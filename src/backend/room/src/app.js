@@ -25,6 +25,40 @@ function isConnected(token) {
   })
 }
 
+/**
+ * API to get a room
+ * request params:
+ *  - room: _
+ *
+ * request query:
+ *  - token: _
+ *
+ *  @param {String} token the token to be checked
+ *  @param {String} room the room to retrieve
+ *
+ *  @returns {status code} 200 in case of success, 400 in case of missing params,
+ *                         err.message in case of invalid token and 500 otherwise.
+ *  @returns {Room} In case of success the room is returned.
+ *
+ *  @see valid_room for the representation of the Room object.
+ */
+app.get('/room/:room', (req, res) => {
+  if(!(req.params.hasOwnProperty('room') && req.query.hasOwnProperty('token'))) {
+    return res.status(400).json({status: 'invalid request'})
+  }
+  let room = req.params.room;
+  let token = req.query.token;
+  isConnected(token).then(_ => {
+    return db.getRoom(room).then(room => {
+      res.status(200).json({room:room})
+    }).catch(err => {
+      res.status(500).json({message:String(err)})
+    })
+  }).catch(err => {
+    res.status(err.message).json()
+  })
+});
+
 app.get('/', (req, res) => {
   return res.status(200).json({status: "success"})
 });

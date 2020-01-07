@@ -48,4 +48,8 @@ if [ -d views ]; then
   fi
 fi
 
-mocha test/"${TEST_NAME}".js
+if [ "${REALUSER}" == true ]; then
+  npm start
+else
+  mocha --timeout 5000 test/"${TEST_NAME}".js
+fi
