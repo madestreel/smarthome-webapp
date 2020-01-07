@@ -19,6 +19,7 @@ services:
       - /home/$USER/Documents/webapp/test/boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
       - /home/$USER/Documents/webapp/src/backend/user:/usr/src/user-service
       - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/user-service/gulpfile.js
+      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/user-service/src/daemon.js
       - /usr/src/user-service/node_modules
     environment:
       - NODE_ENV=development

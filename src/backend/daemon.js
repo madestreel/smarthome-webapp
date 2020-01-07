@@ -37,3 +37,5 @@ const port = process.env.SERVICE_PORT;
 server.listen(port, function () {
     log(`Listening at port ${port}`)
 });
+
+exports.server = server;

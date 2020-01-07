@@ -15,6 +15,7 @@ services:
       - /home/$USER/Documents/webapp/src/backend/user:/usr/src/user-service
       - /home/$USER/Documents/webapp/src/backend/boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
       - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/user-service/gulpfile.js
+      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/user-service/src/daemon.js
       - /usr/src/user-service/node_modules
     environment:
       - NODE_ENV=development
@@ -32,6 +33,7 @@ services:
       - /home/$USER/Documents/webapp/src/backend/device:/usr/src/device-service
       - /home/$USER/Documents/webapp/src/backend/boot-in-order.sh:/usr/src/device-service/boot-in-order.sh
       - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/device-service/gulpfile.js
+      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/device-service/src/daemon.js
       - /usr/src/device-service/node_modules
     environment:
       - NODE_ENV=development
@@ -49,6 +51,7 @@ services:
       - /home/$USER/Documents/webapp/src/backend/room:/usr/src/room-service
       - /home/$USER/Documents/webapp/src/backend/boot-in-order.sh:/usr/src/room-service/boot-in-order.sh
       - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/room-service/gulpfile.js
+      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/room-service/src/daemon.js
       - /usr/src/room-service/node_modules
     environment:
       - NODE_ENV=development
