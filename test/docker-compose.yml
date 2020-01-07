@@ -15,7 +15,7 @@ services:
       - "5080:5080"
     volumes:
       - /home/$USER/Documents/webapp/test/user/test:/usr/src/user-service/test
-      - /home/$USER/Documents/webapp/test/user/jsons:/usr/src/user-service/jsons
+      - /home/$USER/Documents/webapp/test/user/jsons:/usr/src/user-service/test-jsons
       - /home/$USER/Documents/webapp/test/boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
       - /home/$USER/Documents/webapp/src/backend/user:/usr/src/user-service
       - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/user-service/gulpfile.js

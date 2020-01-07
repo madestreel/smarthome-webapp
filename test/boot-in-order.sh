@@ -24,8 +24,8 @@ until curl -s --request PUT "${DB_URL}" -o /dev/null; do
   sleep 2
 done
 
-if [ -d jsons ]; then
-  cd jsons || exit
+if [ -d test-jsons ]; then
+  cd test-jsons || exit
   source fill_db.sh "${DB_URL}"
   cd ..
 fi
