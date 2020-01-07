@@ -29,6 +29,25 @@ services:
     depends_on:
       - test-smarthome-db
 
+  device:
+    build: ./device
+    ports:
+      - "5081:5081"
+    volumes:
+      - /home/$USER/Documents/webapp/test/device/test:/usr/src/device-service/test
+      - /home/$USER/Documents/webapp/test/boot-in-order.sh:/usr/src/device-service/boot-in-order.sh
+      - /home/$USER/Documents/webapp/src/backend/device:/usr/src/device-service
+      - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/device-service/gulpfile.js
+      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/device-service/src/daemon.js
+      - /usr/src/device-service/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - test-backend
+    restart: on-failure
+    depends_on:
+      - test-smarthome-db
+
 networks:
   test-backend:
     driver: overlay
