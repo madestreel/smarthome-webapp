@@ -1,0 +1,7 @@
+#
+# list of all requirements need to deploy the micro services
+#
+curl
+software-properties-common
+docker.io
+docker-compose
