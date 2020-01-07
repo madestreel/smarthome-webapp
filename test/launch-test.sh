@@ -50,9 +50,14 @@ done
 
 shift $((OPTIND - 1))
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "$DIR" || exit 1
 if [ "$test" == null ]; then
   if [ $BUILD -eq 1 ]; then
     docker-compose build
+  else
+    echo "$usage"
+    exit 1
   fi
   exit 0
 fi
