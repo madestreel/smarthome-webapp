@@ -25,7 +25,7 @@ usage="usage: $(basename "${BASH_SOURCE[0]}")} [-h] [-n]
     -b  build the image instead of running
     -n  name of the uservice you want to test/build, if not present all tests are build"
 
-test=0
+test=null
 OPTIND=1
 BUILD=0
 while getopts ':hbn:' option; do
@@ -50,7 +50,7 @@ done
 
 shift $((OPTIND - 1))
 
-if [ "$test" -eq 0 ]; then
+if [ "$test" == null ]; then
   if [ $BUILD -eq 1 ]; then
     docker-compose build
   fi
@@ -59,8 +59,7 @@ fi
 
 if [ $BUILD -eq 1 ]; then
   docker-compose build "${test}"
-else
-  docker-compose rm  -f "${test}"
-  docker-compose up "${test}"
 fi
 
+docker-compose rm  -f "${test}"
+docker-compose up "${test}"
