@@ -1,4 +1,5 @@
 .idea
 /**/boot-in-order.sh
 /**/gulpfile.js
-/**/deamon.js
+/**/daemon.js
+npm-debug.log
