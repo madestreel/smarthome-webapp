@@ -3,20 +3,83 @@
   width: 50%;
 }
 
-.card-success {
-  border-color: #d6e9c6;
-  .card-header {
-    background-color: #dff0d8;
-    color: #3c763d;
-  }
+.card {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  font-family: lato, serif;
+  border-radius: 10px 10px 10px 10px;
+  position: relative;
+  color: #333;
 }
-
-.form-style {
-  .row {
-    margin-bottom: 2%;
-  }
+.card .card-header {
+  background: #FF3838;
+  padding: 20px 30px;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  border-radius: 10px 10px 0 0;
 }
 
 .btn-margin {
   margin-left: 2%;
 }
+.form_container{
+  padding-top: 15%;
+  width: 50%;
+}
+
+form .help {
+  margin-left: 20px;
+  font-size: 0.8em;
+  color: #777;
+  margin-bottom: 5%;
+}
+
+form button {
+  position: relative;
+  margin-bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-family: inherit;
+  color: white;
+  background: #FF3838;
+  outline: none;
+  border: none;
+  padding: 5px 15px;
+  font-size: 1.3em;
+  font-weight: 400;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.4);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  &:not(.disabled):hover {
+    background: #ff5252;
+  }
+}
+
+form label {
+  margin-left: 20px;
+  display: inline-block;
+  position: relative;
+}
+
+form label span {
+  color: green;
+  &:not(.valid) {
+    color: #FF3838;
+  }
+  font-size: 2em;
+  position: absolute;
+  left: 2.3em;
+  top: -10px;
+}
+
+form input {
+  display: block;
+  width: 80%;
+  margin-left: 20px;
+  font-size: 1em;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid #ccc;
+}
+

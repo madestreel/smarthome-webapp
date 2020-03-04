@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
@@ -13,21 +13,27 @@ import {AuthenticationService} from "../../services/authentication.service";
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthenticationService
-  ) {
+  constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      username: 'username',
-      password: 'password'
-    })
+    this.loginForm = new FormGroup({
+      username: new FormControl("", Validators.compose([
+        Validators.required,
+        Validators.minLength(6)
+      ])),
+      password: new FormControl("", Validators.compose([
+        Validators.required,
+        Validators.minLength(6),
+        //Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]+$')
+      ]))
+    });
   }
 
   onSubmit(data) {
-    this.loginForm.setValue({username: "username", password: "password"});
-    this.authService.login(data.username, data.password)
+    console.log(data.uname);
+    this.authService.login(data.username, data.password);
+    this.loginForm.reset();
   }
 }
