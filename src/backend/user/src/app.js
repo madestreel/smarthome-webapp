@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
  *                        and 500 otherwise
  * @returns {String} the token of the user in case of success
  */
-app.get('/user/:username/:password', (req, res) => {
+app.get('/user/:username/password/:password', (req, res) => {
   if(!(req.params.hasOwnProperty('username') && req.params.hasOwnProperty('password')))
       return res.status(400).json({status: 'bad request'});
 
