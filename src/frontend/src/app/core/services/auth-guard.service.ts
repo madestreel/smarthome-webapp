@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AuthenticationService } from './authentication.service';
 import {map, take} from 'rxjs/operators';
-import {RoutesConfig} from "../configs/routes.config";
+import {RoutesConfig} from "../../configs/routes.config";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

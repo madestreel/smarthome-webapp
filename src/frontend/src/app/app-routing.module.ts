@@ -1,16 +1,12 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {RoutesConfig} from "./configs/routes.config";
-import {HomePageComponent} from "./home/home-page.component";
-import {LoginPageComponent} from "./login/pages/login-page.component";
-import {Error404Component} from "./error/404/error404.component";
-import {NoAuthGuard} from "./login/no-auth-guard.service";
-import {AuthGuard} from "./services/auth-guard.service";
+import {Error404Component} from "./shared/components/error/404/error404.component";
 
 
 const routes: Routes = [
-  {path: RoutesConfig.routesName.home, component: HomePageComponent, canActivate: [AuthGuard]},
-  {path: RoutesConfig.routesName.login, component: LoginPageComponent, canActivate: [NoAuthGuard]},
+  {path: RoutesConfig.routesName.home, loadChildren: './components/home/home-routing.module#HomeRoutingModule'},
+  {path: RoutesConfig.routesName.login, loadChildren: './components/login/login-routing.module#LoginRoutingModule'},
   {path: "**", component: Error404Component}
 ];
 
@@ -18,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

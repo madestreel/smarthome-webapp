@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import axios from 'axios';
 import {Router} from "@angular/router";
-import {RoutesConfig} from "../configs/routes.config";
+import {RoutesConfig} from "../../configs/routes.config";
 import {BehaviorSubject, ReplaySubject} from 'rxjs';
 
 import {JwtService} from './jwt.service';

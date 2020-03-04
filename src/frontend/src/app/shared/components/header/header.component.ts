@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {RoutesConfig} from "../configs/routes.config";
-import {AuthenticationService} from "../services/authentication.service";
+import {RoutesConfig} from "../../../configs/routes.config";
+import {AuthenticationService} from "../../../core/services/authentication.service";
 
 @Component({
   selector: "app-header",
