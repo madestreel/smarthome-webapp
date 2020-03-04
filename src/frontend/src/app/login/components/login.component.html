@@ -8,7 +8,7 @@
             <label for="username">Username: <span class="{{!loginForm.controls.username.valid ? '' : 'valid'}}">*</span></label>
           </div>
           <div class="col-md-9">
-            <input onfocus="this.select()" class="form-control" id="username" type="text" formControlName="username">
+            <input placeholder="Username" onfocus="this.select()" class="form-control" id="username" type="text" formControlName="username">
             <div *ngIf="!loginForm.controls.username.valid" class="help"> At least 6 characters</div>
           </div>
         </div>
@@ -17,7 +17,7 @@
             <label for="password">password: <span class="{{!loginForm.controls.password.valid ? '' : 'valid'}}">*</span></label>
           </div>
           <div class="col-md-9">
-            <input onfocus="this.select()" class="form-control" id="password" type="password"
+            <input placeholder="Password" onfocus="this.select()" class="form-control" id="password" type="password"
                    formControlName="password">
             <div *ngIf="!loginForm.controls.password.valid" class="help">At least 6 characters <br/> Use upper and lowercase letters as well</div>
           </div>
