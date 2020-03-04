@@ -9,11 +9,6 @@ RUN apk update && apk add curl
 ENV PATH /usr/src/device-service/node_modules/.bin:${PATH}
 COPY package.json .
 RUN npm install
-# source files of the authentication service
-#ADD ../gulpfile.js .
-#ADD ../boot-in-order.sh .
-# string to create tokens (see utils/en-de-coders.js)
-ENV TOKEN_SECRET IhiKrqjq-F(o1k?
 # header for loggining messages
 ENV SERVICE_NAME device-d
 ENV SERVICE_PORT 3082
