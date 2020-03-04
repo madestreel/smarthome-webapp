@@ -18,7 +18,8 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
   exports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    ShowAuthedDirective,
   ]
 })
 

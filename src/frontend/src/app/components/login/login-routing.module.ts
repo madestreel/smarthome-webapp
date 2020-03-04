@@ -3,9 +3,10 @@ import {RoutesConfig} from "../../configs/routes.config";
 import {LoginPageComponent} from "./pages/login-page.component";
 import {NoAuthGuard} from "./no-auth-guard.service";
 import {NgModule} from "@angular/core";
+import {Error404Component} from "../../shared/components/error/404/error404.component";
 
 const routes: Routes = [
-  {path: '', component: LoginPageComponent, canActivate: [NoAuthGuard]}
+  {path: '', component: LoginPageComponent, canActivate: [NoAuthGuard]},
 ];
 
 @NgModule({
