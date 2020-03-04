@@ -1,7 +1,7 @@
 version: "3"
 services:
   smarthome-db:
-    image: "kv-storage-system:latest"
+    image: "destmaxi/kv-storage-system:latest"
     ports:
       - "3000:5984"
     networks:
@@ -12,10 +12,10 @@ services:
     ports:
       - "3080:3080"
     volumes:
-      - /home/$USER/Documents/webapp/src/backend/user:/usr/src/user-service
-      - /home/$USER/Documents/webapp/src/backend/boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
-      - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/user-service/gulpfile.js
-      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/user-service/src/daemon.js
+      - ./user:/usr/src/user-service
+      - ./boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
+      - ./gulpfile.js:/usr/src/user-service/gulpfile.js
+      - ./daemon.js:/usr/src/user-service/src/daemon.js
       - /usr/src/user-service/node_modules
     environment:
       - NODE_ENV=development
@@ -30,10 +30,10 @@ services:
     ports:
       - "3082:3082"
     volumes:
-      - /home/$USER/Documents/webapp/src/backend/device:/usr/src/device-service
-      - /home/$USER/Documents/webapp/src/backend/boot-in-order.sh:/usr/src/device-service/boot-in-order.sh
-      - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/device-service/gulpfile.js
-      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/device-service/src/daemon.js
+      - ./device:/usr/src/device-service
+      - ./boot-in-order.sh:/usr/src/device-service/boot-in-order.sh
+      - ./gulpfile.js:/usr/src/device-service/gulpfile.js
+      - ./daemon.js:/usr/src/device-service/src/daemon.js
       - /usr/src/device-service/node_modules
     environment:
       - NODE_ENV=development
@@ -48,10 +48,10 @@ services:
     ports:
       - "3081:3081"
     volumes:
-      - /home/$USER/Documents/webapp/src/backend/room:/usr/src/room-service
-      - /home/$USER/Documents/webapp/src/backend/boot-in-order.sh:/usr/src/room-service/boot-in-order.sh
-      - /home/$USER/Documents/webapp/src/backend/gulpfile.js:/usr/src/room-service/gulpfile.js
-      - /home/$USER/Documents/webapp/src/backend/daemon.js:/usr/src/room-service/src/daemon.js
+      - ./room:/usr/src/room-service
+      - ./boot-in-order.sh:/usr/src/room-service/boot-in-order.sh
+      - ./gulpfile.js:/usr/src/room-service/gulpfile.js
+      - ./daemon.js:/usr/src/room-service/src/daemon.js
       - /usr/src/room-service/node_modules
     environment:
       - NODE_ENV=development

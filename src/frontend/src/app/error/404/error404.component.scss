@@ -1,0 +1,15 @@
+::ng-deep body {
+  background-color: red;
+  width: 100%;
+  height: 100%;
+}
+
+div {
+  display:flex;
+  min-height:100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto!important;
+  font-size: 40vw
+}

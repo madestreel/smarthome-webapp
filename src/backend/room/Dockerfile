@@ -9,13 +9,6 @@ RUN apk update && apk add curl
 ENV PATH /usr/src/room-service/node_modules/.bin:${PATH}
 COPY package.json .
 RUN npm install
-# source files of the authentication service
-#ADD ../gulpfile.js .
-#ADD src src
-#ADD jsons jsons
-#ADD ../boot-in-order.sh .
-# string to create tokens (see utils/en-de-coders.js)
-ENV TOKEN_SECRET IhiKrqjq-F(o1k?
 # header for loggining messages
 ENV SERVICE_NAME room-d
 ENV SERVICE_PORT 3081
