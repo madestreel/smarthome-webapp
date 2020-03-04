@@ -59,6 +59,42 @@ app.get('/room/:room', (req, res) => {
   })
 });
 
+/**
+ * API to get the rooms of a user
+ * request params:
+ *  - user: _
+ *
+ *  request query:
+ *    -token: _
+ *
+ *  @param {String} token the token to be checked
+ *  @param {String} user the user from which to get the rooms
+ *
+ *  @returns {status code} 200 in case of success, 400 in case of missing params,
+ *                        err.message in case of invalid token and 500 otherwise.
+ *
+ *  @returns {List[Room]} In case of success the rooms of the user
+ *
+ *  @see valid_room for the representation of the Room object.
+ */
+app.get('room/:user', (req, res) => {
+  if (!(req.params.hasOwnProperty('user') && req.query.hasOwnProperty('token'))) {
+    return res.status(400).json({status: 'invalid request'})
+  }
+  let user = req.params.user;
+  let token = req.query.token;
+  isConnected(token).then(_ => {
+    return db.getRoomsForUser(user).then(rooms => {
+      res.status(200).json({rooms: rooms})
+    }).catch(err => {
+      res.status(500).json({message:String(err)})
+    })
+  }).catch(err => {
+    res.status(err.message).json()
+  })
+});
+
+
 app.get('/', (req, res) => {
   return res.status(200).json({status: "success"})
 });
