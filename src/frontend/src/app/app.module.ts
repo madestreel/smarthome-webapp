@@ -9,6 +9,11 @@ import {LoginComponent} from "./login/components/login.component";
 import {LoginPageComponent} from "./login/pages/login-page.component";
 import {Error404Component} from "./error/404/error404.component";
 import {AuthenticationService} from "./services/authentication.service";
+import {HeaderComponent} from "./header/header.component";
+import {JwtService} from "./services/jwt.service";
+import {AuthGuard} from "./services/auth-guard.service";
+import {ShowAuthedDirective} from "./header/show-authed.directive";
+import {NoAuthGuard} from "./login/no-auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -16,14 +21,16 @@ import {AuthenticationService} from "./services/authentication.service";
     HomePageComponent,
     LoginPageComponent,
     LoginComponent,
-    Error404Component
+    Error404Component,
+    HeaderComponent,
+    ShowAuthedDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, JwtService, AuthGuard, NoAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

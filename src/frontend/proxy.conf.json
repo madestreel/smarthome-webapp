@@ -7,5 +7,14 @@
     "pathRewrite": {
       "^/api/login": ""
     }
+  },
+  "/api/user/*": {
+    "target": "http://localhost:3080",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/user": ""
+    }
   }
 }
