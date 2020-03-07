@@ -7,6 +7,10 @@ import {Error404Component} from "./shared/components/error/404/error404.componen
 const routes: Routes = [
   {path: RoutesConfig.routesName.home, loadChildren: './components/home/home-routing.module#HomeRoutingModule'},
   {path: RoutesConfig.routesName.login, loadChildren: './components/login/login-routing.module#LoginRoutingModule'},
+  {
+    path: RoutesConfig.routesName.devices,
+    loadChildren: './components/devices/devices-routing.module#DevicesRoutingModule'
+  },
   {path: "**", component: Error404Component}
 ];
 

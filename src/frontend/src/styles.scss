@@ -26,6 +26,20 @@
   }
 }
 
+hr {
+  z-index: 99;
+  width: 80%;
+  background-color: #212529;
+  height: 1px;
+  margin-bottom: 5%;
+}
+
+.title {
+  text-align: center;
+  padding-top: 5%;
+  padding-left: 2%;
+}
+
 .col-center {
   text-align: center;
 }
