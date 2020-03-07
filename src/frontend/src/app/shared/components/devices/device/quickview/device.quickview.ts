@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {Device} from "../../../../core/models/devices/device.model";
-import {Permission} from "../../../../core/models/permission.model";
+import {Device} from "../../../../../core/models/devices/device.model";
+import {Permission} from "../../../../../core/models/permission.model";
 
 @Component({
   selector: "device-quickview",

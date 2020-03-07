@@ -20,6 +20,7 @@ export abstract class AbstractDevice {
   }
 
   addAction(action: Action) {
+    console.log(this.device)
     this.device.actions.push(action)
   }
 
