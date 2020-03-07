@@ -61,13 +61,14 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    axios.get(`/api/login/user/${username}/password/${password}`).then(res => {
+    return axios.get(`/api/login/user/${username}/password/${password}`).then(res => {
       console.log(res.data);
       this.setAuth({token: res.data.token, username:"arthur", permission:Permission.USER});
       this.router.navigate([RoutesConfig.routesName.home])
     }).catch(err => {
       console.error(err.message);
-      this.purgeAuth()
+      this.purgeAuth();
+      throw new Error("failed to connect")
     })
   }
 
