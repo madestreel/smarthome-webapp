@@ -4,13 +4,17 @@ import {ShowAuthedDirective} from "./directives/show-authed.directive";
 import {AuthenticationService} from "../core/services/authentication.service";
 import {JwtService} from "../core/services/jwt.service";
 import {ReactiveFormsModule} from "@angular/forms";
+import {DeviceComponent} from "./components/device/device.component";
+import {ActionComponent} from "./components/actions/action.component";
 
 @NgModule({
   imports: [
     CommonModule,
   ],
   declarations: [
-    ShowAuthedDirective
+    ShowAuthedDirective,
+    DeviceComponent,
+    ActionComponent
   ],
   providers: [
     AuthenticationService,
@@ -20,6 +24,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule,
     CommonModule,
     ShowAuthedDirective,
+    DeviceComponent,
+    ActionComponent
   ]
 })
 

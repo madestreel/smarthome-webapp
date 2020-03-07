@@ -1,0 +1,24 @@
+.card {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  font-family: lato serif;
+  border-radius: 10px 10px 10px 10px;
+  position: relative;
+  color: #333;
+}
+
+.card .card-header {
+  background: #FF3838;
+  padding: 10px 10px;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  border-radius: 10px 10px 0 0;
+}
+
+button {
+  border: none;
+}
+
+.fa:focus {
+  outline-color: #FF3838;
+}
