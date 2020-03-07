@@ -4,9 +4,10 @@ import {ShowAuthedDirective} from "./directives/show-authed.directive";
 import {AuthenticationService} from "../core/services/authentication.service";
 import {JwtService} from "../core/services/jwt.service";
 import {ReactiveFormsModule} from "@angular/forms";
-import {DeviceComponent} from "./components/device/device.component";
+import {DeviceComponent} from "./components/devices/device/device.component";
 import {ActionComponent} from "./components/actions/action.component";
-import {DeviceQuickView} from "./components/device/quickview/device.quickview";
+import {DeviceQuickView} from "./components/devices/device/quickview/device.quickview";
+import {Devices} from "./components/devices/devices.component";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {DeviceQuickView} from "./components/device/quickview/device.quickview";
     ShowAuthedDirective,
     DeviceComponent,
     ActionComponent,
-    DeviceQuickView
+    DeviceQuickView,
+    Devices
   ],
   providers: [
     AuthenticationService,
@@ -29,6 +31,7 @@ import {DeviceQuickView} from "./components/device/quickview/device.quickview";
     DeviceComponent,
     ActionComponent,
     DeviceQuickView,
+    Devices
   ]
 })
 
