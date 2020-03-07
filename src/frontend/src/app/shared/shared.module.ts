@@ -6,6 +6,7 @@ import {JwtService} from "../core/services/jwt.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DeviceComponent} from "./components/device/device.component";
 import {ActionComponent} from "./components/actions/action.component";
+import {DeviceQuickView} from "./components/device/quickview/device.quickview";
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {ActionComponent} from "./components/actions/action.component";
   declarations: [
     ShowAuthedDirective,
     DeviceComponent,
-    ActionComponent
+    ActionComponent,
+    DeviceQuickView
   ],
   providers: [
     AuthenticationService,
@@ -25,7 +27,8 @@ import {ActionComponent} from "./components/actions/action.component";
     CommonModule,
     ShowAuthedDirective,
     DeviceComponent,
-    ActionComponent
+    ActionComponent,
+    DeviceQuickView,
   ]
 })
 

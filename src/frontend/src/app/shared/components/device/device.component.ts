@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {Device} from "../../../core/models/devices/device.model";
+import {AbstractDevice} from "../../../core/models/devices/device.model";
 import {DeviceService} from "../../../core/services/DeviceService.service";
 import {LightDevice} from "../../../core/models/devices/LightDevice.model";
 import {SwitchAction} from "../../../core/models/actions/SwitchAction.model";
@@ -14,7 +14,7 @@ import {SwitchAction} from "../../../core/models/actions/SwitchAction.model";
 
 export class DeviceComponent {
   @Input()
-  device: Device;
+  device: AbstractDevice;
 
   constructor(private deviceService: DeviceService) {
     this.device = new LightDevice(deviceService, "Main light");

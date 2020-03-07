@@ -1,27 +1,18 @@
-import {Device} from "./device.model";
-import {Action} from "../actions/action.model";
+import {AbstractDevice} from "./device.model";
 import {DeviceService} from "../../services/DeviceService.service";
+import {Permission} from "../permission.model";
 
-export class LightDevice implements Device {
-  actions: Action[] = [];
-  favorite: boolean;
-  name: string;
-  status: string;
-  type: string = "light";
+export class LightDevice extends AbstractDevice {
 
   constructor(private deviceService: DeviceService, name: string) {
-    this.name = name;
-  }
-
-  setStatus(status: string) {
-    this.status = status;
-  }
-
-  switchFavorite() {
-    this.favorite = !this.favorite
-  }
-
-  addAction(action: Action) {
-    this.actions.push(action)
+    super(deviceService, {
+      name: name,
+      status: "",
+      actions: [],
+      favorite: false,
+      type: "light",
+      permission: Permission.USER,
+      id: "1"
+    });
   }
 }
