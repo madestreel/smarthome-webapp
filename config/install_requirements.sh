@@ -31,7 +31,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 sudo apt update
 
 if [ -f "${DIR}"/requirements.txt ]; then
-  sudo apt-get install $(grep -vE "^\s*#" "${DIR}"/requirements.txt  | tr "\n" " ") || { echo -e "${RED}Some dependencies couldn't be installed, fix them.${NC}"; exit 1; }
+  sudo apt-get install "$(grep -vE "^\s*#" "${DIR}"/requirements.txt  | tr "\n" " ")" || { echo -e "${RED}Some dependencies couldn't be installed, fix them.${NC}"; exit 1; }
 else
   echo -e "${YELLOW}File config/requirements.txt doesn't exist${NC}"
   exit 1
