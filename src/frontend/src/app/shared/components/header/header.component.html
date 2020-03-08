@@ -21,7 +21,7 @@
           {{auth.getCurrentUser().username}}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="routes.about"> About me</a>
+          <a class="dropdown-item" href="{{routes.about}}"> About me</a>
           <a class="dropdown-item" href="" (click)="auth.logout()"> Logout</a>
         </div>
       </li>

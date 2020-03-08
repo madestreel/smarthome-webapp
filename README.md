@@ -8,4 +8,4 @@
 - [ ] backend devices u-service
 - [ ] backend room u-service
 - [ ] frontend rooms
-- [ ] about me
+- [x] about me
