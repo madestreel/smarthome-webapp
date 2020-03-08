@@ -69,6 +69,35 @@ app.delete('/user/:username', (req, res) => {
 });
 
 /**
+ * API to retrieve users information
+ * request query
+ *  - token: _
+ *
+ *  @param {String} token the token of the user which makes the request
+ *
+ *  @returns {Status code} 200 in case of success, 400 in case of missing param,
+ *                         403 in case of bad token and 500 otherwise
+ *
+ *  @returns {User} in case of success, the users informations
+ */
+app.get('/user', (req, res) => {
+   if (!(req.query.hasOwnProperty("token"))) {
+       return res.status(400).json({message: "bad request"})
+   }
+
+   let token = req.query.token;
+   return db.isConnected(token).then(_ => {
+       return db.getUserInfo(token).then(user => {
+           res.status(200).json({message: "success", user: user})
+       }).catch(err => {
+           res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
+       })
+   }).catch(err => {
+       res.status(403).json({message: "permission denied"})
+   })
+});
+
+/**
  * API to add a new user
  * request boy:
  *  - username: _

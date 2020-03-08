@@ -54,6 +54,20 @@ function getUser(username, password) {
     }))
 }
 
+function getUserInfo(token) {
+    return new Promise((resolve, reject) => {
+        let username = tku.decodeToken(token).sub;
+        db.get(username, (error, success) => {
+            if (success) {
+                log(success);
+                resolve(success)
+            } else {
+                reject(new Error(`User ${username} doesn't exist`))
+            }
+        })
+    })
+}
+
 function isConnected(token) {
     return new Promise(((resolve, reject) => {
         let username = tku.decodeToken(token).sub;
@@ -71,5 +85,6 @@ module.exports = {
     createUser,
     getUser,
     deleteUser,
-    isConnected
+    isConnected,
+    getUserInfo
 };
