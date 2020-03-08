@@ -4,7 +4,7 @@
 - [x] frontend login
 - [x] backend user u-service
 - [ ] Docker file for frontend
-- [ ] show favorites on home page
+- [x] show favorites on home page
 - [ ] backend devices u-service
 - [ ] backend room u-service
 - [ ] frontend rooms

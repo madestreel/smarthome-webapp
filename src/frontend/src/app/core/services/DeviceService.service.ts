@@ -28,7 +28,7 @@ export class DeviceService {
       name: "Main light 2",
       status: "ON",
       actions: [],
-      favorite: false,
+      favorite: true,
       type: "light",
       permission: Permission.USER,
       id: "2"
@@ -37,7 +37,7 @@ export class DeviceService {
       name: "Main light 3",
       status: "ON",
       actions: [],
-      favorite: false,
+      favorite: true,
       type: "light",
       permission: Permission.USER,
       id: "3"
