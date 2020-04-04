@@ -50,6 +50,7 @@ services:
     volumes:
       - ./room:/usr/src/room-service
       - ./boot-in-order.sh:/usr/src/room-service/boot-in-order.sh
+      - ./func_to_string.js:/usr/src/room-service/func_to_string.js
       - ./gulpfile.js:/usr/src/room-service/gulpfile.js
       - ./daemon.js:/usr/src/room-service/src/daemon.js
       - /usr/src/room-service/node_modules

@@ -1,3 +1,4 @@
 !/boot-in-order.sh
 !/gulpfile.js
 !/daemon.js
+!/func_to_string.js
