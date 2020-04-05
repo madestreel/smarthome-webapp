@@ -1,5 +1,5 @@
 # this image relies on the nodejs image
-FROM node:6.11-alpine
+FROM node:11-alpine
 # set working directory
 WORKDIR /usr/src/room-service
 # we need CURL to verify that the key-value storage is running (see boot-in-order.sh)
