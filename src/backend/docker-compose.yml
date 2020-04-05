@@ -44,6 +44,7 @@ services:
     volumes:
       - ./device:/usr/src/device-service
       - ./boot-in-order.sh:/usr/src/device-service/boot-in-order.sh
+      - ./func_to_string.js:/usr/src/device-service/func_to_string.js
       - ./gulpfile.js:/usr/src/device-service/gulpfile.js
       - ./daemon.js:/usr/src/device-service/src/daemon.js
       - /usr/src/device-service/node_modules
