@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(data) {
     console.log(data.uname);
-    this.authService.login(data.username, data.password);
-    this.loginForm.reset();
+    this.authService.login(data.username, data.password).catch(_ => {
+      this.loginForm.reset()
+    })
   }
 }

@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {AuthGuard} from "./services/auth-guard.service";
 import {JwtService} from "./services/jwt.service";
 import {AuthenticationService} from "./services/authentication.service";
+import {DeviceService} from "./services/DeviceService.service";
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import {AuthenticationService} from "./services/authentication.service";
   providers: [
     AuthGuard,
     JwtService,
-    AuthenticationService
+    AuthenticationService,
+    DeviceService
   ],
   declarations: []
 })

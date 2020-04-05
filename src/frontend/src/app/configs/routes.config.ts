@@ -1,7 +1,9 @@
 const routesNames = {
   home: "",
   login: "login",
-  error404: "404"
+  error404: "404",
+  devices: "devices",
+  about: "about"
 };
 
 export const RoutesConfig: any = {
@@ -9,6 +11,8 @@ export const RoutesConfig: any = {
   routes: {
     home: `/${routesNames.home}`,
     login: `/${routesNames.login}`,
-    error404: `/${routesNames.error404}`
+    error404: `/${routesNames.error404}`,
+    devices: `/${routesNames.devices}`,
+    about: `/${routesNames.about}`
   }
 };

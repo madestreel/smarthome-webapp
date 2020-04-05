@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="card">
+    <button class="card-header card-header-center" data-toggle="modal" attr.data-target="#quickview-{{device.device.id}}">
+      {{device.device.name}}
+    </button>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-1 col-center">
+          <button class="fa fa-star{{!device.device.favorite ? '-o' : ''}} fa-2x" style="color: red; cursor: pointer"
+                  (click)="device.switchFavorite()"></button>
+        </div>
+        <div class="col-md-3 col-center">
+          {{device.device.status}}
+        </div>
+        <div class="col-md-8 col-center">
+          <ng-container *ngFor="let action of device.device.actions">
+            <action style="margin-right: 5%" [action]="action"></action>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<device-quickview [device]="device.device"></device-quickview>
+

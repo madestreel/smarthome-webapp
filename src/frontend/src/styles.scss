@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+.center-container {
+  position: fixed;
+  width: 50%;
+  left: 25%;
+  top: 25%;
+  z-index: 99;
+}
+
+.card {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  font-family: lato, serif;
+  border-radius: 10px 10px 10px 10px;
+  position: relative;
+  color: #333;
+}
+.card .card-header {
+  background: #FF3838;
+  padding: 20px 30px;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  border-radius: 10px 10px 0 0;
+  .card-header-center {
+    text-align: center;
+  }
+}
+
+hr {
+  z-index: 99;
+  width: 80%;
+  background-color: #212529;
+  height: 1px;
+  margin-bottom: 5%;
+}
+
+.title {
+  text-align: center;
+  padding-top: 5%;
+  padding-left: 2%;
+}
+
+.col-center {
+  text-align: center;
+}
+
+

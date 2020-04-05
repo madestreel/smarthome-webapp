@@ -29,9 +29,9 @@ export class AuthenticationService {
   populate() {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
-      axios.get('api/user')
+      axios.get('api/user/user', {params: {token: this.jwtService.getToken()}})
         .then(
-          data => this.setAuth({username: "arthut", permission:Permission.USER, token:"token"}),
+          resp => this.setAuth({username: resp.data.user._id, permission:Permission.USER, token:this.jwtService.getToken()}),
         ).catch(_ => {
         this.purgeAuth()
       });
@@ -61,13 +61,14 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    axios.get(`/api/login/user/${username}/password/${password}`).then(res => {
+    return axios.get(`/api/login/user/${username}/password/${password}`).then(res => {
       console.log(res.data);
-      this.setAuth({token: res.data.token, username:"arthur", permission:Permission.USER});
+      this.setAuth({username: username, permission:Permission.USER, token:res.data.token});
       this.router.navigate([RoutesConfig.routesName.home])
     }).catch(err => {
       console.error(err.message);
-      this.purgeAuth()
+      this.purgeAuth();
+      throw new Error("failed to connect")
     })
   }
 
