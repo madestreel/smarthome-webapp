@@ -160,7 +160,7 @@ app.get('/devices/:roomID', (req, res) => {
 });
 
 
-app.get('/device:id', (req, res) => {
+app.get('/device/:id', (req, res) => {
   if (!(req.params.hasOwnProperty('id') && req.query.hasOwnProperty('token'))) {
     res.status(400).json({message: 'bad request'});
     return
