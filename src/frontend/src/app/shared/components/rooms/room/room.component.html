@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="card">
+    <button class="card-header card-header-center" style="cursor: pointer" data-toggle="modal"
+            attr.data-target="#roomquickview-{{room.roomID}}">
+      {{room.name}}
+    </button>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-1 col-center">
+          <div class="fa fa-star{{!room.favorite ? '-o' : ''}} fa-2x" style="color: red; cursor: pointer"
+               (click)="switchFavorite()"></div>
+        </div>
+        <div class="col-md-11 col-center" style="cursor: pointer" (click)="onClick()">
+          <h4>
+            Devices of {{room.name}}
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="selected" style="padding-bottom: 2%">
+      <devices [devices]="room.devices"></devices>
+    </div>
+  </div>
+</div>
+<room-quickview [room]="room"></room-quickview>

@@ -6,8 +6,8 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-1 col-center">
-          <button class="fa fa-star{{!device.device.favorite ? '-o' : ''}} fa-2x" style="color: red; cursor: pointer"
-                  (click)="device.switchFavorite()"></button>
+          <div class="fa fa-star{{!device.device.favorite ? '-o' : ''}} fa-2x" style="color: red; cursor: pointer"
+                  (click)="device.switchFavorite()"></div>
         </div>
         <div class="col-md-3 col-center">
           {{device.device.status}}

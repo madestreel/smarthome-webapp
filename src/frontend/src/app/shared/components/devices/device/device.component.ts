@@ -1,8 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {AbstractDevice} from "../../../../core/models/devices/device.model";
 import {DeviceService} from "../../../../core/services/DeviceService.service";
-import {LightDevice} from "../../../../core/models/devices/LightDevice.model";
-import {SwitchAction} from "../../../../core/models/actions/SwitchAction.model";
+import {DefaultDevice} from "../../../../core/models/devices/DefaultDevice.model";
 
 @Component({
   selector: "device",
@@ -14,7 +12,7 @@ import {SwitchAction} from "../../../../core/models/actions/SwitchAction.model";
 
 export class DeviceComponent {
   @Input()
-  device: AbstractDevice;
+  device: DefaultDevice;
 
   constructor(private deviceService: DeviceService) {
   }

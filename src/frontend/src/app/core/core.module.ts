@@ -4,6 +4,7 @@ import {AuthGuard} from "./services/auth-guard.service";
 import {JwtService} from "./services/jwt.service";
 import {AuthenticationService} from "./services/authentication.service";
 import {DeviceService} from "./services/DeviceService.service";
+import {RoomService} from "./services/RoomService.service";
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {DeviceService} from "./services/DeviceService.service";
     AuthGuard,
     JwtService,
     AuthenticationService,
-    DeviceService
+    DeviceService,
+    RoomService
   ],
   declarations: []
 })

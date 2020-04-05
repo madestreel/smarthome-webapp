@@ -1,64 +1,94 @@
 import {Injectable} from "@angular/core";
-import {AbstractDevice} from "../models/devices/device.model";
-import {LightDevice} from "../models/devices/LightDevice.model";
+import axios from 'axios';
 import {Permission} from "../models/permission.model";
-import {SwitchAction} from "../models/actions/SwitchAction.model";
+import {AuthenticationService} from "./authentication.service";
+import {User} from "../models/user.model";
+import {Action, ActionType} from "../models/actions/action.model";
+import {ActionBuilder} from "../models/actions/ActionBuilder.model";
+import {DefaultDevice} from "../models/devices/DefaultDevice.model";
+import {Device} from "../models/devices/device.model";
 
 
 @Injectable()
 export class DeviceService {
 
-  switch(device: AbstractDevice) {
+  constructor(
+    private authenticationService: AuthenticationService
+  ) {
+  }
+
+  switchFav(device: Device) {
+    const user: User = this.authenticationService.getCurrentUser();
+    if (device.favorite) {
+      axios.delete(`api/device/fav`, {
+        data: {
+          token: user.token,
+          userID: user.username,
+          deviceID: device.id
+        }
+      }).then(_ => {
+        device.favorite = false
+      })
+    } else {
+      axios.post(`api/device/fav`, {
+        token: user.token,
+        userID: user.username,
+        deviceID: device.id
+      }).then(_ => {
+        device.favorite = true
+      })
+    }
+
+  }
+
+  switch(device: DefaultDevice) {
     console.log("on switch");
     device.device.status = device.device.status === "ON" ? "OFF" : "ON"
   }
 
-  fetchDevices(devices: AbstractDevice[]) {
-    console.log("fetch devices");
-    const device1: AbstractDevice = new LightDevice(this, {
-      name: "Main light 1",
-      status: "ON",
-      actions: [],
-      favorite: false,
-      type: "light",
-      permission: Permission.USER,
-      id: "1"
-    });
-    const device2: AbstractDevice = new LightDevice(this, {
-      name: "Main light 2",
-      status: "ON",
-      actions: [],
-      favorite: true,
-      type: "light",
-      permission: Permission.USER,
-      id: "2"
-    });
-    const device3: AbstractDevice = new LightDevice(this, {
-      name: "Main light 3",
-      status: "ON",
-      actions: [],
-      favorite: true,
-      type: "light",
-      permission: Permission.USER,
-      id: "3"
-    });
-    const device4: AbstractDevice = new LightDevice(this, {
-      name: "Main light 4",
-      status: "OFF",
-      actions: [],
-      favorite: false,
-      type: "light",
-      permission: Permission.USER,
-      id: "4"
-    });
-    device1.addAction(new SwitchAction(this, device1));
-    device2.addAction(new SwitchAction(this, device2));
-    device3.addAction(new SwitchAction(this, device3));
-    device4.addAction(new SwitchAction(this, device4));
+  fetchDevicesForRoom(devices: DefaultDevice[], roomID: string) {
+    const user: User = this.authenticationService.getCurrentUser();
+    axios.get(`api/device/devices/${roomID}`, {params: {token: user.token}}).then(res => {
+      res.data.devices.forEach(device => {
+        axios.get(`api/device/device/${device}`, {params: {token: user.token}}).then(res => {
+          console.log(res.data);
+          const device1: DefaultDevice = new DefaultDevice(this, {
+            name: res.data.device.device.name,
+            status: res.data.device.device.value,
+            actions: [],
+            favorite: false,
+            permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
+            id: res.data.device._id,
+            roomID: roomID
+          });
+          console.log(res.data.device.device);
+          res.data.device.device.actions.forEach(action => {
+            const concreteAction: Action = ActionBuilder.createAction(
+              (<any>ActionType)[action.toUpperCase()],
+              this,
+              device1
+            );
+            if (concreteAction) device1.addAction(concreteAction)
+          });
+          devices.push(device1);
+          axios.get(`api/device/fav/device/${res.data.device._id}/user/${user.username}`, {params: {token: user.token}}).then(res => {
+            device1.setFav(res.data.isfav)
+          })
+        })
+      });
 
-    devices.push(device1);
-    devices.push(device2);
-    devices.push(device3);
-    devices.push(device4);
+    })
+  }
+
+  fetchDevices(devices: DefaultDevice[]) {
+    const user: User = this.authenticationService.getCurrentUser();
+
+    axios.get(`api/room/rooms/${user.username}`, {params: {token: user.token}})
+      .then(res => {
+        console.log(res.data.rooms);
+        res.data.rooms.forEach(room => {
+          this.fetchDevicesForRoom(devices, room);
+        })
+      });
   }
 }

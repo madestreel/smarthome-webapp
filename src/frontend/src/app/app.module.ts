@@ -10,6 +10,8 @@ import {HomeModule} from "./components/home/home.module";
 import {LoginModule} from "./components/login/login.module";
 import {DevicesModule} from "./components/devices/devices.module";
 import {About} from "./components/about/about.component";
+import {RoomsRoutingModule} from "./components/rooms/rooms-routing.module";
+import {RoomsModule} from "./components/rooms/rooms.module";
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import {About} from "./components/about/about.component";
     HomeModule,
     LoginModule,
     DevicesModule,
+    RoomsModule,
+    RoomsRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

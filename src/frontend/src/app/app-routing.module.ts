@@ -13,6 +13,10 @@ const routes: Routes = [
     path: RoutesConfig.routesName.devices,
     loadChildren: './components/devices/devices-routing.module#DevicesRoutingModule'
   },
+  {
+    path: RoutesConfig.routesName.rooms,
+    loadChildren: './components/rooms/rooms-routing.module#RoomsRoutingModule'
+  },
   {path: RoutesConfig.routesName.about, component: About, canActivate: [AuthGuard]},
   {path: "**", component: Error404Component}
 ];

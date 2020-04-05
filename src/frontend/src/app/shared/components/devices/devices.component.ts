@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {AbstractDevice} from "../../../core/models/devices/device.model";
+import {DefaultDevice} from "../../../core/models/devices/DefaultDevice.model";
 
 @Component({
   selector: "devices",
@@ -11,5 +11,5 @@ import {AbstractDevice} from "../../../core/models/devices/device.model";
 
 export class Devices {
   @Input()
-  devices: AbstractDevice[] = [];
+  devices: DefaultDevice[] = [];
 }

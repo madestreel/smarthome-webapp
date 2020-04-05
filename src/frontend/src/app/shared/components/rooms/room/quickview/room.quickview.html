@@ -1,0 +1,22 @@
+<div class="modal fade" tabindex="-1" id="roomquickview-{{room.roomID}}" aria-labelledby="roomquickview">
+  <div class="container-fluid center-container">
+    <div class="modal-dialog" role="article">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> {{room.name}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4"> Favorite:</div>
+            <div class="col-md-2"> {{room.favorite}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-4"> Permission:</div>
+            <div class="col-md-2"> {{Permission[room.permission]}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
