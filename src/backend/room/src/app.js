@@ -173,6 +173,21 @@ app.post('/user', (req, res) => {
 });
 
 
+/**
+ * API to delete a user from a room
+ * request body:
+ *  - roomID:
+ *  - userID: _
+ *  - token: _
+ *
+ *  @param {String} token the token to be checked
+ *  @param {String} roomID the room id where to user will be added
+ *  @param {String} userID the user id of the user to be added to the room
+ *
+ *  @returns {status code} 200 in case of success, 400 in case of missing params,
+ *                        err.message in case of invalid token and 500 otherwise.
+ *
+ */
 app.delete('/user', (req, res) => {
   if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('roomID'))) {
     res.status(400).json({message: 'bad request'})
@@ -267,10 +282,12 @@ app.delete('/fav', (req, res) => {
 
 
 /**
- * API to remove a user from a room
- * request body:
+ * API to verify if a room is in the favs of a user.
+ * request params:
  *  - roomID: _
  *  - userID: _
+ *
+ * request query:
  *  - token: _
  *
  *  @param {String} token the token to be checked
