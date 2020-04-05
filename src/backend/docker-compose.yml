@@ -3,17 +3,14 @@ services:
   mosquitto:
     image: "eclipse-mosquitto:latest"
     ports:
-      - "1883:1883"
+      - "1880:1883"
     volumes:
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
     networks:
       - backend
-    environment:
-      - PUID=1883
-      - PGID=1883
 
   smarthome-db:
-    image: "destmaxi/kv-storage-system:latest"
+    image: "treehouses/couchdb"
     ports:
       - "3000:5984"
     networks:

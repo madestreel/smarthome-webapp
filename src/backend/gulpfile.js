@@ -11,4 +11,4 @@ gulp.task('start', () => {
 
 gulp.watch('./src');
 
-gulp.task('default', ['start']);
+gulp.task('default', gulp.series('start'));

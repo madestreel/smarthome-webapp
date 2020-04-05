@@ -26,7 +26,7 @@ ENV DB_PORT 5984
 # authentication information to CRUD (create/remove/update/delete) objects in our DB
 ENV ADMIN_NAME admin
 ENV ADMIN_PASSW admin
-ENV DB_URL http://${ADMIN_NAME}:${ADMIN_PASSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+ENV DB_URL http://${DB_HOST}:${DB_PORT}/${DB_NAME}
 
 # we now use an script to deploy.sh the authentication service
 CMD source boot-in-order.sh
