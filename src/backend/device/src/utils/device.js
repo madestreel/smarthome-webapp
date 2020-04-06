@@ -4,6 +4,7 @@ function createDevice(device) {
     return new Promise(((resolve, reject) => {
         db.insert(
             {device: device},
+            device.deviceID,
             (error, success) => {
                 if (success) {
                     resolve()

@@ -12,5 +12,6 @@ export enum ActionStyle {
 export interface Action {
   type: ActionType,
   style: ActionStyle,
-  action: Function
+  action: Function,
+  name: string
 }

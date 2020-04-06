@@ -10,15 +10,18 @@
         <a class="nav-link" href="/"> Home <span class="sr-only">(current)</span> </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *appShowAuthed="true" href="{{routes.devices}}">My devices</a>
+        <a class="nav-link" *ngIf="canShow()" href="{{routes.devices}}">My devices</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *appShowAuthed="true" href="{{routes.rooms}}">My rooms</a>
+        <a class="nav-link" *ngIf="canShow(true, Permission.ADMIN)" href="{{routes.manage}}">Manage</a>
       </li>
-      <li class="nav-item" *appShowAuthed=false>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="canShow()" href="{{routes.rooms}}">My rooms</a>
+      </li>
+      <li class="nav-item" *ngIf="canShow(false)">
         <a class="nav-link" href="{{routes.login}}">Sign in</a>
       </li>
-      <li *appShowAuthed=true class="nav-item-dropdown">
+      <li *ngIf="canShow()" class="nav-item-dropdown">
         <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
           {{auth.getCurrentUser().username}}

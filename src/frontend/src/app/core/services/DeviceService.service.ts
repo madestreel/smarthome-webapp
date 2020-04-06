@@ -3,17 +3,19 @@ import axios from 'axios';
 import {Permission} from "../models/permission.model";
 import {AuthenticationService} from "./authentication.service";
 import {User} from "../models/user.model";
-import {Action, ActionType} from "../models/actions/action.model";
+import {Action} from "../models/actions/action.model";
 import {ActionBuilder} from "../models/actions/ActionBuilder.model";
 import {DefaultDevice} from "../models/devices/DefaultDevice.model";
 import {Device} from "../models/devices/device.model";
+import {FlashMessagesService} from "angular2-flash-messages";
 
 
 @Injectable()
 export class DeviceService {
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private alert: FlashMessagesService
   ) {
   }
 
@@ -64,7 +66,7 @@ export class DeviceService {
           console.log(res.data.device.device);
           res.data.device.device.actions.forEach(action => {
             const concreteAction: Action = ActionBuilder.createAction(
-              (<any>ActionType)[action.toUpperCase()],
+              action,
               this,
               device1
             );
@@ -90,5 +92,36 @@ export class DeviceService {
           this.fetchDevicesForRoom(devices, room);
         })
       });
+  }
+
+  displayAlert(msg: string, type: string) {
+    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+  }
+
+  filter(s) {
+    return s.replace(/ |'|\"/g, '');
+  }
+  createDevice(device: any) {
+    axios.post(`api/device/device`, {
+      token: this.authenticationService.getCurrentUser().token,
+      device: {
+        permission: device.permission,
+        actions: device.actions,
+        name: device.deviceID,
+        deviceID: this.filter(device.deviceID)
+      }
+    }).then(_ => {
+      this.displayAlert("Device successfully created!", "success")
+    }).catch(_ => {
+      this.displayAlert("Failed to create device!", "danger")
+    })
+  }
+
+  addDeviceToRoom(roomID: string, deviceID: string) {
+    axios.post(`api/device/room`, {
+      roomID: this.filter(roomID),
+      deviceID: this.filter(deviceID),
+      token: this.authenticationService.getCurrentUser().token
+    })
   }
 }

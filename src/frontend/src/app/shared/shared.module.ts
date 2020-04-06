@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {ShowAuthedDirective} from "./directives/show-authed.directive";
 import {AuthenticationService} from "../core/services/authentication.service";
 import {JwtService} from "../core/services/jwt.service";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -17,7 +16,6 @@ import {RoomQuickView} from "./components/rooms/room/quickview/room.quickview";
     CommonModule,
   ],
   declarations: [
-    ShowAuthedDirective,
     DeviceComponent,
     ActionComponent,
     DeviceQuickView,
@@ -28,12 +26,11 @@ import {RoomQuickView} from "./components/rooms/room/quickview/room.quickview";
   ],
   providers: [
     AuthenticationService,
-    JwtService
+    JwtService,
   ],
   exports: [
     ReactiveFormsModule,
     CommonModule,
-    ShowAuthedDirective,
     DeviceComponent,
     ActionComponent,
     DeviceQuickView,

@@ -5,10 +5,11 @@ import axios from 'axios';
 import {DeviceService} from "./DeviceService.service";
 import {Room} from "../models/room.model";
 import {Permission} from "../models/permission.model";
+import {FlashMessagesService} from "angular2-flash-messages";
 
 @Injectable()
 export class RoomService {
-  constructor(private authenticationService: AuthenticationService, private deviceService: DeviceService) {
+  constructor(private alert: FlashMessagesService, private authenticationService: AuthenticationService, private deviceService: DeviceService) {
   }
 
   switchFav(room: Room) {
@@ -32,6 +33,39 @@ export class RoomService {
         room.favorite = true
       })
     }
+  }
+
+  displayAlert(msg: string, type: string) {
+    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+  }
+
+  createRoom(room: any) {
+    axios.post(`api/room/room`, {
+      token: this.authenticationService.getCurrentUser().token,
+      room: {
+        permission: room.permission,
+        name: room.roomName,
+        roomID: this.filter(room.roomName)
+      }
+    }).then(_ => {
+      this.displayAlert("Room successfully created!", "success")
+    }).catch(_ => {
+      this.displayAlert("Failed to create room!", "danger")
+    });
+    for (let device of room.devices) {
+      this.deviceService.addDeviceToRoom(room.roomName, device)
+    }
+    for (let user of room.users) {
+      axios.post(`api/room/user`, {
+        roomID: this.filter(room.roomName),
+        userID: user,
+        token: this.authenticationService.getCurrentUser().token
+      })
+    }
+  }
+
+  filter(s) {
+    return s.replace(/ |'|\"/g, '');
   }
 
   fetchRooms(rooms: Room[]) {

@@ -6,7 +6,9 @@ export class SwitchAction implements Action {
   action: Function = () => this.deviceService.switch(this.device);
   style: ActionStyle = ActionStyle.SUCCESS;
   type: ActionType = ActionType.SWITCH;
+  name: string;
 
-  constructor(private deviceService: DeviceService, private device: DefaultDevice) {
+  constructor(private deviceService: DeviceService, private device: DefaultDevice, name: string) {
+    this.name = name ? name : this.type;
   }
 }
