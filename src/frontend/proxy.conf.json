@@ -34,5 +34,14 @@
     "pathRewrite": {
       "^/api/device": ""
     }
+  },
+  "/api/action/*": {
+    "target": "http://localhost:3083",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/action": ""
+    }
   }
 }

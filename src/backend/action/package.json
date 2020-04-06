@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "start": "gulp --gulpfile gulpfile.js"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "graceful-fs": "^4.2.3",
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0",
+    "morgan": "^1.10.0",
+    "bcryptjs": "^2.4.3",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.24.0",
+    "nano": "^8.2.2",
+    "gulp": "^4.0.2",
+    "gulp-nodemon": "^2.5.0",
+    "gulp-watch": "^5.0.1",
+    "axios": "^0.19.0",
+    "mqtt": "^3.0.0",
+    "url": "^0.11.0"
+  }
+}

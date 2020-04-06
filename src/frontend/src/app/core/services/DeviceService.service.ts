@@ -43,11 +43,6 @@ export class DeviceService {
 
   }
 
-  switch(device: DefaultDevice) {
-    console.log("on switch");
-    device.device.status = device.device.status === "ON" ? "OFF" : "ON"
-  }
-
   fetchDevicesForRoom(devices: DefaultDevice[], roomID: string) {
     const user: User = this.authenticationService.getCurrentUser();
     axios.get(`api/device/devices/${roomID}`, {params: {token: user.token}}).then(res => {
@@ -67,7 +62,7 @@ export class DeviceService {
           res.data.device.device.actions.forEach(action => {
             const concreteAction: Action = ActionBuilder.createAction(
               action,
-              this,
+              this.authenticationService,
               device1
             );
             if (concreteAction) device1.addAction(concreteAction)
