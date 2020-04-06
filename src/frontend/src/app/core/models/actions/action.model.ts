@@ -1,5 +1,7 @@
 export enum ActionType {
-  SWITCH= "switch"
+  SWITCH= "switch",
+  ON ="on",
+  OFF="off"
 }
 
 export enum ActionStyle {
