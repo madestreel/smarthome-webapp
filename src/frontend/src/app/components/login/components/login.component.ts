@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       username: new FormControl("", Validators.compose([
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(4)
       ])),
       password: new FormControl("", Validators.compose([
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(4),
         //Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z]+$')
       ]))
