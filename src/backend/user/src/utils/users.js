@@ -7,9 +7,9 @@ function equalPassword(userPass, usrDBPass) {
     return bcrypt.compareSync(userPass, usrDBPass)
 }
 
-function createUser(username, password) {
+function createUser(username, password, permission) {
     return new Promise((resolve, reject) => {
-        let data = {'password': bcrypt.hashSync(password, bcrypt.genSaltSync())};
+        let data = {'password': bcrypt.hashSync(password, bcrypt.genSaltSync()), permission: permission};
         db.insert(data, username, (error, success) => {
             if (success) {
                 resolve(tku.encodeToken(username))
@@ -54,6 +54,18 @@ function getUser(username, password) {
     }))
 }
 
+function getUsersInfo() {
+    return new Promise((resolve, reject) => {
+        db.view('queries', 'all_users', function (error, body) {
+            if (!error) {
+                resolve(body.rows.map(user => user.value))
+            } else {
+                reject(new Error(`Failed to retrieve users`))
+            }
+        })
+    })
+}
+
 function getUserInfo(token) {
     return new Promise((resolve, reject) => {
         let username = tku.decodeToken(token).sub;
@@ -86,5 +98,6 @@ module.exports = {
     getUser,
     deleteUser,
     isConnected,
-    getUserInfo
+    getUserInfo,
+    getUsersInfo,
 };

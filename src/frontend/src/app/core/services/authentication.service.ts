@@ -42,7 +42,15 @@ export class AuthenticationService {
   }
 
   fetchUsers(users: User[]) {
-    users.push(this.getCurrentUser())
+    axios.get(`api/user/users`, {params: {token: this.getCurrentUser().token}}).then(res => {
+      res.data.users.forEach(user => {
+        users.push({
+          username: user._id,
+          token: "",
+          permission: Permission[String(user.permission).toUpperCase()]
+        })
+      })
+    });
   }
 
   setAuth(user: User) {

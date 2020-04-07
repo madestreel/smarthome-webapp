@@ -2,6 +2,10 @@ import {Component, Input, OnInit} from "@angular/core";
 import {Room} from "../../../../core/models/room.model";
 import {RoomService} from "../../../../core/services/RoomService.service";
 import {DeviceService} from "../../../../core/services/DeviceService.service";
+import {AuthenticationService} from "../../../../core/services/authentication.service";
+import {Permission} from "../../../../core/models/permission.model";
+import {Router} from "@angular/router";
+import {RoutesConfig} from "../../../../configs/routes.config";
 
 @Component({
   selector: "room",
@@ -16,7 +20,11 @@ export class RoomComponent implements OnInit {
   @Input()
   room: Room;
 
-  constructor(private roomService: RoomService, private deviceService: DeviceService) {
+  constructor(
+    private roomService: RoomService,
+    private deviceService: DeviceService,
+    private authenticationService: AuthenticationService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -29,5 +37,13 @@ export class RoomComponent implements OnInit {
 
   onClick() {
     this.selected = !this.selected;
+  }
+
+  isAdmin() {
+    return this.authenticationService.getCurrentUser().permission >= Permission.ADMIN
+  }
+
+  manage() {
+    this.router.navigate([RoutesConfig.routesName.manage + "/room", this.room.roomID])
   }
 }

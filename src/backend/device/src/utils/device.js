@@ -26,6 +26,15 @@ function getDevice(deviceID) {
 }
 
 function getDevices() {
+    return new Promise((resolve, reject) => {
+        db.view('queries', 'all_devices', function (err, body) {
+            if (!err) {
+                resolve(body.rows.map(device => device.value))
+            } else {
+                reject(new Error(`Failed to get devices. Reason: ${err.message}`))
+            }
+        })
+    })
 
 }
 
@@ -119,6 +128,7 @@ function addDeviceToRoom(deviceID, roomID) {
                 roomID: roomID,
                 type: 'owner'
             },
+            deviceID + roomID,
             (error, success) => {
                 if (success) resolve();
                 else reject(new Error(`Failed to add device to room. Reason ${error.reason}`))

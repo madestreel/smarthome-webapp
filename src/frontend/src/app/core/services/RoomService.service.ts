@@ -56,12 +56,16 @@ export class RoomService {
       this.deviceService.addDeviceToRoom(room.roomName, device)
     }
     for (let user of room.users) {
-      axios.post(`api/room/user`, {
-        roomID: this.filter(room.roomName),
-        userID: user,
-        token: this.authenticationService.getCurrentUser().token
-      })
+      this.addUserToRoom(user, room.roomID)
     }
+  }
+
+  addUserToRoom(user, room) {
+    axios.post(`api/room/user`, {
+      roomID: this.filter(room),
+      userID: user,
+      token: this.authenticationService.getCurrentUser().token
+    })
   }
 
   filter(s) {

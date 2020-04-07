@@ -48,7 +48,7 @@ export class Manage implements OnInit {
       devices: new FormControl(""),
       users: new FormControl("")
     }));
-    this.deviceService.fetchDevices(this.devices);
+    this.deviceService.fetchAllDevices(this.devices);
     this.authenticationService.fetchUsers(this.users)
   }
 

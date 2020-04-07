@@ -10,10 +10,15 @@
           <div class="fa fa-star{{!room.favorite ? '-o' : ''}} fa-2x" style="color: red; cursor: pointer"
                (click)="switchFavorite()"></div>
         </div>
-        <div class="col-md-11 col-center" style="cursor: pointer" (click)="onClick()">
+        <div class="col-md-7 col-center" style="cursor: pointer" (click)="onClick()">
           <h4>
             Devices of {{room.name}}
           </h4>
+        </div>
+        <div class="col-md-4">
+          <button *ngIf="isAdmin()" class="btn btn-primary" (click)="manage()">
+            Manage
+          </button>
         </div>
       </div>
     </div>

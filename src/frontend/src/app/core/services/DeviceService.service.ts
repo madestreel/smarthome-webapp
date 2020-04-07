@@ -77,6 +77,29 @@ export class DeviceService {
     })
   }
 
+  fetchAllDevices(devices: DefaultDevice[]) {
+    const user: User = this.authenticationService.getCurrentUser();
+
+    axios.get(`api/device/devices`, {params: {token: user.token}})
+      .then(res => {
+        res.data.devices.forEach(device => {
+          console.log(device)
+          axios.get(`api/device/device/${device.device.deviceID}`, {params: {token: user.token}}).then(res => {
+            const device1: DefaultDevice = new DefaultDevice(this, {
+              name: res.data.device.device.name,
+              status: res.data.device.device.value,
+              actions: [],
+              favorite: false,
+              permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
+              id: res.data.device._id,
+              roomID: ""
+            });
+            devices.push(device1)
+          })
+        })
+      });
+  }
+
   fetchDevices(devices: DefaultDevice[]) {
     const user: User = this.authenticationService.getCurrentUser();
 

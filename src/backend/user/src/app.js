@@ -80,6 +80,35 @@ app.delete('/user/:username', (req, res) => {
  *
  *  @returns {User} in case of success, the users informations
  */
+app.get('/users', (req, res) => {
+    if (!(req.query.hasOwnProperty("token"))) {
+        return res.status(400).json({message: "bad request"})
+    }
+
+    let token = req.query.token;
+    return db.isConnected(token).then(_ => {
+        return db.getUsersInfo().then(users => {
+            res.status(200).json({message: "success", users: users})
+        }).catch(err => {
+            res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
+        })
+    }).catch(err => {
+        res.status(403).json({message: "permission denied"})
+    })
+});
+
+/**
+ * API to retrieve users information
+ * request query
+ *  - token: _
+ *
+ *  @param {String} token the token of the user which makes the request
+ *
+ *  @returns {Status code} 200 in case of success, 400 in case of missing param,
+ *                         403 in case of bad token and 500 otherwise
+ *
+ *  @returns {User} in case of success, the users informations
+ */
 app.get('/user', (req, res) => {
    if (!(req.query.hasOwnProperty("token"))) {
        return res.status(400).json({message: "bad request"})
@@ -111,12 +140,13 @@ app.get('/user', (req, res) => {
  * @returns {String} the token of the user
  */
 app.post('/user', (req, res) => {
-    if(!(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password')))
+    if(!(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password') && req.body.hasOwnProperty('permission')))
         return res.status(400).json({status:'bad request'});
 
     let usr = req.body.username;
     let usrPassw = req.body.password;
-    return db.createUser(usr, usrPassw)
+    let permission = req.body.permission;
+    return db.createUser(usr, usrPassw, permission)
         .then((token) => {
             res.status(200).json({ status: 'success', token })
         })

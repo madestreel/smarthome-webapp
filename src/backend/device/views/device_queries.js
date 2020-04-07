@@ -13,6 +13,13 @@ const viewDescriptor = {
                     emit(doc.userID, doc)
                 }
             }
+        },
+        all_devices: {
+            map: function(doc) {
+                if (doc.device) {
+                    emit(doc.device.deviceID, doc)
+                }
+            }
         }
     }
 };

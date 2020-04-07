@@ -26,6 +26,7 @@ services:
     volumes:
       - ./user:/usr/src/user-service
       - ./boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
+      - ./func_to_string.js:/usr/src/user-service/func_to_string.js
       - ./gulpfile.js:/usr/src/user-service/gulpfile.js
       - ./daemon.js:/usr/src/user-service/src/daemon.js
       - /usr/src/user-service/node_modules

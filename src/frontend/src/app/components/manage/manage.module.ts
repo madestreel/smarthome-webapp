@@ -7,6 +7,7 @@ import {DeviceService} from "../../core/services/DeviceService.service";
 import {Manage} from "./manage.component";
 import {ManageRoutingModule} from "./manage-routing.module";
 import {ActionForm} from "./action/action.component";
+import {ManageRoom} from "./room/manage.component";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {ActionForm} from "./action/action.component";
   ],
   declarations: [
     Manage,
-    ActionForm
+    ActionForm,
+    ManageRoom
   ],
   providers: [
     AuthGuard,
