@@ -12,13 +12,16 @@ import {DevicesModule} from "./components/devices/devices.module";
 import {About} from "./components/about/about.component";
 import {RoomsRoutingModule} from "./components/rooms/rooms-routing.module";
 import {RoomsModule} from "./components/rooms/rooms.module";
+import {ManageModule} from "./components/manage/manage.module";
+import {ManageRoutingModule} from "./components/manage/manage-routing.module";
+import {FlashMessagesModule} from "angular2-flash-messages";
 
 @NgModule({
   declarations: [
     AppComponent,
     Error404Component,
     HeaderComponent,
-    About
+    About,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,10 @@ import {RoomsModule} from "./components/rooms/rooms.module";
     LoginModule,
     DevicesModule,
     RoomsModule,
-    RoomsRoutingModule
+    RoomsRoutingModule,
+    ManageModule,
+    ManageRoutingModule,
+    FlashMessagesModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

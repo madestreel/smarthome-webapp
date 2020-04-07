@@ -23,6 +23,7 @@ services:
     volumes:
       - ./user:/usr/src/user-service
       - ./boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
+      - ./func_to_string.js:/usr/src/user-service/func_to_string.js
       - ./gulpfile.js:/usr/src/user-service/gulpfile.js
       - ./daemon.js:/usr/src/user-service/src/daemon.js
       - /usr/src/user-service/node_modules
@@ -33,6 +34,23 @@ services:
     restart: on-failure
     depends_on:
       - smarthome-db
+
+  action:
+    build: ./action
+    ports:
+      - "3083:3083"
+    volumes:
+      - ./action:/usr/src/action-service
+      - ./boot-in-order.sh:/usr/src/action-service/boot-in-order.sh
+      - ./func_to_string.js:/usr/src/action-service/func_to_string.js
+      - ./gulpfile.js:/usr/src/action-service/gulpfile.js
+      - ./daemon.js:/usr/src/action-service/src/daemon.js
+      - /usr/src/action-service/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - backend
+    restart: on-failure
 
   device:
     build: ./device

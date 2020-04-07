@@ -20,13 +20,15 @@
 #      REVISION:  ---
 #===============================================================================
 echo "Launching ${SERVICE_NAME} service"
-echo "Wait (indefenitly) until the DB creation (name: ${DB_NAME})."
-echo "The DB URL is: ${DB_URL}"
-until curl --request PUT "${DB_URL}" ; do
-  echo -e "\t DB (${DB_NAME}) wasn't created - trying again later..."
-  sleep 2
-done
-echo "DB (${DB_NAME}) was created!"
+if [ "${DB_URL}" ]; then
+  echo "Wait (indefenitly) until the DB creation (name: ${DB_NAME})."
+  echo "The DB URL is: ${DB_URL}"
+  until curl --request PUT "${DB_URL}" ; do
+    echo -e "\t DB (${DB_NAME}) wasn't created - trying again later..."
+    sleep 2
+  done
+  echo "DB (${DB_NAME}) was created!"
+fi
 
 echo "Filling de DB ..."
 if [ -d jsons ]; then

@@ -153,6 +153,7 @@ app.post('/room', (req, res) => {
  *
  */
 app.post('/user', (req, res) => {
+  console.log(req.body)
   if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('roomID'))) {
     res.status(400).json({message: 'bad request'});
     return

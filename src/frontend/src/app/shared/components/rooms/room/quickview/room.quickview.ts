@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Room} from "../../../../../core/models/room.model";
 import { Permission } from 'src/app/core/models/permission.model';
 
@@ -10,9 +10,16 @@ import { Permission } from 'src/app/core/models/permission.model';
   ]
 })
 
-export class RoomQuickView {
+export class RoomQuickView implements OnInit {
   @Input()
   room: Room;
+
+  constructor() {
+  }
+
+  ngOnInit(): void {
+    console.log(this.room)
+  }
 
   Permission = Permission
 }

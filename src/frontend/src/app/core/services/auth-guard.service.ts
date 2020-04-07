@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import {map, take} from 'rxjs/operators';
 import {RoutesConfig} from "../../configs/routes.config";
+import {Permission} from "../models/permission.model";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,11 +18,12 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
+    let permission: Permission = route.data.permission;
     return this.userService.isAuthenticated.pipe((take(1)), map(logged => {
-      if (!logged) {
+      if (!logged || (permission && this.userService.getCurrentUser().permission < permission)) {
         this.router.navigate([RoutesConfig.routesName.login])
       }
-      return logged
+      return logged || (permission && this.userService.getCurrentUser().permission >= permission || !permission)
     }))
   }
 }

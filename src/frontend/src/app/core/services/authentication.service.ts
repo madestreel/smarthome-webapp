@@ -31,7 +31,7 @@ export class AuthenticationService {
     if (this.jwtService.getToken()) {
       axios.get('api/user/user', {params: {token: this.jwtService.getToken()}})
         .then(
-          resp => this.setAuth({username: resp.data.user._id, permission:Permission.USER, token:this.jwtService.getToken()}),
+          resp => this.setAuth({username: resp.data.user._id, permission:Permission[String(resp.data.user.permission).toUpperCase()], token:this.jwtService.getToken()}),
         ).catch(_ => {
         this.purgeAuth()
       });
@@ -39,6 +39,18 @@ export class AuthenticationService {
       // Remove any potential remnants of previous auth states
       this.purgeAuth();
     }
+  }
+
+  fetchUsers(users: User[]) {
+    axios.get(`api/user/users`, {params: {token: this.getCurrentUser().token}}).then(res => {
+      res.data.users.forEach(user => {
+        users.push({
+          username: user._id,
+          token: "",
+          permission: Permission[String(user.permission).toUpperCase()]
+        })
+      })
+    });
   }
 
   setAuth(user: User) {
@@ -64,6 +76,7 @@ export class AuthenticationService {
     return axios.get(`/api/login/user/${username}/password/${password}`).then(res => {
       console.log(res.data);
       this.setAuth({username: username, permission:Permission.USER, token:res.data.token});
+      this.populate();
       this.router.navigate([RoutesConfig.routesName.home])
     }).catch(err => {
       console.error(err.message);
@@ -77,7 +90,7 @@ export class AuthenticationService {
   }
 
   getCurrentUser(): User {
-    return this.currentUserSubject.value;
+    return this.currentUserSubject.value.token ? this.currentUserSubject.value : {username: undefined, token: undefined, permission: Permission.USER};
   }
 
 }

@@ -26,12 +26,13 @@ function isConnected(token) {
 }
 
 function isValidDevice(device) {
-  return device.hasOwnProperty('name') && device.hasOwnProperty('roomID') &&
-      device.hasOwnProperty('permission') && device.hasOwnProperty('value') &&
+  return device.hasOwnProperty('name') &&
+      device.hasOwnProperty('permission') &&
       device.hasOwnProperty('actions')
 }
 
 app.post('/device', (req, res) => {
+    console.log(req.body);
   if(!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('device') && isValidDevice(req.body.device)))  {
     res.status(400).json({message: 'bad request'});
     return

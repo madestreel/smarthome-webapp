@@ -4,7 +4,8 @@ const routesNames = {
   error404: "404",
   devices: "devices",
   about: "about",
-  rooms: "rooms"
+  rooms: "rooms",
+  manage: "manage"
 };
 
 export const RoutesConfig: any = {
@@ -15,6 +16,7 @@ export const RoutesConfig: any = {
     login: `/${routesNames.login}`,
     error404: `/${routesNames.error404}`,
     devices: `/${routesNames.devices}`,
-    about: `/${routesNames.about}`
+    about: `/${routesNames.about}`,
+    manage: `/${routesNames.manage}`
   }
 };

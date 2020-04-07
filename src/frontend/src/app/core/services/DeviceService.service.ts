@@ -3,17 +3,19 @@ import axios from 'axios';
 import {Permission} from "../models/permission.model";
 import {AuthenticationService} from "./authentication.service";
 import {User} from "../models/user.model";
-import {Action, ActionType} from "../models/actions/action.model";
+import {Action} from "../models/actions/action.model";
 import {ActionBuilder} from "../models/actions/ActionBuilder.model";
 import {DefaultDevice} from "../models/devices/DefaultDevice.model";
 import {Device} from "../models/devices/device.model";
+import {FlashMessagesService} from "angular2-flash-messages";
 
 
 @Injectable()
 export class DeviceService {
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private alert: FlashMessagesService
   ) {
   }
 
@@ -41,11 +43,6 @@ export class DeviceService {
 
   }
 
-  switch(device: DefaultDevice) {
-    console.log("on switch");
-    device.device.status = device.device.status === "ON" ? "OFF" : "ON"
-  }
-
   fetchDevicesForRoom(devices: DefaultDevice[], roomID: string) {
     const user: User = this.authenticationService.getCurrentUser();
     axios.get(`api/device/devices/${roomID}`, {params: {token: user.token}}).then(res => {
@@ -64,8 +61,8 @@ export class DeviceService {
           console.log(res.data.device.device);
           res.data.device.device.actions.forEach(action => {
             const concreteAction: Action = ActionBuilder.createAction(
-              (<any>ActionType)[action.toUpperCase()],
-              this,
+              action,
+              this.authenticationService,
               device1
             );
             if (concreteAction) device1.addAction(concreteAction)
@@ -80,6 +77,29 @@ export class DeviceService {
     })
   }
 
+  fetchAllDevices(devices: DefaultDevice[]) {
+    const user: User = this.authenticationService.getCurrentUser();
+
+    axios.get(`api/device/devices`, {params: {token: user.token}})
+      .then(res => {
+        res.data.devices.forEach(device => {
+          console.log(device)
+          axios.get(`api/device/device/${device.device.deviceID}`, {params: {token: user.token}}).then(res => {
+            const device1: DefaultDevice = new DefaultDevice(this, {
+              name: res.data.device.device.name,
+              status: res.data.device.device.value,
+              actions: [],
+              favorite: false,
+              permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
+              id: res.data.device._id,
+              roomID: ""
+            });
+            devices.push(device1)
+          })
+        })
+      });
+  }
+
   fetchDevices(devices: DefaultDevice[]) {
     const user: User = this.authenticationService.getCurrentUser();
 
@@ -90,5 +110,36 @@ export class DeviceService {
           this.fetchDevicesForRoom(devices, room);
         })
       });
+  }
+
+  displayAlert(msg: string, type: string) {
+    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+  }
+
+  filter(s) {
+    return s.replace(/ |'|\"/g, '');
+  }
+  createDevice(device: any) {
+    axios.post(`api/device/device`, {
+      token: this.authenticationService.getCurrentUser().token,
+      device: {
+        permission: device.permission,
+        actions: device.actions,
+        name: device.deviceID,
+        deviceID: this.filter(device.deviceID)
+      }
+    }).then(_ => {
+      this.displayAlert("Device successfully created!", "success")
+    }).catch(_ => {
+      this.displayAlert("Failed to create device!", "danger")
+    })
+  }
+
+  addDeviceToRoom(roomID: string, deviceID: string) {
+    axios.post(`api/device/room`, {
+      roomID: this.filter(roomID),
+      deviceID: this.filter(deviceID),
+      token: this.authenticationService.getCurrentUser().token
+    })
   }
 }

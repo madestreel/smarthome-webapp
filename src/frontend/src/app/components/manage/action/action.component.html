@@ -1,0 +1,24 @@
+<form [formGroup]="actionForm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <label for="actions">Action: </label>
+      </div>
+      <div class="col-md-3">
+        <select class="form-control" id="actions" formControlName="action">
+          <option *ngFor="let action of keys()" [value]="ActionType[action]"> {{action}}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="actionName"> Name: </label>
+      </div>
+      <div class="col-md-4">
+        <input placeholder="Name" onfocus="this.select()" class="form-control" id="actionName"
+               formControlName="actionName">
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="fa fa-plus success" (click)="addAction( actionForm.value)"></button>
+      </div>
+    </div>
+  </div>
+</form>

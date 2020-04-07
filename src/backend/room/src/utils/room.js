@@ -29,6 +29,7 @@ function createRoom(room) {
     return new Promise(((resolve, reject) => {
         db.insert(
             {room: room},
+            room.roomID,
             (error, success) => {
                 if (success) resolve();
                 else reject(new Error(`Failed to create new room. Reason ${error.reason}`))
@@ -45,6 +46,7 @@ function addUserToRoom(userID, roomID) {
                 roomID: roomID,
                 type: 'owner'
             },
+            userID + roomID,
             (error, success) => {
                 if (success) resolve();
                 else reject(new Error(`Failed to add user to room. Reason ${error.reason}`))
