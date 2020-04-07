@@ -20,6 +20,7 @@ $ docker-compose up -d
 - launch the frontend
 ```
 $ cd ../frontend
+$ npm install
 $ npm start
 ```
 
