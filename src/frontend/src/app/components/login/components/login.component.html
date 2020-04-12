@@ -9,7 +9,7 @@
           </div>
           <div class="col-md-9">
             <input placeholder="Username" onfocus="this.select()" class="form-control" id="username" type="text" formControlName="username">
-            <div *ngIf="!loginForm.controls.username.valid" class="help"> At least 6 characters</div>
+            <div *ngIf="!loginForm.controls.username.valid" class="help"> At least 4 characters</div>
           </div>
         </div>
         <div class="row">
@@ -19,7 +19,7 @@
           <div class="col-md-9">
             <input placeholder="Password" onfocus="this.select()" class="form-control" id="password" type="password"
                    formControlName="password">
-            <div *ngIf="!loginForm.controls.password.valid" class="help">At least 6 characters <br/> Use upper and lowercase letters as well</div>
+            <div *ngIf="!loginForm.controls.password.valid" class="help">At least 4 characters</div>
           </div>
         </div>
       </div>
