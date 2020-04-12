@@ -56,8 +56,9 @@ export class RoomService {
       this.deviceService.addDeviceToRoom(room.roomName, device)
     }
     for (let user of room.users) {
-      this.addUserToRoom(user, room.roomID)
+      this.addUserToRoom(user, room.roomName)
     }
+    this.addUserToRoom("root", room.roomName);
   }
 
   addUserToRoom(user, room) {
