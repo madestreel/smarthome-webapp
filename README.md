@@ -20,8 +20,7 @@ $ docker-compose up -d
 - launch the frontend
 ```
 $ cd ../frontend
-$ npm install
-$ npm start
+$ docker-compose up -d
 ```
 
 ## On Raspberry pi
@@ -37,11 +36,11 @@ $ npm start
 - [x] frontend devices
 - [x] frontend login
 - [x] backend user u-service
-- [ ] Docker file for frontend
+- [x] Docker file for frontend
 - [x] show favorites on home page
 - [x] backend devices u-service
 - [x] backend room u-service
 - [x] frontend rooms
 - [x] about me
-- [ ] Action u-service
+- [x] Action u-service
 - [ ] Monitoring u-service
