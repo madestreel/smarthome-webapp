@@ -1,0 +1,21 @@
+version: "3"
+services:
+  app:
+    build: .
+    volumes:
+      - ./src:/usr/src/frontend/src
+      - ./package.json:/usr/src/frontend/package.json
+      - ./angular.json:/usr/src/frontend/angular.json
+      - ./tsconfig.app.json:/usr/src/frontend/tsconfig.app.json
+      - ./tsconfig.json:/usr/src/frontend/tsconfig.json
+      - ./proxy.conf.json:/usr/src/frontend/proxy.conf.json
+      - /usr/src/frontend/node_modules
+    networks:
+      - backend_backend
+    ports:
+      - "80:4200"
+    restart: on-failure
+
+networks:
+  backend_backend:
+    external: true

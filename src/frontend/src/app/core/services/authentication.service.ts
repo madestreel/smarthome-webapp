@@ -73,7 +73,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return axios.get(`/api/login/user/${username}/password/${password}`).then(res => {
+    return axios.get(`/api/user/user/${username}/password/${password}`).then(res => {
       console.log(res.data);
       this.setAuth({username: username, permission:Permission.USER, token:res.data.token});
       this.populate();
