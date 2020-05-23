@@ -11,8 +11,8 @@ COPY package.json .
 RUN npm install
 # header for loggining messages
 ENV SERVICE_NAME device-d
-ENV SERVICE_PORT 3082
-ENV REACT_APP_AUTH_SERVICE_URL http://user:3080
+ENV SERVICE_PORT 80
+ENV REACT_APP_AUTH_SERVICE_URL http://user
 
 # name of container running CouchDB
 #ENV DB_HOST 192.168.56.102

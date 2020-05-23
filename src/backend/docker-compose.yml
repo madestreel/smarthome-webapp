@@ -1,5 +1,17 @@
 version: "3"
 services:
+  proxy:
+    build: ./proxy
+    ports:
+      - "3000:80"
+    networks:
+      - backend
+    depends_on:
+      - user
+      - room
+      - device
+      - action
+
   mosquitto:
     image: "eclipse-mosquitto:latest"
     ports:
@@ -14,15 +26,11 @@ services:
 
   smarthome-db:
     image: "destmaxi/kv-storage-system:latest"
-    ports:
-      - "3000:5984"
     networks:
       - backend
 
   user:
     build: ./user
-    ports:
-      - "3080:3080"
     volumes:
       - ./user:/usr/src/user-service
       - ./boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
@@ -40,8 +48,6 @@ services:
 
   action:
     build: ./action
-    ports:
-      - "3083:3083"
     volumes:
       - ./action:/usr/src/action-service
       - ./boot-in-order.sh:/usr/src/action-service/boot-in-order.sh
@@ -57,8 +63,6 @@ services:
 
   device:
     build: ./device
-    ports:
-      - "3082:3082"
     volumes:
       - ./device:/usr/src/device-service
       - ./boot-in-order.sh:/usr/src/device-service/boot-in-order.sh
@@ -76,8 +80,6 @@ services:
 
   room:
     build: ./room
-    ports:
-      - "3081:3081"
     volumes:
       - ./room:/usr/src/room-service
       - ./boot-in-order.sh:/usr/src/room-service/boot-in-order.sh

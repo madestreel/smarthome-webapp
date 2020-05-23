@@ -13,7 +13,7 @@ RUN npm install
 ENV TOKEN_SECRET IhiKrqjq-F(o1k?
 # header for loggining messages
 ENV SERVICE_NAME user-d
-ENV SERVICE_PORT 3080
+ENV SERVICE_PORT 80
 
 # name of container running CouchDB
 # ENV DB_HOST 192.168.56.102
@@ -27,6 +27,8 @@ ENV DB_PORT 5984
 ENV ADMIN_NAME admin
 ENV ADMIN_PASSW admin
 ENV DB_URL http://${ADMIN_NAME}:${ADMIN_PASSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+
+EXPOSE ${SERVICE_PORT}
 
 # we now use an script to deploy.sh the authentication service
 CMD source boot-in-order.sh

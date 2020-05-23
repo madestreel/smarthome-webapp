@@ -11,9 +11,9 @@ COPY package.json .
 RUN npm install
 # header for loggining messages
 ENV SERVICE_NAME action-d
-ENV SERVICE_PORT 3083
-ENV REACT_APP_AUTH_SERVICE_URL http://user:3080
-ENV DEVICE_URL http://device:3082
-ENV MQTT_BROKER_URL http://mosquitto:1883
+ENV SERVICE_PORT 80
+ENV REACT_APP_AUTH_SERVICE_URL http://user
+ENV DEVICE_URL http://device
+ENV MQTT_BROKER_URL http://mosquitto
 # we now use an script to deploy.sh the authentication service
 CMD source boot-in-order.sh
