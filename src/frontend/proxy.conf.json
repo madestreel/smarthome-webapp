@@ -1,47 +1,8 @@
 {
-  "/api/login/*": {
-    "target": "http://localhost:3080",
+  "/api/*": {
+    "target": "http://proxy",
     "secure": false,
     "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "^/api/login": ""
-    }
-  },
-  "/api/user/*": {
-    "target": "http://localhost:3080",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "^/api/user": ""
-    }
-  },
-  "/api/room/*": {
-    "target": "http://localhost:3081",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "^/api/room": ""
-    }
-  },
-  "/api/device/*": {
-    "target": "http://localhost:3082",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "^/api/device": ""
-    }
-  },
-  "/api/action/*": {
-    "target": "http://localhost:3083",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "^/api/action": ""
-    }
+    "changeOrigin": true
   }
 }
