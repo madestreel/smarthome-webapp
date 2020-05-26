@@ -68,3 +68,25 @@ export class OnAction implements Action {
     this.name = name ? name : this.type;
   }
 }
+
+export class StatusAction implements Action {
+  action: Function = () => {
+    const name = this.name;
+    this.name = "sending...";
+    axios.post(`api/action/action`, {
+      token: this.authService.getCurrentUser().token,
+      topic: this.device.device.id,
+      action: 'status'
+    }).then(res => {
+      this.name = name;
+      this.device.device.status = res.data.value
+    })
+  };
+  style: ActionStyle = ActionStyle.SUCCESS;
+  type: ActionType = ActionType.STATUS;
+  name: string;
+
+  constructor(private authService: AuthenticationService, private device: DefaultDevice, name: string) {
+    this.name = name ? name : this.type
+  }
+}
