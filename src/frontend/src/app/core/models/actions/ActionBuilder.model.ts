@@ -1,4 +1,4 @@
-import {OffAction, OnAction, SwitchAction} from "./ConcreteAction.model";
+import {OffAction, OnAction, StatusAction, SwitchAction} from "./ConcreteAction.model";
 import {ActionType} from "./action.model";
 import {DefaultDevice} from "../devices/DefaultDevice.model";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -13,6 +13,8 @@ export class ActionBuilder {
         return new OffAction(auth, device, action.actionName);
       case ActionType.ON:
         return new OnAction(auth, device, action.actionName);
+      case ActionType.STATUS:
+        return new StatusAction(auth, device, action.actionName);
       default:
         return undefined;
     }
