@@ -10,6 +10,7 @@ import {Devices} from "./components/devices/devices.component";
 import {Rooms} from "./components/rooms/rooms.component";
 import {RoomComponent} from "./components/rooms/room/room.component";
 import {RoomQuickView} from "./components/rooms/room/quickview/room.quickview";
+import {DeviceService} from "../core/services/DeviceService.service";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import {RoomQuickView} from "./components/rooms/room/quickview/room.quickview";
   ],
   providers: [
     AuthenticationService,
+      DeviceService,
     JwtService,
   ],
   exports: [
@@ -36,7 +38,6 @@ import {RoomQuickView} from "./components/rooms/room/quickview/room.quickview";
     DeviceQuickView,
     Devices,
     Rooms,
-    DeviceComponent,
     DeviceQuickView
   ]
 })

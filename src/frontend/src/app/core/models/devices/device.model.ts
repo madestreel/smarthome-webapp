@@ -1,4 +1,4 @@
-import {Action} from "../actions/action.model";
+import {Action} from "../actions/ConcreteAction.model";
 import {Permission} from "../permission.model";
 
 export interface Device {

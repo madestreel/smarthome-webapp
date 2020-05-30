@@ -3,8 +3,7 @@ import axios from 'axios';
 import {Permission} from "../models/permission.model";
 import {AuthenticationService} from "./authentication.service";
 import {User} from "../models/user.model";
-import {Action} from "../models/actions/action.model";
-import {ActionBuilder} from "../models/actions/ActionBuilder.model";
+import {Action} from "../models/actions/ConcreteAction.model";
 import {DefaultDevice} from "../models/devices/DefaultDevice.model";
 import {Device} from "../models/devices/device.model";
 import {FlashMessagesService} from "angular2-flash-messages";
@@ -51,7 +50,7 @@ export class DeviceService {
           console.log(res.data);
           const device1: DefaultDevice = new DefaultDevice(this, {
             name: res.data.device.device.name,
-            status: res.data.device.device.value,
+            status: res.data.device.device.status,
             actions: [],
             favorite: false,
             permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
@@ -60,10 +59,11 @@ export class DeviceService {
           });
           console.log(res.data.device.device);
           res.data.device.device.actions.forEach(action => {
-            const concreteAction: Action = ActionBuilder.createAction(
-              action,
+            const concreteAction: Action = new Action(
               this.authenticationService,
-              device1
+              this,
+              device1,
+                action
             );
             if (concreteAction) device1.addAction(concreteAction)
           });
@@ -87,7 +87,7 @@ export class DeviceService {
           axios.get(`api/device/device/${device.device.deviceID}`, {params: {token: user.token}}).then(res => {
             const device1: DefaultDevice = new DefaultDevice(this, {
               name: res.data.device.device.name,
-              status: res.data.device.device.value,
+              status: res.data.device.device.status,
               actions: [],
               favorite: false,
               permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
@@ -141,5 +141,19 @@ export class DeviceService {
       deviceID: this.filter(deviceID),
       token: this.authenticationService.getCurrentUser().token
     })
+  }
+
+  getDevice(deviceID: string) {
+    const user: User = this.authenticationService.getCurrentUser();
+    return axios.get(`api/device/device/${this.filter(deviceID)}`, {params: {token: user.token}})
+  }
+
+  updateDevice(device: Device) {
+    device.id = this.filter(device.name);
+    console.log(device);
+    axios.post(`api/device/update`, {token: this.authenticationService.getCurrentUser().token, device: device})
+        .then(_ => {
+          this.displayAlert("Device successfully updated!", "success")
+        })
   }
 }

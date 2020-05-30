@@ -3,7 +3,7 @@ const device = process.env.DEVICE_URL;
 const mosquitto = process.env.MQTT_BROKER_URL;
 const mqtt = require('mqtt');
 
-function action(deviceID, action, token) {
+function action(deviceID, topic, action, token) {
     return new Promise((resolve, reject) => {
         axios.get(`${device}/device/${deviceID}?token=${token}`).then(_ => {
             console.log('1')
@@ -14,8 +14,8 @@ function action(deviceID, action, token) {
                 resolve(message.toString())
             });
             mqttClient.on('connect', _ => {
-                mqttClient.subscribe(deviceID + "/sub", function () {
-                    mqttClient.publish(deviceID + "/pub", action)
+                mqttClient.subscribe(topic + "/sub", function () {
+                    mqttClient.publish(topic + "/pub", action)
                 })
             });
         }).catch(_ => {

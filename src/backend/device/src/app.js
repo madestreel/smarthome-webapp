@@ -51,6 +51,26 @@ app.post('/device', (req, res) => {
   })
 });
 
+app.post('/update', (req, res) => {
+  console.log(req.body);
+  if(!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('device') && isValidDevice(req.body.device)))  {
+    res.status(400).json({message: 'bad request'});
+    return
+  }
+
+  const token = req.body.token;
+  const device = req.body.device;
+  isConnected(token).then(_ => {
+    return db.updateDevice(device).then(_ => {
+      res.status(200).json({message: "success"})
+    }).catch(err => {
+      res.status(500).json({message: err.message})
+    })
+  }).catch(err => {
+    res.status(err.message).json({message: 'permission denied'})
+  })
+});
+
 /**
  * API to add a device to a room
  * request body:

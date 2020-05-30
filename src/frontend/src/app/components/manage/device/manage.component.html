@@ -1,0 +1,72 @@
+<form [formGroup]="manageDeviceForm">
+    <div class="container-fluid">
+        <h1 class="title"> Manage </h1> <br>
+        <hr>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header" style="text-align: center">
+                    Manage device {{this.device.device.name}}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="name">Name: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input value="{{this.device.device.name}}" placeholder="deviceName" onFocus="this.select()" class="form-control" id="name"
+                                   formControlName="name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="permission">Permission: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" id="permission" formControlName="permission">
+                                <option *ngFor="let permission of keys()" [value]="Permission[permission]"> {{permission}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Actions: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div *ngFor="let action of actions; index as i" class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="action-label"> Action: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input [disabled]="true" placeholder="{{action.action}}" class="form-control" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="action-label"> Name: </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input [disabled]="true" placeholder="{{action.actionName}}" class="action-input form-control" type="text">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-9">
+                            <actionForm [actions]="this.actions"></actionForm>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button style="margin-top: 2%" class="btn btn-success btn-margin"
+                                type="submit" (click)="onUpdateDevice(manageDeviceForm.value)"> Update device
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
