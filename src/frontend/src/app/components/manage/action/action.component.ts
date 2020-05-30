@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActionType} from "../../../core/models/actions/action.model";
 
 @Component({
   selector: "actionForm",
@@ -12,14 +11,14 @@ import {ActionType} from "../../../core/models/actions/action.model";
 
 export class ActionForm implements OnInit {
   actionForm: FormGroup;
-  ActionType = ActionType;
+  //ActionType = ActionType;
 
   @Input()
   actions: any = [];
 
-  keys(): Array<string> {
+  /*keys(): Array<string> {
     return Object.keys(ActionType)
-  }
+  }*/
 
   ngOnInit(): void {
     this.actionForm = new FormGroup({

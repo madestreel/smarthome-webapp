@@ -3,8 +3,7 @@ import axios from 'axios';
 import {Permission} from "../models/permission.model";
 import {AuthenticationService} from "./authentication.service";
 import {User} from "../models/user.model";
-import {Action} from "../models/actions/action.model";
-import {ActionBuilder} from "../models/actions/ActionBuilder.model";
+import {Action} from "../models/actions/ConcreteAction.model";
 import {DefaultDevice} from "../models/devices/DefaultDevice.model";
 import {Device} from "../models/devices/device.model";
 import {FlashMessagesService} from "angular2-flash-messages";
@@ -60,10 +59,10 @@ export class DeviceService {
           });
           console.log(res.data.device.device);
           res.data.device.device.actions.forEach(action => {
-            const concreteAction: Action = ActionBuilder.createAction(
-              action,
+            const concreteAction: Action = new Action(
               this.authenticationService,
-              device1
+              device1,
+                action
             );
             if (concreteAction) device1.addAction(concreteAction)
           });

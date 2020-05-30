@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {Action} from "../../../core/models/actions/action.model";
+import {Action} from "../../../core/models/actions/ConcreteAction.model";
 
 @Component({
   selector: "action",

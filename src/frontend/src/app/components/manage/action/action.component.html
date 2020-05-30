@@ -5,9 +5,8 @@
         <label for="actions">Action: </label>
       </div>
       <div class="col-md-3">
-        <select class="form-control" id="actions" formControlName="action">
-          <option *ngFor="let action of keys()" [value]="ActionType[action]"> {{action}}</option>
-        </select>
+        <input placeholder="actions" onfocus="this.select()" class="form-control" id="actions"
+               formControlName="action">
       </div>
       <div class="col-md-2">
         <label for="actionName"> Name: </label>
