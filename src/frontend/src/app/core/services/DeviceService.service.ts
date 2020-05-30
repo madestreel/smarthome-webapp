@@ -50,7 +50,7 @@ export class DeviceService {
           console.log(res.data);
           const device1: DefaultDevice = new DefaultDevice(this, {
             name: res.data.device.device.name,
-            status: res.data.device.device.value,
+            status: res.data.device.device.status,
             actions: [],
             favorite: false,
             permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
@@ -61,6 +61,7 @@ export class DeviceService {
           res.data.device.device.actions.forEach(action => {
             const concreteAction: Action = new Action(
               this.authenticationService,
+              this,
               device1,
                 action
             );
@@ -86,7 +87,7 @@ export class DeviceService {
           axios.get(`api/device/device/${device.device.deviceID}`, {params: {token: user.token}}).then(res => {
             const device1: DefaultDevice = new DefaultDevice(this, {
               name: res.data.device.device.name,
-              status: res.data.device.device.value,
+              status: res.data.device.device.status,
               actions: [],
               favorite: false,
               permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
@@ -140,5 +141,19 @@ export class DeviceService {
       deviceID: this.filter(deviceID),
       token: this.authenticationService.getCurrentUser().token
     })
+  }
+
+  getDevice(deviceID: string) {
+    const user: User = this.authenticationService.getCurrentUser();
+    return axios.get(`api/device/device/${this.filter(deviceID)}`, {params: {token: user.token}})
+  }
+
+  updateDevice(device: Device) {
+    device.id = this.filter(device.name);
+    console.log(device);
+    axios.post(`api/device/update`, {token: this.authenticationService.getCurrentUser().token, device: device})
+        .then(_ => {
+          this.displayAlert("Device successfully updated!", "success")
+        })
   }
 }

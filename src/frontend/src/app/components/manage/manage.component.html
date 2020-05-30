@@ -4,7 +4,7 @@
   <form [formGroup]="newDeviceForm" style="margin-bottom: 5%">
     <div class="container-fluid">
       <div class="card">
-        <div class="card-header card-header-center" style="cursor: pointer; text-align: center">
+        <div class="card-header card-header-center" style="text-align: center">
           Create a new device
         </div>
         <div class="card-body">
@@ -30,7 +30,7 @@
           </div>
           <div class="row">
             <div class="col-md-3">
-              <label>Action: </label>
+              <label>Actions: </label>
             </div>
             <div class="col-md-9">
               <div *ngFor="let action of actions; index as i" class="container-fluid">
@@ -45,7 +45,7 @@
                     <label class="action-label"> Name: </label>
                   </div>
                   <div class="col-md-4">
-                    <input [disabled]="true" placeholder="{{action.actionName}}" class="action-input form-control" type="text">
+                    <input [disabled]="true" placeholder="{{action.name}}" class="action-input form-control" type="text">
                   </div>
                   <div class="col-md-1">
                     <button type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
@@ -74,7 +74,7 @@
   <form [formGroup]="newRoomForm" style="margin-bottom: 5%">
     <div class="container-fluid">
       <div class="card">
-        <div class="card-header card-header-center" style="cursor: pointer; text-align: center">
+        <div class="card-header card-header-center" style="text-align: center">
           Create a new room
         </div>
         <div class="card-body">

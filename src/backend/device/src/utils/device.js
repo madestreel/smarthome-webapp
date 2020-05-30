@@ -140,13 +140,13 @@ function addDeviceToRoom(deviceID, roomID) {
 function updateDevice(device) {
     console.log(device)
     return new Promise((resolve, reject) => {
-        db.get(device.deviceID, (error, success) => {
+        db.get(device.id, (error, success) => {
             if (success) {
                 db.destroy(success._id, success._rev, (err, succ) => {
                     if (succ) {
                         db.insert(
                             {device: device},
-                            device.deviceID,
+                            device.id,
                             (error, success) => {
                                 if (success) resolve();
                                 else reject(new Error(`Failed to update device. Reason ${error.reason}`))

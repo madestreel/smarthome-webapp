@@ -2,22 +2,25 @@ import {ActionStyle} from "./action.model";
 import {DefaultDevice} from "../devices/DefaultDevice.model";
 import axios from 'axios'
 import {AuthenticationService} from "../../services/authentication.service";
+import {DeviceService} from "../../services/DeviceService.service";
 
 export class Action {
   style : ActionStyle;
-  actionType: string;
-  name: string;
+  action: string;
+  actionName: string;
   topic: string;
   waitForResponse: boolean;
   statusWp: boolean;
 
   data : any;
+
   constructor(
       private authService: AuthenticationService,
+      private deviceService: DeviceService,
       private device: DefaultDevice,
       action: any) {
-    this.name = action.actionName;
-    this.actionType = action.action;
+    this.actionName = action.actionName;
+    this.action = action.action;
     this.topic = action.hasOwnProperty("topic") ? action.topic : device.device.id;
     this.waitForResponse = action.hasOwnProperty("waitForResponse") ? action.waitForResponse : true;
     this.statusWp = action.hasOwnProperty('statusWp') ? action.statusWp : false;
@@ -26,21 +29,24 @@ export class Action {
     this.data = {
       token: this.authService.getCurrentUser().token,
       topic: this.topic,
-      action: this.actionType,
-      status: this.device.device.status
+      action: this.action,
+      status: this.device.device.status,
+      deviceID: this.device.device.id
     };
   }
 
-  action() {
-    const name = this.name;
-    this.name = this.waitForResponse ? "sending..." : this.name;
+  execute() {
+    const name = this.actionName;
+    this.actionName = this.waitForResponse == true ? "sending..." : this.actionName;
     axios.post(`api/action/action`, this.data).then(res => {
-      this.name = name;
+      this.actionName = name;
       this.device.device.status = res.data.value;
-      if (this.statusWp) {
-        axios.post(`api/device/update`, this.data).then(res => {
-          console.log(res)
-        })
+      if (this.statusWp == true) {
+        this.deviceService.getDevice(this.device.device.id).then(dev => {
+          this.device = dev.data.device;
+          this.device.device.status = res.data.value;
+          this.deviceService.updateDevice(this.device.device);
+        });
       }
     })
   };

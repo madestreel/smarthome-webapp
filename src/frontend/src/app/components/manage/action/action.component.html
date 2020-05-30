@@ -1,22 +1,69 @@
 <form [formGroup]="actionForm">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2">
-        <label for="actions">Action: </label>
+    <div class="card">
+      <div class="card-header card-header-center" style="text-align: center">
+        Create a new action
       </div>
-      <div class="col-md-3">
-        <input placeholder="actions" onfocus="this.select()" class="form-control" id="actions"
-               formControlName="action">
-      </div>
-      <div class="col-md-2">
-        <label for="actionName"> Name: </label>
-      </div>
-      <div class="col-md-4">
-        <input placeholder="Name" onfocus="this.select()" class="form-control" id="actionName"
-               formControlName="actionName">
-      </div>
-      <div class="col-md-1">
-        <button type="submit" class="fa fa-plus success" (click)="addAction( actionForm.value)"></button>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <label for="actions">Action: </label>
+          </div>
+          <div class="col-md-3">
+            <input placeholder="actions" onfocus="this.select()" class="form-control" id="actions"
+                   formControlName="action">
+          </div>
+          <div class="col-md-3">
+            <label for="actionName"> Name: </label>
+          </div>
+          <div class="col-md-3">
+            <input placeholder="Name" onfocus="this.select()" class="form-control" id="actionName"
+                   formControlName="actionName">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <label for="topic">Topic: </label>
+          </div>
+          <div class="col-md-3">
+            <input placeholder="topic" onfocus="this.select()" class="form-control" id="topic"
+                   formControlName="topic">
+          </div>
+          <div class="col-md-3">
+            <label for="waitForResponse"> Wait for response: </label>
+          </div>
+          <div class="col-md-3">
+            <select style="margin-left: 0" class="form-control" id="waitForResponse" formControlName="waitForResponse">
+              <option [value]=true> TRUE </option>
+              <option [value]=false> FALSE </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <label for="statusWp">Persistent status: </label>
+          </div>
+          <div class="col-md-3">
+            <select style="margin-left: 0" class="form-control" id="statusWp" formControlName="statusWp">
+              <option [value]=true> TRUE </option>
+              <option [value]=false> FALSE </option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="style"> Style: </label>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control" style="margin-left: 0" id="style" formControlName="style">
+              <option *ngFor="let style of keys()" [value]="ActionStyle[style]"> {{style}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <button style="margin-top: 2%" [disabled]="!actionForm.valid"
+                  class="btn btn-success btn-margin {{!actionForm.valid ? 'disabled' : ''}}"
+                  type="submit" (click)="addAction(actionForm.value)"> Create action
+          </button>
+        </div>
       </div>
     </div>
   </div>
