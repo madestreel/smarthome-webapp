@@ -52,7 +52,7 @@ function getDevicesForRoom(roomID) {
 
 function isFav(userID, deviceID) {
     return new Promise((resolve, reject) => {
-        db.view('queries', 'fav_devices', {key: userID}, function(err, body) {
+        db.view('queries', 'fav_devices', {key: userID}, function (err, body) {
             if (!err) {
                 const isfav = body.rows.some(device => device.value.deviceID === deviceID);
                 resolve(isfav)
@@ -87,7 +87,7 @@ function addFav(userID, deviceID) {
 
 function deleteFav(userID, deviceID) {
     return new Promise(((resolve, reject) => {
-        db.view('queries', 'fav_devices', {key: userID}, function(err, body) {
+        db.view('queries', 'fav_devices', {key: userID}, function (err, body) {
             const device = body.rows.find(device => device.value.deviceID === deviceID);
             if (!err && device) {
                 db.destroy(device.value._id, device.value._rev, (err, success) => {
@@ -106,7 +106,7 @@ function deleteFav(userID, deviceID) {
 
 function deleteDeviceOfRoom(deviceID, roomID) {
     return new Promise((resolve, reject) => {
-        db.view('queries', 'devices_room', {key: roomID}, function(err, body) {
+        db.view('queries', 'devices_room', {key: roomID}, function (err, body) {
             const device = body.rows.find(device => device.value.deviceID === deviceID);
             if (!err && device) {
                 db.destroy(device.value._id, device.value._rev, (err, success) => {
@@ -137,6 +137,31 @@ function addDeviceToRoom(deviceID, roomID) {
     })
 }
 
+function updateDevice(device) {
+    console.log(device)
+    return new Promise((resolve, reject) => {
+        db.get(device.deviceID, (error, success) => {
+            if (success) {
+                db.destroy(success._id, success._rev, (err, succ) => {
+                    if (succ) {
+                        db.insert(
+                            {device: device},
+                            device.deviceID,
+                            (error, success) => {
+                                if (success) resolve();
+                                else reject(new Error(`Failed to update device. Reason ${error.reason}`))
+                            })
+                    } else {
+                        reject(new Error('Failed to update device'))
+                    }
+                });
+            } else {
+                reject(new Error(`Device does not exist`))
+            }
+        })
+    })
+}
+
 module.exports = {
     createDevice,
     isFav,
@@ -146,5 +171,6 @@ module.exports = {
     getDevices,
     getDevicesForRoom,
     deleteDeviceOfRoom,
-    addDeviceToRoom
+    addDeviceToRoom,
+    updateDevice
 };
