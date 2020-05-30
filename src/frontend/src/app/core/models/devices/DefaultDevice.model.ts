@@ -1,5 +1,5 @@
 import {DeviceService} from "../../services/DeviceService.service";
-import {Action} from "../actions/action.model";
+import {Action} from "../actions/ConcreteAction.model";
 import {Device} from "./device.model";
 
 export class DefaultDevice {

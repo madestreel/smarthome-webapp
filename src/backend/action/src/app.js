@@ -32,7 +32,7 @@ app.post('/action', (req, res) => {
     }
 
     isConnected(req.body.token).then(_ => {
-        return db.action(req.body.topic, req.body.action, req.body.token).then(val => {
+        return db.action(req.body.deviceID, req.body.topic, req.body.action, req.body.token).then(val => {
             res.status(200).json({message: 'success', value: val})
         }).catch(err => {
             res.status(500).json({message: err.message})
