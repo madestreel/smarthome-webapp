@@ -22,6 +22,7 @@ export class Action {
     this.actionName = action.actionName;
     this.action = action.action;
     this.topic = action.hasOwnProperty("topic") ? action.topic : device.device.id;
+    console.log(this.topic);
     this.waitForResponse = action.hasOwnProperty("waitForResponse") ? action.waitForResponse : true;
     this.statusWp = action.hasOwnProperty('statusWp') ? action.statusWp : false;
     this.style = action.hasOwnProperty("style") ? (<any> ActionStyle)[action.style.toUpperCase()] : ActionStyle.SUCCESS;
@@ -50,26 +51,4 @@ export class Action {
       }
     })
   };
-}
-
-export class StatusAction implements Action {
-  action: Function = () => {
-    const name = this.name;
-    this.name = "sending...";
-    axios.post(`api/action/action`, {
-      token: this.authService.getCurrentUser().token,
-      topic: this.device.device.id,
-      action: 'status'
-    }).then(res => {
-      this.name = name;
-      this.device.device.status = res.data.value
-    })
-  };
-  style: ActionStyle = ActionStyle.SUCCESS;
-  type: ActionType = ActionType.STATUS;
-  name: string;
-
-  constructor(private authService: AuthenticationService, private device: DefaultDevice, name: string) {
-    this.name = name ? name : this.type
-  }
 }
