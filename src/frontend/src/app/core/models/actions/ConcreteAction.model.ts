@@ -21,11 +21,10 @@ export class Action {
       action: any) {
     this.actionName = action.actionName;
     this.action = action.action;
-    this.topic = action.hasOwnProperty("topic") ? action.topic : device.device.id;
-    console.log(this.topic);
-    this.waitForResponse = action.hasOwnProperty("waitForResponse") ? action.waitForResponse : true;
-    this.statusWp = action.hasOwnProperty('statusWp') ? action.statusWp : false;
-    this.style = action.hasOwnProperty("style") ? (<any> ActionStyle)[action.style.toUpperCase()] : ActionStyle.SUCCESS;
+    this.topic = action.topic ? action.topic : device.device.id;
+    this.waitForResponse = action.waitForResponse ? action.waitForResponse : true;
+    this.statusWp = action.statusWp ? action.statusWp : false;
+    this.style = action.style ? (<any> ActionStyle)[action.style.toUpperCase()] : ActionStyle.SUCCESS;
 
     this.data = {
       token: this.authService.getCurrentUser().token,
@@ -44,9 +43,9 @@ export class Action {
       this.device.device.status = res.data.value;
       if (this.statusWp == true) {
         this.deviceService.getDevice(this.device.device.id).then(dev => {
-          this.device = dev.data.device;
-          this.device.device.status = res.data.value;
-          this.deviceService.updateDevice(this.device.device);
+          const device = dev.data.device;
+          device.device.status = res.data.value;
+          this.deviceService.updateDevice(device.device);
         });
       }
     })
