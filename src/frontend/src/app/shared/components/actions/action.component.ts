@@ -55,9 +55,9 @@ export class ActionComponent implements OnInit {
                 Validators.required
             ])),
             topic: new FormControl({value: this.action.topic, disabled: this.disabled}),
-            waitForResponse: new FormControl({value: true, disabled: this.disabled}),
-            statusWp: new FormControl({value: true, disabled: this.disabled}),
-            style: new FormControl({value: ActionStyle.SUCCESS, disabled: this.disabled})
+            waitForResponse: new FormControl({value: this.action.waitForResponse, disabled: this.disabled}),
+            statusWp: new FormControl({value: this.action.statusWp, disabled: this.disabled}),
+            style: new FormControl({value: this.action.style, disabled: this.disabled})
         })
     }
 
