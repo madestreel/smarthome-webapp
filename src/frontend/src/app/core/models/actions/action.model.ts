@@ -4,3 +4,12 @@ export enum ActionStyle {
   PRIMARY="primary",
   WARNING="warning"
 }
+
+export interface ActionModel {
+  action: string;
+  actionName: string;
+  topic: string;
+  statusWp: boolean;
+  waitForResponse: boolean;
+  style: ActionStyle;
+}

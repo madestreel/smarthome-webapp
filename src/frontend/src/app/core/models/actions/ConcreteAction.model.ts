@@ -1,10 +1,10 @@
-import {ActionStyle} from "./action.model";
+import {ActionModel, ActionStyle} from "./action.model";
 import {DefaultDevice} from "../devices/DefaultDevice.model";
 import axios from 'axios'
 import {AuthenticationService} from "../../services/authentication.service";
 import {DeviceService} from "../../services/DeviceService.service";
 
-export class Action {
+export class Action implements ActionModel {
   style : ActionStyle;
   action: string;
   actionName: string;
@@ -31,7 +31,7 @@ export class Action {
       topic: this.topic,
       action: this.action,
       status: this.device.device.status,
-      deviceID: this.device.device.id
+      id: this.device.device.id
     };
   }
 
@@ -50,4 +50,24 @@ export class Action {
       }
     })
   };
+
+  update(data: any) {
+    this.actionName = data.actionName ? data.actionName : this.actionName;
+    this.action = data.action ? data.action : this.action;
+    this.topic = data.topic ? data.topic : this.topic;
+    this.statusWp = data.statusWp ? data.statusWp : this.statusWp;
+    this.waitForResponse = data.waitForResponse ? data.waitForResponse : this.waitForResponse;
+    this.style = data.style ? data.style : this.style;
+  }
+
+  getModel() {
+    return {
+      action: this.action,
+      actionName: this.actionName,
+      topic: this.topic,
+      waitForResponse: this.waitForResponse,
+      statusWp: this.statusWp,
+      style: this.style
+    }
+  }
 }

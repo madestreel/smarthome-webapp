@@ -25,7 +25,7 @@ export class DeviceService {
         data: {
           token: user.token,
           userID: user.username,
-          deviceID: device.id
+          id: device.id
         }
       }).then(_ => {
         device.favorite = false
@@ -34,7 +34,7 @@ export class DeviceService {
       axios.post(`api/device/fav`, {
         token: user.token,
         userID: user.username,
-        deviceID: device.id
+        id: device.id
       }).then(_ => {
         device.favorite = true
       })
@@ -84,7 +84,7 @@ export class DeviceService {
       .then(res => {
         res.data.devices.forEach(device => {
           console.log(device)
-          axios.get(`api/device/device/${device.device.deviceID}`, {params: {token: user.token}}).then(res => {
+          axios.get(`api/device/device/${device.device.id}`, {params: {token: user.token}}).then(res => {
             const device1: DefaultDevice = new DefaultDevice(this, {
               name: res.data.device.device.name,
               status: res.data.device.device.status,
@@ -125,8 +125,8 @@ export class DeviceService {
       device: {
         permission: device.permission,
         actions: device.actions,
-        name: device.deviceID,
-        deviceID: this.filter(device.deviceID)
+        name: device.id,
+        id: this.filter(device.id)
       }
     }).then(_ => {
       this.displayAlert("Device successfully created!", "success")
@@ -135,17 +135,17 @@ export class DeviceService {
     })
   }
 
-  addDeviceToRoom(roomID: string, deviceID: string) {
+  addDeviceToRoom(roomID: string, id: string) {
     axios.post(`api/device/room`, {
       roomID: this.filter(roomID),
-      deviceID: this.filter(deviceID),
+      id: this.filter(id),
       token: this.authenticationService.getCurrentUser().token
     })
   }
 
-  getDevice(deviceID: string) {
+  getDevice(id: string) {
     const user: User = this.authenticationService.getCurrentUser();
-    return axios.get(`api/device/device/${this.filter(deviceID)}`, {params: {token: user.token}})
+    return axios.get(`api/device/device/${this.filter(id)}`, {params: {token: user.token}})
   }
 
   updateDevice(device: Device) {

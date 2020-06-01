@@ -23,7 +23,7 @@
             <div class="col-md-3"> Actions:</div>
             <div class="col-md-9 col-center">
               <ng-container *ngFor="let action of device.actions">
-                <action [action]="action"></action>
+                <actionButton [action]="action"></actionButton>
               </ng-container>
             </div>
           </div>

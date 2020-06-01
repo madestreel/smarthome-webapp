@@ -43,7 +43,6 @@ export class ManageRoom implements OnInit {
       this.deviceService.addDeviceToRoom(this.roomID, device)
     }
     for (let user of data.users) {
-      console.log(user)
       this.roomService.addUserToRoom(user, this.roomID)
     }
     this.displayAlert("Room successfully updated", "success");

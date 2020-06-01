@@ -9,7 +9,7 @@ import {ManageDevice} from "./device/manage.component";
 const routes: Routes = [
   {path: '', component: Manage, canActivate: [AuthGuard], data: {permission: Permission.ADMIN}},
   {path: 'room/:roomID', component: ManageRoom, canActivate: [AuthGuard], data: {permission: Permission.ADMIN}},
-  {path: 'device/:deviceID', component: ManageDevice, canActivate: [AuthGuard], data: {permission: Permission.ADMIN}}
+  {path: 'device/:id', component: ManageDevice, canActivate: [AuthGuard], data: {permission: Permission.ADMIN}}
 ];
 
 @NgModule({

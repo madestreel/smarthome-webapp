@@ -1,6 +1,11 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActionStyle} from "../../../core/models/actions/action.model";
+import {EmptyAction} from "../../../core/models/actions/EmptyAction";
+import {Action} from "../../../core/models/actions/ConcreteAction.model";
+import {AuthenticationService} from "../../../core/services/authentication.service";
+import {DeviceService} from "../../../core/services/DeviceService.service";
+import {DefaultDevice} from "../../../core/models/devices/DefaultDevice.model";
 
 @Component({
   selector: "actionForm",
@@ -10,33 +15,23 @@ import {ActionStyle} from "../../../core/models/actions/action.model";
   ]
 })
 
-export class ActionForm implements OnInit {
-  actionForm: FormGroup;
-  ActionStyle = ActionStyle;
+export class ActionForm {
+  emptyAction: Action = new EmptyAction(this.authenticationService, this.deviceService);
 
   @Input()
   actions: any = [];
 
-  keys(): Array<string> {
-    return Object.keys(ActionStyle)
-  }
+  @Input()
+  device: DefaultDevice;
 
-  ngOnInit(): void {
-    this.actionForm = new FormGroup({
-      action: new FormControl("", Validators.compose([
-        Validators.required
-      ])),
-      actionName: new FormControl("", Validators.compose([
-        Validators.required
-      ])),
-      topic: new FormControl(),
-      waitForResponse: new FormControl(true),
-      statusWp: new FormControl(true),
-      style: new FormControl(ActionStyle.SUCCESS)
-    })
+  constructor(
+      private authenticationService: AuthenticationService,
+      private deviceService: DeviceService
+  ) {
   }
 
   addAction(data) {
+    data.topic = data.topic ? data.topic : data.actionName;
     this.actions.push(data)
   }
 }

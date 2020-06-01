@@ -75,29 +75,29 @@ app.post('/update', (req, res) => {
  * API to add a device to a room
  * request body:
  *  - roomID:
- *  - deviceID: _
+ *  - id: _
  *  - token: _
  *
  *  @param {String} token the token to be checked
  *  @param {String} roomID the room id where to user will be added
- *  @param {String} deviceID the device id of the device to be added to the room
+ *  @param {String} id the device id of the device to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
  *                        err.message in case of invalid token and 500 otherwise.
  *
  */
 app.post('/room', (req, res) => {
-  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('deviceID') && req.body.hasOwnProperty('roomID'))) {
+  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('id') && req.body.hasOwnProperty('roomID'))) {
     res.status(400).json({message: 'bad request'});
     return
   }
 
   const token = req.body.token;
-  const deviceID = req.body.deviceID;
+  const id = req.body.id;
   const roomID = req.body.roomID;
   isConnected(token).then(_ => {
-    return db.addDeviceToRoom(deviceID, roomID).then(_ => {
-      res.status(200).json({message: `device (${deviceID}) successfully added to room (${roomID})`})
+    return db.addDeviceToRoom(id, roomID).then(_ => {
+      res.status(200).json({message: `device (${id}) successfully added to room (${roomID})`})
     }).catch(err => {
       res.status(500).json({message: err.message})
     })
@@ -111,29 +111,29 @@ app.post('/room', (req, res) => {
  * API to delete a device from a room
  * request body:
  *  - roomID:
- *  - deviceID: _
+ *  - id: _
  *  - token: _
  *
  *  @param {String} token the token to be checked
  *  @param {String} roomID the room id where to user will be added
- *  @param {String} deviceID the device id of the device to be added to the room
+ *  @param {String} id the device id of the device to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
  *                        err.message in case of invalid token and 500 otherwise.
  *
  */
 app.delete('/room', (req, res) => {
-  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('deviceID') && req.body.hasOwnProperty('roomID'))) {
+  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('id') && req.body.hasOwnProperty('roomID'))) {
     res.status(400).json({message: 'bad request'});
     return
   }
 
   const token = req.body.token;
-  const deviceID = req.body.deviceID;
+  const id = req.body.id;
   const roomID = req.body.roomID;
 
   isConnected(token).then(_ => {
-    return db.deleteDeviceOfRoom(deviceID, roomID).then(_ => {
+    return db.deleteDeviceOfRoom(id, roomID).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {
       res.status(500).json({message: err.message})
@@ -203,12 +203,12 @@ app.get('/device/:id', (req, res) => {
 /**
  * API to remove a device to the favs of a user
  * request body:
- *  - deviceID: _
+ *  - id: _
  *  - userID: _
  *  - token: _
  *
  *  @param {String} token the token to be checked
- *  @param {String} deviceID the room id where to user will be added
+ *  @param {String} id the room id where to user will be added
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
@@ -216,16 +216,16 @@ app.get('/device/:id', (req, res) => {
  *
  */
 app.delete('/fav', (req, res) => {
-  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('deviceID'))) {
+  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('id'))) {
     res.status(400).json({message: 'bad request'});
     return
   }
 
   const token = req.body.token;
-  const deviceID = req.body.deviceID;
+  const id = req.body.id;
   const userID = req.body.userID;
   isConnected(token).then(_ => {
-    return db.deleteFav(userID, deviceID).then(_ => {
+    return db.deleteFav(userID, id).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {
       res.status(500).json({message: err.message})
@@ -238,12 +238,12 @@ app.delete('/fav', (req, res) => {
 /**
  * API to add a device to the favs of a user
  * request body:
- *  - deviceID:
+ *  - id:
  *  - userID: _
  *  - token: _
  *
  *  @param {String} token the token to be checked
- *  @param {String} deviceID the room id where to user will be added
+ *  @param {String} id the room id where to user will be added
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
@@ -251,16 +251,16 @@ app.delete('/fav', (req, res) => {
  *
  */
 app.post('/fav', (req, res) => {
-  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('deviceID'))) {
+  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('id'))) {
     res.status(400).json({message: 'bad request'});
     return
   }
 
   const token = req.body.token;
   const userID = req.body.userID;
-  const deviceID = req.body.deviceID;
+  const id = req.body.id;
   isConnected(token).then(_ => {
-    return db.addFav(userID, deviceID).then(_ => {
+    return db.addFav(userID, id).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {
       res.status(500).json({message: err.message})
@@ -273,31 +273,31 @@ app.post('/fav', (req, res) => {
 /**
  * API to verify if a device is in the favs of a user.
  * request params:
- *  - deviceID: _
+ *  - id: _
  *  - userID: _
  *
  * request query:
  *  - token: _
  *
  *  @param {String} token the token to be checked
- *  @param {String} deviceID the room id where to user will be added
+ *  @param {String} id the room id where to user will be added
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
  *                        err.message in case of invalid token and 500 otherwise.
  *
  */
-app.get('/fav/device/:deviceID/user/:userID', (req, res) => {
-  if (!(req.params.hasOwnProperty('deviceID') && req.params.hasOwnProperty('userID') && req.query.hasOwnProperty('token'))) {
+app.get('/fav/device/:id/user/:userID', (req, res) => {
+  if (!(req.params.hasOwnProperty('id') && req.params.hasOwnProperty('userID') && req.query.hasOwnProperty('token'))) {
     res.status(400).json({message: 'bad request'});
     return
   }
 
   const token = req.query.token;
   const userID = req.params.userID;
-  const deviceID = req.params.deviceID;
+  const id = req.params.id;
   isConnected(token).then(_ => {
-    db.isFav(userID, deviceID).then(isfav => {
+    db.isFav(userID, id).then(isfav => {
       res.status(200).json({message: 'success', isfav: isfav})
     }).catch(err => {
       res.status(500).json({message: err.message})

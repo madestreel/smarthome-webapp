@@ -1,1 +1,75 @@
-<button class="btn btn-{{action.style}}" (click)="action.execute()"> {{action.actionName}} </button>
+<form [formGroup]="actionForm">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header" style="text-align: center" [ngStyle]="{'background': color}">
+                {{title}}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="actions">Action: </label>
+                    </div>
+                    <div class="col-md-3">
+                        <input placeholder="action" onfocus="this.select()" class="form-control {{disabled ? 'disabled' : ''}}" id="actions"
+                               formControlName="action" value="{{action.action}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="actionName"> Name: </label>
+                    </div>
+                    <div class="col-md-3">
+                        <input placeholder="name" onfocus="this.select()" class="form-control {{disabled ? 'disabled' : ''}}"
+                               id="actionName"
+                               formControlName="actionName" value="{{action.actionName}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="topic">Topic: </label>
+                    </div>
+                    <div class="col-md-3">
+                        <input placeholder="topic" onfocus="this.select()" class="form-control {{disabled ? 'disabled' : ''}}" id="topic"
+                               formControlName="topic" value="{{action.topic}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="waitForResponse"> Wait for response: </label>
+                    </div>
+                    <div class="col-md-3">
+                        <select style="margin-left: 0" class="form-control {{disabled ? 'disabled' : ''}}" id="waitForResponse"
+                                formControlName="waitForResponse">
+                            <option [value]=true> TRUE</option>
+                            <option [value]=false> FALSE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="statusWp">Persistent status: </label>
+                    </div>
+                    <div class="col-md-3">
+                        <select style="margin-left: 0" class="form-control {{disabled ? 'disabled' : ''}}" id="statusWp" formControlName="statusWp">
+                            <option [value]=true> TRUE</option>
+                            <option [value]=false> FALSE</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="style"> Style: </label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control {{disabled ? 'disabled' : ''}}" style="margin-left: 0" id="style" formControlName="style">
+                            <option *ngFor="let style of keys()" [value]="ActionStyle[style]"> {{style}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <button [ngStyle]="{'background': color}" [hidden]="disabled" style="margin-top: 2%; margin-bottom: 0" [disabled]="!actionForm.valid"
+                            class="btn btn-success btn-margin {{!actionForm.valid ? 'disabled' : ''}}"
+                            type="submit" (click)="onButtonClicked(actionForm.value)"> {{buttonTitle}}
+                    </button>
+                </div>
+                <div class="row">
+                    <ng-content></ng-content>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
