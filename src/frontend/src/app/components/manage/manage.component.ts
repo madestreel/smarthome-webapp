@@ -31,7 +31,7 @@ export class Manage implements OnInit {
 
   ngOnInit() {
     this.newDeviceForm = new FormGroup({
-      deviceID: new FormControl("", Validators.compose([
+      id: new FormControl("", Validators.compose([
         Validators.required
       ])),
       permission: new FormControl("", Validators.compose([
@@ -54,7 +54,7 @@ export class Manage implements OnInit {
 
   onSubmit(data) {
     this.deviceService.createDevice({
-      deviceID: data.deviceID,
+      id: data.id,
       permission: data.permission,
       actions: this.actions
     });
@@ -62,9 +62,9 @@ export class Manage implements OnInit {
       status: "",
       actions: [],
       favorite: false,
-      name: data.deviceID,
+      name: data.id,
       permission: Permission.USER,
-      id: data.deviceID,
+      id: data.id,
       roomID: ""
     }));
     this.newDeviceForm.reset();

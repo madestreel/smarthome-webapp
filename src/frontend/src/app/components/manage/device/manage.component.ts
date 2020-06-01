@@ -36,10 +36,12 @@ export class ManageDevice implements OnInit {
     }
 
     ngOnInit(): void {
-        const deviceID = this.route.snapshot.paramMap.get("deviceID");
-        this.deviceService.getDevice(deviceID).then(res => {
+        const id = this.route.snapshot.paramMap.get("id");
+        this.deviceService.getDevice(id).then(res => {
             this.device = res.data.device;
-            this.actions = this.device.device.actions;
+            this.device.device.actions.forEach(action => {
+                this.actions.push(new Action(this.authenticationService, this.deviceService, this.device, action))
+            });
             this.manageDeviceForm.setControl("name", new FormControl(this.device.device.name));
             this.manageDeviceForm.setControl("permission", new FormControl(this.device.device.permission))
         });
@@ -55,8 +57,13 @@ export class ManageDevice implements OnInit {
     }
 
     onUpdateDevice(data) {
-        data.actions = this.actions;
+        data.actions = [];
+        this.actions.forEach(action => {
+            let realAction;
+            if (action instanceof Action) realAction = action;
+            else realAction = new Action(this.authenticationService, this.deviceService, this.device, action);
+            data.actions.push(realAction.getModel())
+        });
         this.deviceService.updateDevice(data);
-        //this.manageDeviceForm.reset()
     }
 }

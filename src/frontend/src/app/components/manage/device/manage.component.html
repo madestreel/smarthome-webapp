@@ -32,24 +32,10 @@
                             <label>Actions: </label>
                         </div>
                         <div class="col-md-9">
-                            <div *ngFor="let action of actions; index as i" class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label class="action-label"> Action: </label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input [disabled]="true" placeholder="{{action.action}}" class="form-control" type="text">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="action-label"> Name: </label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input [disabled]="true" placeholder="{{action.actionName}}" class="action-input form-control" type="text">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
-                                    </div>
-                                </div>
+                            <div *ngFor="let action of actions; index as i" class="container-fluid" style="margin-bottom: 2%">
+                                <action [disabled]="false" [buttonTitle]="'update'" [title]="action.actionName" [action]="action">
+                                    <button style="margin-top: 2%; margin-bottom: 0" type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
+                                </action>
                             </div>
                         </div>
                     </div>
@@ -57,7 +43,7 @@
                         <div class="col-md-3">
                         </div>
                         <div class="col-md-9">
-                            <actionForm [actions]="this.actions"></actionForm>
+                            <actionForm [actions]="this.actions" [device]="this.device"></actionForm>
                         </div>
                     </div>
                     <div class="row">

@@ -1,6 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {Device} from "../../../../../core/models/devices/device.model";
 import {Permission} from "../../../../../core/models/permission.model";
+import {DefaultDevice} from "../../../../../core/models/devices/DefaultDevice.model";
 
 @Component({
   selector: "device-quickview",
@@ -12,7 +13,7 @@ import {Permission} from "../../../../../core/models/permission.model";
 
 export class DeviceQuickView {
   @Input()
-  device: Device
+  device: Device;
 
   Permission = Permission
 }

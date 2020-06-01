@@ -10,11 +10,11 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-3">
-              <label for="deviceID">Name: </label>
+              <label for="id">Name: </label>
             </div>
             <div class="col-md-9">
-              <input placeholder="Name" onfocus="this.select()" class="form-control" id="deviceID" type="text"
-                     formControlName="deviceID">
+              <input placeholder="Name" onfocus="this.select()" class="form-control" id="id" type="text"
+                     formControlName="id">
               <div class="help"> This must be a unique name.</div>
             </div>
           </div>
@@ -33,24 +33,10 @@
               <label>Actions: </label>
             </div>
             <div class="col-md-9">
-              <div *ngFor="let action of actions; index as i" class="container-fluid">
-                <div class="row">
-                  <div class="col-md-2">
-                    <label class="action-label"> Action: </label>
-                  </div>
-                  <div class="col-md-3">
-                    <input [disabled]="true" placeholder="{{action.action}}" class="form-control" type="text">
-                  </div>
-                  <div class="col-md-2">
-                    <label class="action-label"> Name: </label>
-                  </div>
-                  <div class="col-md-4">
-                    <input [disabled]="true" placeholder="{{action.name}}" class="action-input form-control" type="text">
-                  </div>
-                  <div class="col-md-1">
-                    <button type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
-                  </div>
-                </div>
+              <div *ngFor="let action of actions; index as i" class="container-fluid" style="margin-bottom: 2%">
+                <action [disabled]="true" [title]="action.actionName" [action]="action">
+                    <button style="margin-top: 2%; margin-bottom: 0" type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
+                </action>
               </div>
             </div>
           </div>
