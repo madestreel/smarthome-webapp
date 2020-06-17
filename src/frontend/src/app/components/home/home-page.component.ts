@@ -3,7 +3,6 @@ import {DeviceService} from "../../core/services/DeviceService.service";
 import {DefaultDevice} from "../../core/models/devices/DefaultDevice.model";
 import {Room} from "../../core/models/room.model";
 import {RoomService} from "../../core/services/RoomService.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'home-page',

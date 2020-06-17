@@ -27,7 +27,7 @@ services:
   smarthome-db:
     image: "destmaxi/kv-storage-system:latest"
     ports:
-    - "5984:5984"
+      - "5984:5984"
     networks:
       - backend
 

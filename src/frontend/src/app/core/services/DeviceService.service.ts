@@ -13,8 +13,8 @@ import {FlashMessagesService} from "angular2-flash-messages";
 export class DeviceService {
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private alert: FlashMessagesService
+      private authenticationService: AuthenticationService,
+      private alert: FlashMessagesService
   ) {
   }
 
@@ -60,9 +60,9 @@ export class DeviceService {
           console.log(res.data.device.device);
           res.data.device.device.actions.forEach(action => {
             const concreteAction: Action = new Action(
-              this.authenticationService,
-              this,
-              device1,
+                this.authenticationService,
+                this,
+                device1,
                 action
             );
             if (concreteAction) device1.addAction(concreteAction)
@@ -81,44 +81,51 @@ export class DeviceService {
     const user: User = this.authenticationService.getCurrentUser();
 
     axios.get(`api/device/devices`, {params: {token: user.token}})
-      .then(res => {
-        res.data.devices.forEach(device => {
-          console.log(device)
-          axios.get(`api/device/device/${device.device.id}`, {params: {token: user.token}}).then(res => {
-            const device1: DefaultDevice = new DefaultDevice(this, {
-              name: res.data.device.device.name,
-              status: res.data.device.device.status,
-              actions: [],
-              favorite: false,
-              permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
-              id: res.data.device._id,
-              roomID: ""
-            });
-            devices.push(device1)
+        .then(res => {
+          res.data.devices.forEach(device => {
+            console.log(device);
+            axios.get(`api/device/device/${device.device.id}`, {params: {token: user.token}}).then(res => {
+              const device1: DefaultDevice = new DefaultDevice(this, {
+                name: res.data.device.device.name,
+                status: res.data.device.device.status,
+                actions: [],
+                favorite: false,
+                permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
+                id: res.data.device._id,
+                roomID: ""
+              });
+              devices.push(device1)
+            })
           })
-        })
-      });
+        });
   }
 
   fetchDevices(devices: DefaultDevice[]) {
     const user: User = this.authenticationService.getCurrentUser();
 
     axios.get(`api/room/rooms/${user.username}`, {params: {token: user.token}})
-      .then(res => {
-        console.log(res.data.rooms);
-        res.data.rooms.forEach(room => {
-          this.fetchDevicesForRoom(devices, room);
-        })
-      });
+        .then(res => {
+          console.log(res.data.rooms);
+          res.data.rooms.forEach(room => {
+            this.fetchDevicesForRoom(devices, room);
+          })
+        });
   }
 
   displayAlert(msg: string, type: string) {
-    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+    this.alert.show(msg, {
+      cssClass: `alert-${type}`,
+      dismiss: true,
+      timeout: 2000,
+      showCloseBtn: true,
+      closeOnClick: true
+    });
   }
 
   filter(s) {
     return s.replace(/ |'|\"/g, '');
   }
+
   createDevice(device: any) {
     axios.post(`api/device/device`, {
       token: this.authenticationService.getCurrentUser().token,

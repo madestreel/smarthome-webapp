@@ -4,7 +4,7 @@ const app = express.Router();
 const db = require('./utils/users');
 
 app.get('/', (req, res) => {
-  return res.status(200).json({status:'success'})
+  return res.status(200).json({status: 'success'})
 });
 
 /**
@@ -21,18 +21,18 @@ app.get('/', (req, res) => {
  * @returns {String} the token of the user in case of success
  */
 app.get('/user/:username/password/:password', (req, res) => {
-  if(!(req.params.hasOwnProperty('username') && req.params.hasOwnProperty('password')))
-      return res.status(400).json({status: 'bad request'});
+  if (!(req.params.hasOwnProperty('username') && req.params.hasOwnProperty('password')))
+    return res.status(400).json({status: 'bad request'});
 
   let usr = req.params.username;
   let passw = req.params.password;
   return db.getUser(usr, passw).then((token) => {
-        log({"username": usr, "password": passw});
-        res.status(200).json({ status: 'success', token })
-      }).catch((err) => {
-        log(String(err));
-        res.status(500).json({ status: 'error', message: String(err) })
-      })
+    log({"username": usr, "password": passw});
+    res.status(200).json({status: 'success', token})
+  }).catch((err) => {
+    log(String(err));
+    res.status(500).json({status: 'error', message: String(err)})
+  })
 });
 
 /**
@@ -50,22 +50,22 @@ app.get('/user/:username/password/:password', (req, res) => {
  *                        403 in case of invalid token and 500 otherwise
  */
 app.delete('/user/:username', (req, res) => {
-    if (!(req.params.hasOwnProperty('username') && req.body.hasOwnProperty('token')))
-        return res.status(400).json({status: 'bad request'});
+  if (!(req.params.hasOwnProperty('username') && req.body.hasOwnProperty('token')))
+    return res.status(400).json({status: 'bad request'});
 
-    let token = req.body.token;
-    let username = req.params.username;
-    return db.isConnected(token).then(_ => {
-        return db.deleteUser(username).then(_ => {
-            log({"username": username});
-            res.status(200).json({status:'user successfully deleted'})
-        }).catch(err => {
-            log({"username": username});
-            res.status(500).json({status:`could not delete ressource. Reason: ${err.message}`})
-        })
-    }).catch(_ => {
-        res.status(403).json({status:'permission denied'})
+  let token = req.body.token;
+  let username = req.params.username;
+  return db.isConnected(token).then(_ => {
+    return db.deleteUser(username).then(_ => {
+      log({"username": username});
+      res.status(200).json({status: 'user successfully deleted'})
+    }).catch(err => {
+      log({"username": username});
+      res.status(500).json({status: `could not delete ressource. Reason: ${err.message}`})
     })
+  }).catch(_ => {
+    res.status(403).json({status: 'permission denied'})
+  })
 });
 
 /**
@@ -81,20 +81,20 @@ app.delete('/user/:username', (req, res) => {
  *  @returns {User} in case of success, the users informations
  */
 app.get('/users', (req, res) => {
-    if (!(req.query.hasOwnProperty("token"))) {
-        return res.status(400).json({message: "bad request"})
-    }
+  if (!(req.query.hasOwnProperty("token"))) {
+    return res.status(400).json({message: "bad request"})
+  }
 
-    let token = req.query.token;
-    return db.isConnected(token).then(_ => {
-        return db.getUsersInfo().then(users => {
-            res.status(200).json({message: "success", users: users})
-        }).catch(err => {
-            res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
-        })
+  let token = req.query.token;
+  return db.isConnected(token).then(_ => {
+    return db.getUsersInfo().then(users => {
+      res.status(200).json({message: "success", users: users})
     }).catch(err => {
-        res.status(403).json({message: "permission denied"})
+      res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
     })
+  }).catch(err => {
+    res.status(403).json({message: "permission denied"})
+  })
 });
 
 /**
@@ -110,20 +110,20 @@ app.get('/users', (req, res) => {
  *  @returns {User} in case of success, the users informations
  */
 app.get('/user', (req, res) => {
-   if (!(req.query.hasOwnProperty("token"))) {
-       return res.status(400).json({message: "bad request"})
-   }
+  if (!(req.query.hasOwnProperty("token"))) {
+    return res.status(400).json({message: "bad request"})
+  }
 
-   let token = req.query.token;
-   return db.isConnected(token).then(_ => {
-       return db.getUserInfo(token).then(user => {
-           res.status(200).json({message: "success", user: user})
-       }).catch(err => {
-           res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
-       })
-   }).catch(err => {
-       res.status(403).json({message: "permission denied"})
-   })
+  let token = req.query.token;
+  return db.isConnected(token).then(_ => {
+    return db.getUserInfo(token).then(user => {
+      res.status(200).json({message: "success", user: user})
+    }).catch(err => {
+      res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
+    })
+  }).catch(err => {
+    res.status(403).json({message: "permission denied"})
+  })
 });
 
 /**
@@ -140,19 +140,19 @@ app.get('/user', (req, res) => {
  * @returns {String} the token of the user
  */
 app.post('/user', (req, res) => {
-    if(!(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password') && req.body.hasOwnProperty('permission')))
-        return res.status(400).json({status:'bad request'});
+  if (!(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password') && req.body.hasOwnProperty('permission')))
+    return res.status(400).json({status: 'bad request'});
 
-    let usr = req.body.username;
-    let usrPassw = req.body.password;
-    let permission = req.body.permission;
-    return db.createUser(usr, usrPassw, permission)
-        .then((token) => {
-            res.status(200).json({ status: 'success', token })
-        })
-        .catch((err) => {
-            res.status(500).json({ status: 'error', message: String(err) })
-        })
+  let usr = req.body.username;
+  let usrPassw = req.body.password;
+  let permission = req.body.permission;
+  return db.createUser(usr, usrPassw, permission)
+      .then((token) => {
+        res.status(200).json({status: 'success', token})
+      })
+      .catch((err) => {
+        res.status(500).json({status: 'error', message: String(err)})
+      })
 });
 
 /**
@@ -166,17 +166,17 @@ app.post('/user', (req, res) => {
  *                        and 403 otherwise
  */
 app.get('/isconnected/:token', (req, res) => {
-    if(!(req.params.hasOwnProperty('token')))
-        return res.status(400).json({status:'bad request'});
+  if (!(req.params.hasOwnProperty('token')))
+    return res.status(400).json({status: 'bad request'});
 
-    let token = req.params.token;
-    return db.isConnected(token)
-        .then(_ => {
-            res.status(200).json({status:'success'})
-        })
-        .catch(_ => {
-            res.status(403).json({status: 'forbidden'})
-        })
+  let token = req.params.token;
+  return db.isConnected(token)
+      .then(_ => {
+        res.status(200).json({status: 'success'})
+      })
+      .catch(_ => {
+        res.status(403).json({status: 'forbidden'})
+      })
 });
 
 

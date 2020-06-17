@@ -21,4 +21,5 @@ import {AuthenticationService} from "../../core/services/authentication.service"
   ]
 })
 
-export class DevicesModule {}
+export class DevicesModule {
+}

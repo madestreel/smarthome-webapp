@@ -1,7 +1,7 @@
 <form [formGroup]="actionForm">
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header" style="text-align: center" [ngStyle]="{'background': color}">
+            <div [ngStyle]="{'background': color}" class="card-header" style="text-align: center">
                 {{title}}
             </div>
             <div class="card-body">
@@ -10,16 +10,18 @@
                         <label for="actions">Action: </label>
                     </div>
                     <div class="col-md-3">
-                        <input placeholder="action" onfocus="this.select()" class="form-control {{disabled ? 'disabled' : ''}}" id="actions"
-                               formControlName="action" value="{{action.action}}">
+                        <input class="form-control {{disabled ? 'disabled' : ''}}" formControlName="action"
+                               id="actions" onfocus="this.select()"
+                               placeholder="action" value="{{action.action}}">
                     </div>
                     <div class="col-md-3">
                         <label for="actionName"> Name: </label>
                     </div>
                     <div class="col-md-3">
-                        <input placeholder="name" onfocus="this.select()" class="form-control {{disabled ? 'disabled' : ''}}"
+                        <input class="form-control {{disabled ? 'disabled' : ''}}" formControlName="actionName"
                                id="actionName"
-                               formControlName="actionName" value="{{action.actionName}}">
+                               onfocus="this.select()"
+                               placeholder="name" value="{{action.actionName}}">
                     </div>
                 </div>
                 <div class="row">
@@ -27,15 +29,17 @@
                         <label for="topic">Topic: </label>
                     </div>
                     <div class="col-md-3">
-                        <input placeholder="topic" onfocus="this.select()" class="form-control {{disabled ? 'disabled' : ''}}" id="topic"
-                               formControlName="topic" value="{{action.topic}}">
+                        <input class="form-control {{disabled ? 'disabled' : ''}}" formControlName="topic"
+                               id="topic" onfocus="this.select()"
+                               placeholder="topic" value="{{action.topic}}">
                     </div>
                     <div class="col-md-3">
                         <label for="waitForResponse"> Wait for response: </label>
                     </div>
                     <div class="col-md-3">
-                        <select style="margin-left: 0" class="form-control {{disabled ? 'disabled' : ''}}" id="waitForResponse"
-                                formControlName="waitForResponse">
+                        <select class="form-control {{disabled ? 'disabled' : ''}}" formControlName="waitForResponse"
+                                id="waitForResponse"
+                                style="margin-left: 0">
                             <option [value]=true> TRUE</option>
                             <option [value]=false> FALSE</option>
                         </select>
@@ -46,7 +50,8 @@
                         <label for="statusWp">Persistent status: </label>
                     </div>
                     <div class="col-md-3">
-                        <select style="margin-left: 0" class="form-control {{disabled ? 'disabled' : ''}}" id="statusWp" formControlName="statusWp">
+                        <select class="form-control {{disabled ? 'disabled' : ''}}" formControlName="statusWp" id="statusWp"
+                                style="margin-left: 0">
                             <option [value]=true> TRUE</option>
                             <option [value]=false> FALSE</option>
                         </select>
@@ -55,15 +60,17 @@
                         <label for="style"> Style: </label>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-control {{disabled ? 'disabled' : ''}}" style="margin-left: 0" id="style" formControlName="style">
+                        <select class="form-control {{disabled ? 'disabled' : ''}}" formControlName="style" id="style"
+                                style="margin-left: 0">
                             <option *ngFor="let style of keys()" [value]="ActionStyle[style]"> {{style}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <button [ngStyle]="{'background': color}" [hidden]="disabled" style="margin-top: 2%; margin-bottom: 0" [disabled]="!actionForm.valid"
+                    <button (click)="onButtonClicked(actionForm.value)" [disabled]="!actionForm.valid"
+                            [hidden]="disabled" [ngStyle]="{'background': color}"
                             class="btn btn-success btn-margin {{!actionForm.valid ? 'disabled' : ''}}"
-                            type="submit" (click)="onButtonClicked(actionForm.value)"> {{buttonTitle}}
+                            style="margin-top: 2%; margin-bottom: 0" type="submit"> {{buttonTitle}}
                     </button>
                 </div>
                 <div class="row">

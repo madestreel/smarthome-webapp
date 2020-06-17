@@ -36,7 +36,13 @@ export class RoomService {
   }
 
   displayAlert(msg: string, type: string) {
-    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+    this.alert.show(msg, {
+      cssClass: `alert-${type}`,
+      dismiss: true,
+      timeout: 2000,
+      showCloseBtn: true,
+      closeOnClick: true
+    });
   }
 
   createRoom(room: any) {

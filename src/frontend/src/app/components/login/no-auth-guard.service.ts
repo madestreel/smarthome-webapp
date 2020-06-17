@@ -8,14 +8,14 @@ import {RoutesConfig} from "../../configs/routes.config";
 @Injectable()
 export class NoAuthGuard implements CanActivate {
   constructor(
-    private router: Router,
-    private userService: AuthenticationService
+      private router: Router,
+      private userService: AuthenticationService
   ) {
   }
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
 
     return this.userService.isAuthenticated.pipe(take(1), map(isAuth => {

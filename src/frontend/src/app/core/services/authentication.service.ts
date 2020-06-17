@@ -20,9 +20,9 @@ export class AuthenticationService {
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   constructor(
-    private jwtService: JwtService,
-    private router: Router,
-    private alert: FlashMessagesService
+      private jwtService: JwtService,
+      private router: Router,
+      private alert: FlashMessagesService
   ) {
   }
 
@@ -32,13 +32,13 @@ export class AuthenticationService {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
       axios.get('api/user/user', {params: {token: this.jwtService.getToken()}})
-        .then(
-          resp => this.setAuth({
-            username: resp.data.user._id,
-            permission: resp.data.user.permission.toUpperCase(),
-            token:this.jwtService.getToken()
-          }),
-        ).catch(_ => {
+          .then(
+              resp => this.setAuth({
+                username: resp.data.user._id,
+                permission: resp.data.user.permission.toUpperCase(),
+                token: this.jwtService.getToken()
+              }),
+          ).catch(_ => {
         this.purgeAuth()
       });
     } else {
@@ -81,7 +81,7 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return axios.get(`/api/user/user/${username}/password/${password}`).then(res => {
       console.log(res.data);
-      this.setAuth({username: username, permission:Permission.USER, token:res.data.token});
+      this.setAuth({username: username, permission: Permission.USER, token: res.data.token});
       this.populate();
       this.router.navigate([RoutesConfig.routesName.home])
     }).catch(err => {
@@ -96,18 +96,28 @@ export class AuthenticationService {
   }
 
   getCurrentUser(): User {
-    return this.currentUserSubject.value.token ? this.currentUserSubject.value : {username: undefined, token: undefined, permission: Permission.USER};
+    return this.currentUserSubject.value.token ? this.currentUserSubject.value : {
+      username: undefined,
+      token: undefined,
+      permission: Permission.USER
+    };
   }
 
   displayAlert(msg: string, type: string) {
-    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+    this.alert.show(msg, {
+      cssClass: `alert-${type}`,
+      dismiss: true,
+      timeout: 2000,
+      showCloseBtn: true,
+      closeOnClick: true
+    });
   }
 
-  createUser(param: { password: string; permission: string; username: string}) {
-      axios.post('/api/user/user', param).then(_ => {
-        this.displayAlert("User successfully created!", 'success')
-      }).catch(_ => {
-        this.displayAlert("Failed to create user!", 'danger')
-      })
+  createUser(param: { password: string; permission: string; username: string }) {
+    axios.post('/api/user/user', param).then(_ => {
+      this.displayAlert("User successfully created!", 'success')
+    }).catch(_ => {
+      this.displayAlert("Failed to create user!", 'danger')
+    })
   }
 }

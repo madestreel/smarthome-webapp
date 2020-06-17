@@ -13,8 +13,9 @@
                             <label for="name">Name: </label>
                         </div>
                         <div class="col-md-9">
-                            <input value="{{this.device.device.name}}" placeholder="deviceName" onFocus="this.select()" class="form-control" id="name"
-                                   formControlName="name">
+                            <input class="form-control" formControlName="name" id="name"
+                                   onFocus="this.select()" placeholder="deviceName"
+                                   value="{{this.device.device.name}}">
                         </div>
                     </div>
                     <div class="row">
@@ -22,8 +23,9 @@
                             <label for="permission">Permission: </label>
                         </div>
                         <div class="col-md-9">
-                            <select class="form-control" id="permission" formControlName="permission">
-                                <option *ngFor="let permission of keys()" [value]="Permission[permission]"> {{permission}}</option>
+                            <select class="form-control" formControlName="permission" id="permission">
+                                <option *ngFor="let permission of keys()"
+                                        [value]="Permission[permission]"> {{permission}}</option>
                             </select>
                         </div>
                     </div>
@@ -32,9 +34,12 @@
                             <label>Actions: </label>
                         </div>
                         <div class="col-md-9">
-                            <div *ngFor="let action of actions; index as i" class="container-fluid" style="margin-bottom: 2%">
-                                <action [disabled]="false" [buttonTitle]="'update'" [title]="action.actionName" [action]="action">
-                                    <button style="margin-top: 2%; margin-bottom: 0" type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
+                            <div *ngFor="let action of actions; index as i" class="container-fluid"
+                                 style="margin-bottom: 2%">
+                                <action [action]="action" [buttonTitle]="'update'" [disabled]="false"
+                                        [title]="action.actionName">
+                                    <button (click)="removeAction(i)" aria-label="Close" class="fa fa-close"
+                                            style="margin-top: 2%; margin-bottom: 0" type="button"></button>
                                 </action>
                             </div>
                         </div>
@@ -47,8 +52,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button style="margin-top: 2%" class="btn btn-success btn-margin"
-                                type="submit" (click)="onUpdateDevice(manageDeviceForm.value)"> Update device
+                        <button (click)="onUpdateDevice(manageDeviceForm.value)" class="btn btn-success btn-margin"
+                                style="margin-top: 2%" type="submit"> Update device
                         </button>
                     </div>
                 </div>

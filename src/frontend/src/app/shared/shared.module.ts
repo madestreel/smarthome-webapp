@@ -26,11 +26,11 @@ import {ActionComponent} from "./components/actions/action.component";
     Rooms,
     RoomComponent,
     RoomQuickView,
-      ActionComponent
+    ActionComponent
   ],
   providers: [
     AuthenticationService,
-      DeviceService,
+    DeviceService,
     JwtService,
   ],
   exports: [
@@ -42,7 +42,7 @@ import {ActionComponent} from "./components/actions/action.component";
     Devices,
     Rooms,
     DeviceQuickView,
-      ActionComponent
+    ActionComponent
   ]
 })
 

@@ -1,4 +1,4 @@
-const routesNames = {
+const routesNames = {
   home: "",
   login: "login",
   error404: "404",

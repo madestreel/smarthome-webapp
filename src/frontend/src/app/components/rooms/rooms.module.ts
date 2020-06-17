@@ -21,4 +21,5 @@ import {Rooms} from "./rooms.component";
   ]
 })
 
-export class RoomsModule{}
+export class RoomsModule {
+}

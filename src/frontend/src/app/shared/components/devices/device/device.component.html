@@ -1,25 +1,27 @@
 <div class="container-fluid">
-  <div class="card">
-    <button class="card-header card-header-center" data-toggle="modal" attr.data-target="#quickview-{{device.device.id}}">
-      {{device.device.name}}
-    </button>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-1 col-center">
-          <div class="fa fa-star{{!device.device.favorite ? '-o' : ''}} fa-2x" style="color: red; cursor: pointer"
-                  (click)="device.switchFavorite()"></div>
+    <div class="card">
+        <button attr.data-target="#quickview-{{device.device.id}}" class="card-header card-header-center"
+                data-toggle="modal">
+            {{device.device.name}}
+        </button>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-1 col-center">
+                    <div (click)="device.switchFavorite()"
+                         class="fa fa-star{{!device.device.favorite ? '-o' : ''}} fa-2x"
+                         style="color: red; cursor: pointer"></div>
+                </div>
+                <div class="col-md-3 col-center">
+                    {{device.device.status}}
+                </div>
+                <div class="col-md-8 col-center">
+                    <ng-container *ngFor="let action of device.device.actions">
+                        <actionButton [action]="action" style="margin-right: 5%"></actionButton>
+                    </ng-container>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3 col-center">
-          {{device.device.status}}
-        </div>
-        <div class="col-md-8 col-center">
-          <ng-container *ngFor="let action of device.device.actions">
-            <actionButton style="margin-right: 5%" [action]="action"></actionButton>
-          </ng-container>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 <device-quickview [device]="device.device"></device-quickview>
 

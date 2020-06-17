@@ -5,14 +5,14 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {DeviceService} from "../../services/DeviceService.service";
 
 export class Action implements ActionModel {
-  style : ActionStyle;
+  style: ActionStyle;
   action: string;
   actionName: string;
   topic: string;
   waitForResponse: boolean;
   statusWp: boolean;
 
-  data : any;
+  data: any;
 
   constructor(
       private authService: AuthenticationService,
@@ -24,7 +24,7 @@ export class Action implements ActionModel {
     this.topic = action.topic ? action.topic : device.device.id;
     this.waitForResponse = action.waitForResponse ? action.waitForResponse : true;
     this.statusWp = action.statusWp ? action.statusWp : false;
-    this.style = action.style ? (<any> ActionStyle)[action.style.toUpperCase()] : ActionStyle.SUCCESS;
+    this.style = action.style ? (<any>ActionStyle)[action.style.toUpperCase()] : ActionStyle.SUCCESS;
 
     this.data = {
       token: this.authService.getCurrentUser().token,

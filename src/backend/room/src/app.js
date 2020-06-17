@@ -16,12 +16,12 @@ const db = require('./utils/room');
 function isConnected(token) {
   return new Promise((resolve, reject) => {
     axios.get(`${auth}/isconnected/${token}`)
-    .then(res => {
-      resolve("")
-    })
-    .catch(err => {
-      reject(new Error(err.response.status))
-    })
+        .then(res => {
+          resolve("")
+        })
+        .catch(err => {
+          reject(new Error(err.response.status))
+        })
   })
 }
 
@@ -47,16 +47,16 @@ function isValidRoom(room) {
  *  @see isValidRoom for the representation of the Room object.
  */
 app.get('/room/:roomID', (req, res) => {
-  if(!(req.params.hasOwnProperty('roomID') && req.query.hasOwnProperty('token'))) {
+  if (!(req.params.hasOwnProperty('roomID') && req.query.hasOwnProperty('token'))) {
     return res.status(400).json({status: 'invalid request'})
   }
   let room = req.params.roomID;
   let token = req.query.token;
   isConnected(token).then(_ => {
     return db.getRoom(room).then(room => {
-      res.status(200).json({room:room.room})
+      res.status(200).json({room: room.room})
     }).catch(err => {
-      res.status(500).json({message:String(err)})
+      res.status(500).json({message: String(err)})
     })
   }).catch(err => {
     res.status(err.message).json()
@@ -91,7 +91,7 @@ app.get('/rooms/:user', (req, res) => {
     return db.getRoomsForUser(user).then(rooms => {
       res.status(200).json({rooms: rooms})
     }).catch(err => {
-      res.status(500).json({message:String(err)})
+      res.status(500).json({message: String(err)})
     })
   }).catch(err => {
     res.status(err.message).json()
@@ -153,7 +153,7 @@ app.post('/room', (req, res) => {
  *
  */
 app.post('/user', (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('roomID'))) {
     res.status(400).json({message: 'bad request'});
     return
@@ -191,7 +191,7 @@ app.post('/user', (req, res) => {
  */
 app.delete('/user', (req, res) => {
   if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('roomID'))) {
-    res.status(400).json({message: 'bad request'})
+    res.status(400).json({message: 'bad request'});
     return
   }
 

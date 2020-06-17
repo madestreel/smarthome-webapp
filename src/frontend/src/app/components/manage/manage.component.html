@@ -1,172 +1,182 @@
 <div class="container-fluid">
-  <h1 class="title"> Manage </h1> <br>
-  <hr>
-  <form [formGroup]="newDeviceForm" style="margin-bottom: 5%">
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-header card-header-center" style="text-align: center">
-          Create a new device
+    <h1 class="title"> Manage </h1> <br>
+    <hr>
+    <form [formGroup]="newDeviceForm" style="margin-bottom: 5%">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header card-header-center" style="text-align: center">
+                    Create a new device
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="id">Name: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" formControlName="id" id="id" onfocus="this.select()" placeholder="Name"
+                                   type="text">
+                            <div class="help"> This must be a unique name.</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="permission">Permission: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" formControlName="permission" id="permission">
+                                <option *ngFor="let permission of keys()"
+                                        [value]="Permission[permission]"> {{permission}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Actions: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <div *ngFor="let action of actions; index as i" class="container-fluid"
+                                 style="margin-bottom: 2%">
+                                <action [action]="action" [disabled]="true" [title]="action.actionName">
+                                    <button (click)="removeAction(i)" aria-label="Close" class="fa fa-close"
+                                            style="margin-top: 2%; margin-bottom: 0" type="button"></button>
+                                </action>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-9">
+                            <actionForm [actions]="actions"></actionForm>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button (click)="onSubmit(newDeviceForm.value)"
+                            [disabled]="!newDeviceForm.valid"
+                            class="btn btn-success btn-margin {{!newDeviceForm.valid ? 'disabled' : ''}}" type="submit"> Create device
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3">
-              <label for="id">Name: </label>
+    </form>
+    <form [formGroup]="newUserForm" style="margin-bottom: 5%">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header card-header-center" style="text-align: center">
+                    Create a new user
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="username">username: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" formControlName="username" id="username" onfocus="this.select()"
+                                   placeholder="username"
+                                   type="text">
+                            <div class="help"> This must be a unique name.</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="password">password: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" formControlName="password" id="password" onfocus="this.select()"
+                                   placeholder="password"
+                                   type="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="password2">password: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" formControlName="password2" id="password2" onfocus="this.select()"
+                                   placeholder="password"
+                                   type="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="userPermission">Permission: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" formControlName="userPermission" id="userPermission">
+                                <option *ngFor="let permission of keys()"
+                                        [value]="Permission[permission]"> {{permission}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button (click)="onSubmitUser(newUserForm.value)"
+                                [disabled]="!newUserForm.valid"
+                                class="btn btn-success btn-margin {{!newUserForm.valid ? 'disabled' : ''}}" type="submit"> Create user
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-9">
-              <input placeholder="Name" onfocus="this.select()" class="form-control" id="id" type="text"
-                     formControlName="id">
-              <div class="help"> This must be a unique name.</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="permission">Permission: </label>
-            </div>
-            <div class="col-md-9">
-              <select class="form-control" id="permission" formControlName="permission">
-                <option *ngFor="let permission of keys()" [value]="Permission[permission]"> {{permission}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label>Actions: </label>
-            </div>
-            <div class="col-md-9">
-              <div *ngFor="let action of actions; index as i" class="container-fluid" style="margin-bottom: 2%">
-                <action [disabled]="true" [title]="action.actionName" [action]="action">
-                    <button style="margin-top: 2%; margin-bottom: 0" type="button" class="fa fa-close" aria-label="Close"  (click)="removeAction(i)"></button>
-                </action>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-9">
-              <actionForm [actions]="actions"></actionForm>
-            </div>
-          </div>
         </div>
-        <div class="row">
-          <button [disabled]="!newDeviceForm.valid"
-                  class="btn btn-success btn-margin {{!newDeviceForm.valid ? 'disabled' : ''}}"
-                  type="submit" (click)="onSubmit(newDeviceForm.value)"> Create device
-          </button>
+    </form>
+    <form [formGroup]="newRoomForm" style="margin-bottom: 5%">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header card-header-center" style="text-align: center">
+                    Create a new room
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="roomName">Name: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" formControlName="roomName" id="roomName" onfocus="this.select()"
+                                   placeholder="Name"
+                                   type="text">
+                            <div class="help"> This must be a unique name.</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="roomPermission">Permission: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" formControlName="roomPermission" id="roomPermission">
+                                <option *ngFor="let permission of keys()"
+                                        [value]="Permission[permission]"> {{permission}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="devices">Device: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" formControlName="devices" id="devices" multiple>
+                                <option *ngFor="let device of devices"
+                                        [value]="device.device.id">{{device.device.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="users">Users: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" formControlName="users" id="users" multiple>
+                                <option *ngFor="let user of users" [value]="user.username">{{user.username}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button (click)="onSubmitRoom(newRoomForm.value)"
+                            [disabled]="!newRoomForm.valid"
+                            class="btn btn-success btn-margin {{!newRoomForm.valid ? 'disabled' : ''}}" type="submit"> Create room
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </form>
-  <form [formGroup]="newUserForm" style="margin-bottom: 5%">
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-header card-header-center" style="text-align: center">
-          Create a new user
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3">
-              <label for="username">username: </label>
-            </div>
-            <div class="col-md-9">
-              <input placeholder="username" onfocus="this.select()" class="form-control" id="username" type="text"
-                formControlName="username">
-              <div class="help"> This must be a unique name.</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="password">password: </label>
-            </div>
-              <div class="col-md-9">
-                <input placeholder="password" onfocus="this.select()" class="form-control" id="password" type="password"
-                       formControlName="password">
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="password2">password: </label>
-            </div>
-              <div class="col-md-9">
-                <input placeholder="password" onfocus="this.select()" class="form-control" id="password2" type="password"
-                       formControlName="password2">
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="userPermission">Permission: </label>
-            </div>
-            <div class="col-md-9">
-              <select class="form-control" id="userPermission" formControlName="userPermission">
-                <option *ngFor="let permission of keys()" [value]="Permission[permission]"> {{permission}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <button [disabled]="!newUserForm.valid"
-                    class="btn btn-success btn-margin {{!newUserForm.valid ? 'disabled' : ''}}"
-                    type="submit" (click)="onSubmitUser(newUserForm.value)"> Create user
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
-  <form [formGroup]="newRoomForm" style="margin-bottom: 5%">
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-header card-header-center" style="text-align: center">
-          Create a new room
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3">
-              <label for="roomName">Name: </label>
-            </div>
-            <div class="col-md-9">
-              <input placeholder="Name" onfocus="this.select()" class="form-control" id="roomName" type="text"
-                     formControlName="roomName">
-              <div class="help"> This must be a unique name.</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="roomPermission">Permission: </label>
-            </div>
-            <div class="col-md-9">
-              <select class="form-control" id="roomPermission" formControlName="roomPermission">
-                <option *ngFor="let permission of keys()" [value]="Permission[permission]"> {{permission}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="devices">Device: </label>
-            </div>
-            <div class="col-md-9">
-              <select multiple class="form-control" id="devices" formControlName="devices">
-                <option *ngFor="let device of devices" [value]="device.device.id">{{device.device.name}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="users">Users: </label>
-            </div>
-            <div class="col-md-9">
-              <select multiple class="form-control" id="users" formControlName="users">
-                <option *ngFor="let user of users" [value]="user.username">{{user.username}}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <button [disabled]="!newRoomForm.valid"
-                  class="btn btn-success btn-margin {{!newRoomForm.valid ? 'disabled' : ''}}"
-                  type="submit" (click)="onSubmitRoom(newRoomForm.value)"> Create room
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
+    </form>
 </div>

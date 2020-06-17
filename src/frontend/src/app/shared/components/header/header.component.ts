@@ -2,8 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {RoutesConfig} from "../../../configs/routes.config";
 import {AuthenticationService} from "../../../core/services/authentication.service";
 import {Permission} from "../../../core/models/permission.model";
-import {map, take} from "rxjs/operators";
-import {Observable} from "rxjs";
 
 @Component({
   selector: "app-header",
@@ -13,7 +11,7 @@ import {Observable} from "rxjs";
   ]
 })
 
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   routes = RoutesConfig.routesName;
   Permission = Permission;
   logged: boolean = false;
@@ -23,9 +21,9 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
     this.auth.isAuthenticated.subscribe(
-      logged => {
-        this.logged = logged;//d === login && permission <= this.auth.getCurrentUser().permission;
-      })
+        logged => {
+          this.logged = logged;//d === login && permission <= this.auth.getCurrentUser().permission;
+        })
   }
 
   canShow(login: boolean = true, permission: Permission = Permission.USER) {

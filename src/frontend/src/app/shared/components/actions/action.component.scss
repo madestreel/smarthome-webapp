@@ -7,9 +7,11 @@ form .help {
 
 form .form-control {
   cursor: not-allowed;
+
   &:not(.disabled):hover {
     cursor: auto;
-  };
+  }
+;
 }
 
 form button {
@@ -28,13 +30,17 @@ form button {
   box-shadow: 0 0 10px rgba(51, 51, 51, 0.4);
   transition: all 0.15s ease-in-out;
   cursor: not-allowed;
+
   &:not(.disabled):hover {
     cursor: pointer;
     background: #ff5252;
-  };
+  }
+;
+
   &.success {
     background: green;
   }
+
   &.success:hover {
     background: #00a100;
   }
@@ -48,9 +54,11 @@ form label {
 
 form label span {
   color: green;
+
   &:not(.valid) {
     color: #FF3838;
   }
+
   font-size: 2em;
   position: absolute;
   left: 2.3em;

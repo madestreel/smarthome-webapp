@@ -9,7 +9,6 @@ import {ManageRoutingModule} from "./manage-routing.module";
 import {ActionForm} from "./action/action.component";
 import {ManageRoom} from "./room/manage.component";
 import {ManageDevice} from "./device/manage.component";
-import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
@@ -30,4 +29,5 @@ import {ReactiveFormsModule} from "@angular/forms";
   ]
 })
 
-export class ManageModule {}
+export class ManageModule {
+}

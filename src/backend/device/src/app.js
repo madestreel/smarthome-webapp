@@ -16,12 +16,12 @@ const db = require('./utils/device');
 function isConnected(token) {
   return new Promise((resolve, reject) => {
     axios.get(`${auth}/isconnected/${token}`)
-    .then(res => {
-      resolve("")
-    })
-    .catch(err => {
-      reject(new Error(err.response.status))
-    })
+        .then(res => {
+          resolve("")
+        })
+        .catch(err => {
+          reject(new Error(err.response.status))
+        })
   })
 }
 
@@ -32,8 +32,8 @@ function isValidDevice(device) {
 }
 
 app.post('/device', (req, res) => {
-    console.log(req.body);
-  if(!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('device') && isValidDevice(req.body.device)))  {
+  console.log(req.body);
+  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('device') && isValidDevice(req.body.device))) {
     res.status(400).json({message: 'bad request'});
     return
   }
@@ -53,7 +53,7 @@ app.post('/device', (req, res) => {
 
 app.post('/update', (req, res) => {
   console.log(req.body);
-  if(!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('device') && isValidDevice(req.body.device)))  {
+  if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('device') && isValidDevice(req.body.device))) {
     res.status(400).json({message: 'bad request'});
     return
   }

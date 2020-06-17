@@ -1,1 +1,2 @@
-<action [action]="emptyAction" [disabled]="false" [title]="'Create a new Action'" [color]="'#00a100'" (onButtonClick)="addAction($event[0])"></action>
+<action (onButtonClick)="addAction($event[0])" [action]="emptyAction" [color]="'#00a100'" [disabled]="false"
+        [title]="'Create a new Action'"></action>

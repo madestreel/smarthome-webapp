@@ -6,7 +6,7 @@ import {AuthenticationService} from "./core/services/authentication.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   constructor(private authService: AuthenticationService) {
   }

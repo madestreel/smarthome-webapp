@@ -1,8 +1,8 @@
 export enum ActionStyle {
-  DANGER="danger",
-  SUCCESS="success",
-  PRIMARY="primary",
-  WARNING="warning"
+  DANGER = "danger",
+  SUCCESS = "success",
+  PRIMARY = "primary",
+  WARNING = "warning"
 }
 
 export interface ActionModel {

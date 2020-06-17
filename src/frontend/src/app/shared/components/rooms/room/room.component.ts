@@ -21,10 +21,10 @@ export class RoomComponent implements OnInit {
   room: Room;
 
   constructor(
-    private roomService: RoomService,
-    private deviceService: DeviceService,
-    private authenticationService: AuthenticationService,
-    private router: Router) {
+      private roomService: RoomService,
+      private deviceService: DeviceService,
+      private authenticationService: AuthenticationService,
+      private router: Router) {
   }
 
   ngOnInit() {

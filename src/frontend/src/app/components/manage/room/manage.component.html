@@ -1,41 +1,42 @@
 <!--TODO: delete user/device from room -->
 <form [formGroup]="manageRoomForm">
-  <div class="container-fluid">
-    <h1 class="title"> Manage </h1> <br>
-    <hr>
     <div class="container-fluid">
-      <div class="card">
-        <div class="card-header card-header-center" style="cursor: pointer; text-align: center">
-          Manage room {{roomID}}
+        <h1 class="title"> Manage </h1> <br>
+        <hr>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header card-header-center" style="cursor: pointer; text-align: center">
+                    Manage room {{roomID}}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="devices">Device: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" formControlName="devices" id="devices" multiple>
+                                <option *ngFor="let device of devices"
+                                        [value]="device.device.id">{{device.device.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="users">Users: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control" formControlName="users" id="users" multiple>
+                                <option *ngFor="let user of users" [value]="user.username">{{user.username}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button (click)="onUpdateRoom(manageRoomForm.value)"
+                            class="btn btn-success btn-margin" type="submit"> Update room
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3">
-              <label for="devices">Device: </label>
-            </div>
-            <div class="col-md-9">
-              <select multiple class="form-control" id="devices" formControlName="devices">
-                <option *ngFor="let device of devices" [value]="device.device.id">{{device.device.name}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <label for="users">Users: </label>
-            </div>
-            <div class="col-md-9">
-              <select multiple class="form-control" id="users" formControlName="users">
-                <option *ngFor="let user of users" [value]="user.username">{{user.username}}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <button class="btn btn-success btn-margin"
-                  type="submit" (click)="onUpdateRoom(manageRoomForm.value)"> Update room
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
 </form>

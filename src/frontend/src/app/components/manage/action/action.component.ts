@@ -1,6 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActionStyle} from "../../../core/models/actions/action.model";
+import {Component, Input} from "@angular/core";
 import {EmptyAction} from "../../../core/models/actions/EmptyAction";
 import {Action} from "../../../core/models/actions/ConcreteAction.model";
 import {AuthenticationService} from "../../../core/services/authentication.service";

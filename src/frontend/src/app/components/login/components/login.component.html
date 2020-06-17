@@ -1,33 +1,38 @@
 <form [formGroup]="loginForm">
-  <div class="container-fluid center-container">
-    <div class="card">
-      <div class="card-header"><b>Login</b></div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-3">
-            <label for="username">Username: <span class="{{!loginForm.controls.username.valid ? '' : 'valid'}}">*</span></label>
-          </div>
-          <div class="col-md-9">
-            <input placeholder="Username" onfocus="this.select()" class="form-control" id="username" type="text" formControlName="username">
-            <div *ngIf="!loginForm.controls.username.valid" class="help"> At least 4 characters</div>
-          </div>
+    <div class="container-fluid center-container">
+        <div class="card">
+            <div class="card-header"><b>Login</b></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="username">Username: <span
+                                class="{{!loginForm.controls.username.valid ? '' : 'valid'}}">*</span></label>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control" formControlName="username" id="username" onfocus="this.select()"
+                               placeholder="Username" type="text">
+                        <div *ngIf="!loginForm.controls.username.valid" class="help"> At least 4 characters</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="password">password: <span
+                                class="{{!loginForm.controls.password.valid ? '' : 'valid'}}">*</span></label>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-control" formControlName="password" id="password" onfocus="this.select()"
+                               placeholder="Password"
+                               type="password">
+                        <div *ngIf="!loginForm.controls.password.valid" class="help">At least 4 characters</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button (click)="onSubmit(loginForm.value)"
+                        [disabled]="!loginForm.valid" class="btn btn-success btn-margin {{!loginForm.valid ? 'disabled' : '' }}"
+                        type="submit"> Login
+                </button>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-md-3">
-            <label for="password">password: <span class="{{!loginForm.controls.password.valid ? '' : 'valid'}}">*</span></label>
-          </div>
-          <div class="col-md-9">
-            <input placeholder="Password" onfocus="this.select()" class="form-control" id="password" type="password"
-                   formControlName="password">
-            <div *ngIf="!loginForm.controls.password.valid" class="help">At least 4 characters</div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <button [disabled]="!loginForm.valid" class="btn btn-success btn-margin {{!loginForm.valid ? 'disabled' : '' }}" type="submit"
-                (click)="onSubmit(loginForm.value)"> Login
-        </button>
-      </div>
     </div>
-  </div>
 </form>

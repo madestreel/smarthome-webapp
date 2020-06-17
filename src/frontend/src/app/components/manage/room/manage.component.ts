@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {DefaultDevice} from "../../../core/models/devices/DefaultDevice.model";
 import {User} from "../../../core/models/user.model";
 import {DeviceService} from "../../../core/services/DeviceService.service";
@@ -35,7 +35,13 @@ export class ManageRoom implements OnInit {
   }
 
   displayAlert(msg: string, type: string) {
-    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+    this.alert.show(msg, {
+      cssClass: `alert-${type}`,
+      dismiss: true,
+      timeout: 2000,
+      showCloseBtn: true,
+      closeOnClick: true
+    });
   }
 
   onUpdateRoom(data) {
