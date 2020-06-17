@@ -58,6 +58,7 @@ export class RoomService {
     for (let user of room.users) {
       this.addUserToRoom(user, room.roomName)
     }
+    //FIXME: admins should not be added to rooms, they should be able to see them all
     this.addUserToRoom("root", room.roomName);
   }
 

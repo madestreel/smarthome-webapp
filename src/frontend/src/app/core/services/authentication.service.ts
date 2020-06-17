@@ -8,6 +8,7 @@ import {JwtService} from './jwt.service';
 import {User} from '../models/user.model';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Permission} from "../models/permission.model";
+import {FlashMessagesService} from "angular2-flash-messages";
 
 
 @Injectable()
@@ -20,7 +21,8 @@ export class AuthenticationService {
 
   constructor(
     private jwtService: JwtService,
-    private router: Router
+    private router: Router,
+    private alert: FlashMessagesService
   ) {
   }
 
@@ -31,7 +33,11 @@ export class AuthenticationService {
     if (this.jwtService.getToken()) {
       axios.get('api/user/user', {params: {token: this.jwtService.getToken()}})
         .then(
-          resp => this.setAuth({username: resp.data.user._id, permission:Permission[String(resp.data.user.permission).toUpperCase()], token:this.jwtService.getToken()}),
+          resp => this.setAuth({
+            username: resp.data.user._id,
+            permission: resp.data.user.permission.toUpperCase(),
+            token:this.jwtService.getToken()
+          }),
         ).catch(_ => {
         this.purgeAuth()
       });
@@ -47,7 +53,7 @@ export class AuthenticationService {
         users.push({
           username: user._id,
           token: "",
-          permission: Permission[String(user.permission).toUpperCase()]
+          permission: user.permission.toUpperCase(),
         })
       })
     });
@@ -93,4 +99,15 @@ export class AuthenticationService {
     return this.currentUserSubject.value.token ? this.currentUserSubject.value : {username: undefined, token: undefined, permission: Permission.USER};
   }
 
+  displayAlert(msg: string, type: string) {
+    this.alert.show(msg, {cssClass: `alert-${type}`, dismiss:true, timeout: 2000, showCloseBtn: true, closeOnClick: true});
+  }
+
+  createUser(param: { password: string; permission: string; username: string}) {
+      axios.post('/api/user/user', param).then(_ => {
+        this.displayAlert("User successfully created!", 'success')
+      }).catch(_ => {
+        this.displayAlert("Failed to create user!", 'danger')
+      })
+  }
 }

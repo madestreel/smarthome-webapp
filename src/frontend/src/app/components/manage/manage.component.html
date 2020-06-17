@@ -57,6 +57,61 @@
       </div>
     </div>
   </form>
+  <form [formGroup]="newUserForm" style="margin-bottom: 5%">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header card-header-center" style="text-align: center">
+          Create a new user
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="username">username: </label>
+            </div>
+            <div class="col-md-9">
+              <input placeholder="username" onfocus="this.select()" class="form-control" id="username" type="text"
+                formControlName="username">
+              <div class="help"> This must be a unique name.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="password">password: </label>
+            </div>
+              <div class="col-md-9">
+                <input placeholder="password" onfocus="this.select()" class="form-control" id="password" type="password"
+                       formControlName="password">
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="password2">password: </label>
+            </div>
+              <div class="col-md-9">
+                <input placeholder="password" onfocus="this.select()" class="form-control" id="password2" type="password"
+                       formControlName="password2">
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="userPermission">Permission: </label>
+            </div>
+            <div class="col-md-9">
+              <select class="form-control" id="userPermission" formControlName="userPermission">
+                <option *ngFor="let permission of keys()" [value]="Permission[permission]"> {{permission}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <button [disabled]="!newUserForm.valid"
+                    class="btn btn-success btn-margin {{!newUserForm.valid ? 'disabled' : ''}}"
+                    type="submit" (click)="onSubmitUser(newUserForm.value)"> Create user
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
   <form [formGroup]="newRoomForm" style="margin-bottom: 5%">
     <div class="container-fluid">
       <div class="card">
