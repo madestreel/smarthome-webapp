@@ -32,17 +32,10 @@ services:
       - backend
 
   user:
-    build: ./user
-    volumes:
-      - ./user:/usr/src/user-service
-      - ./boot-in-order.sh:/usr/src/user-service/boot-in-order.sh
-      - ./func_to_string.js:/usr/src/user-service/func_to_string.js
-      - ./gulpfile.js:/usr/src/user-service/gulpfile.js
-      - ./daemon.js:/usr/src/user-service/src/daemon.js
-      - ./permissions.js:/usr/src/user-service/src/utils/permissions.js
-      - /usr/src/user-service/node_modules
+    image: destmaxi/user:latest
     environment:
       - NODE_ENV=development
+      - DB_URL=http://admin:admin@smarthome-db:5984/users
     networks:
       - backend
     restart: on-failure

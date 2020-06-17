@@ -7,28 +7,13 @@ RUN apk update && apk add curl
 
 # let NPM packages be called anywhere within the container
 ENV PATH /usr/src/user-service/node_modules/.bin:${PATH}
-COPY package.json .
+COPY . .
 RUN npm install
 # string to create tokens (see utils/en-de-coders.js)
 ENV TOKEN_SECRET IhiKrqjq-F(o1k?
 # header for loggining messages
 ENV SERVICE_NAME user-d
 ENV SERVICE_PORT 80
-
-# name of container running CouchDB
-# ENV DB_HOST 192.168.56.102
-ENV DB_HOST smarthome-db
-# database name
-ENV DB_NAME users
-# database port default 5984
-#ENV DB_PORT 3000
-ENV DB_PORT 5984
-# authentication information to CRUD (create/remove/update/delete) objects in our DB
-ENV ADMIN_NAME admin
-ENV ADMIN_PASSW admin
-ENV DB_URL http://${ADMIN_NAME}:${ADMIN_PASSW}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-
-EXPOSE ${SERVICE_PORT}
 
 # we now use an script to deploy.sh the authentication service
 CMD source boot-in-order.sh
