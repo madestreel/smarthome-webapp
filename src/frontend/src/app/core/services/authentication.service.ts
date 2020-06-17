@@ -114,7 +114,12 @@ export class AuthenticationService {
   }
 
   createUser(param: { password: string; permission: string; username: string }) {
-    axios.post('/api/user/user', param).then(_ => {
+    axios.post('/api/user/user', {
+      username: param.username,
+      permission: param.permission,
+      password: param.password,
+      token: this.getCurrentUser().token
+    }).then(_ => {
       this.displayAlert("User successfully created!", 'success')
     }).catch(_ => {
       this.displayAlert("Failed to create user!", 'danger')
