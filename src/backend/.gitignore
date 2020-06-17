@@ -2,3 +2,4 @@
 !/gulpfile.js
 !/daemon.js
 !/func_to_string.js
+!/permissions.js

@@ -2,6 +2,7 @@
 /**/boot-in-order.sh
 /**/gulpfile.js
 /**/daemon.js
+/**/permissions.js
 /**/func_to_string.js
 npm-debug.log
 /**/formatter_output

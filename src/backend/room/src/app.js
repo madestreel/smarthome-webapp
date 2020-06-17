@@ -2,6 +2,7 @@ const axios = require('axios');
 const express = require('express');
 const log = require('debug')(process.env.SERVICE_NAME);
 const auth = process.env.REACT_APP_AUTH_SERVICE_URL;
+const {PERMISSION} = require('./utils/permissions');
 
 const app = express.Router();
 const db = require('./utils/room');
@@ -10,12 +11,13 @@ const db = require('./utils/room');
  * isConnected -- Check if the token is a valid token by asking the users micro-service
  *
  * @param {String} token the token to be verified
+ * @param {String} permission the permission needed
  *
  * @returns {Promise} a promise with a call to the users microservice
  */
-function isConnected(token) {
+function isConnected(token, permission = PERMISSION.USER) {
   return new Promise((resolve, reject) => {
-    axios.get(`${auth}/isconnected/${token}`)
+    axios.get(`${auth}/isconnected/${token}`, {params: {permission: permission}})
         .then(res => {
           resolve("")
         })
@@ -125,7 +127,7 @@ app.post('/room', (req, res) => {
   const token = req.body.token;
   const room = req.body.room;
 
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.createRoom(room).then(_ => {
       res.status(200).json({message: 'room successfully created'})
     }).catch(err => {
@@ -162,7 +164,7 @@ app.post('/user', (req, res) => {
   const token = req.body.token;
   const userID = req.body.userID;
   const roomID = req.body.roomID;
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.addUserToRoom(userID, roomID).then(_ => {
       res.status(200).json({message: `user (${userID}) successfully added to room (${roomID})`})
     }).catch(err => {
@@ -199,7 +201,7 @@ app.delete('/user', (req, res) => {
   const userID = req.body.userID;
   const roomID = req.body.roomID;
 
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.deleteUserOfRoom(userID, roomID).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {

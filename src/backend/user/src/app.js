@@ -2,6 +2,7 @@ const express = require('express');
 const log = require('debug')(process.env.SERVICE_NAME);
 const app = express.Router();
 const db = require('./utils/users');
+const {PERMISSION}= require("./utils/permissions");
 
 app.get('/', (req, res) => {
   return res.status(200).json({status: 'success'})
@@ -55,7 +56,7 @@ app.delete('/user/:username', (req, res) => {
 
   let token = req.body.token;
   let username = req.params.username;
-  return db.isConnected(token).then(_ => {
+  return db.isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.deleteUser(username).then(_ => {
       log({"username": username});
       res.status(200).json({status: 'user successfully deleted'})
@@ -86,13 +87,13 @@ app.get('/users', (req, res) => {
   }
 
   let token = req.query.token;
-  return db.isConnected(token).then(_ => {
+  return db.isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.getUsersInfo().then(users => {
       res.status(200).json({message: "success", users: users})
     }).catch(err => {
       res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
     })
-  }).catch(err => {
+  }).catch(_ => {
     res.status(403).json({message: "permission denied"})
   })
 });
@@ -121,7 +122,7 @@ app.get('/user', (req, res) => {
     }).catch(err => {
       res.status(500).json({message: `could not retrieve user. Reason: ${err.message}`})
     })
-  }).catch(err => {
+  }).catch(_ => {
     res.status(403).json({message: "permission denied"})
   })
 });
@@ -131,28 +132,35 @@ app.get('/user', (req, res) => {
  * request boy:
  *  - username: _
  *  - password: _
+ *  - permission: _
  *
  * @param {String} username the username of the user
  * @param {String} password the password of the user
+ * @param {String} permission the permission of the user
  *
  * @returns {status code} 200 in case of success, 400 in case of missing params
  *                        and 500 otherwise.
  * @returns {String} the token of the user
  */
 app.post('/user', (req, res) => {
-  if (!(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password') && req.body.hasOwnProperty('permission')))
+  if (!(req.body.hasOwnProperty('username') && req.body.hasOwnProperty('password') && req.body.hasOwnProperty('permission') && req.body.hasOwnProperty('token')))
     return res.status(400).json({status: 'bad request'});
 
   let usr = req.body.username;
   let usrPassw = req.body.password;
   let permission = req.body.permission;
-  return db.createUser(usr, usrPassw, permission)
-      .then((token) => {
-        res.status(200).json({status: 'success', token})
-      })
-      .catch((err) => {
-        res.status(500).json({status: 'error', message: String(err)})
-      })
+  let token = req.body.token;
+  return db.isConnected(token, PERMISSION.ADMIN).then(_ => {
+    db.createUser(usr, usrPassw, permission)
+        .then((token) => {
+          res.status(200).json({status: 'success', token})
+        })
+        .catch((err) => {
+          res.status(500).json({status: 'error', message: String(err)})
+        })
+  }).catch(_ => {
+    res.status(404).json({status: 'forbidden'})
+  })
 });
 
 /**
@@ -170,9 +178,10 @@ app.get('/isconnected/:token', (req, res) => {
     return res.status(400).json({status: 'bad request'});
 
   let token = req.params.token;
-  return db.isConnected(token)
-      .then(_ => {
-        res.status(200).json({status: 'success'})
+  let permission = req.query.hasOwnProperty('permission') ? req.query.permission : PERMISSION.USER;
+  return db.isConnected(token, permission)
+      .then(user => {
+        res.status(200).json({status: 'success', user: user})
       })
       .catch(_ => {
         res.status(403).json({status: 'forbidden'})

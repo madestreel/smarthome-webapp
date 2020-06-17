@@ -2,6 +2,7 @@ const db = require('nano')(process.env.DB_URL);
 const log = require('debug')(process.env.SERVICE_NAME);
 const bcrypt = require('bcryptjs');
 const tku = require('./en-de-coders');
+const {PERMISSION} = require('./permissions');
 
 function equalPassword(userPass, usrDBPass) {
   return bcrypt.compareSync(userPass, usrDBPass)
@@ -80,11 +81,11 @@ function getUserInfo(token) {
   })
 }
 
-function isConnected(token) {
+function isConnected(token, permission = PERMISSION.USER) {
   return new Promise(((resolve, reject) => {
     let username = tku.decodeToken(token).sub;
     db.get(username, (error, success) => {
-      if (success) {
+      if (success && parseInt(success.permission, 10) >= parseInt(permission, 10)) {
         resolve()
       } else {
         reject(new Error(`User (${username}) doesn't exist.`))

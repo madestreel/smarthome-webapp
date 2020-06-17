@@ -39,6 +39,7 @@ services:
       - ./func_to_string.js:/usr/src/user-service/func_to_string.js
       - ./gulpfile.js:/usr/src/user-service/gulpfile.js
       - ./daemon.js:/usr/src/user-service/src/daemon.js
+      - ./permissions.js:/usr/src/user-service/src/utils/permissions.js
       - /usr/src/user-service/node_modules
     environment:
       - NODE_ENV=development
@@ -71,6 +72,7 @@ services:
       - ./func_to_string.js:/usr/src/device-service/func_to_string.js
       - ./gulpfile.js:/usr/src/device-service/gulpfile.js
       - ./daemon.js:/usr/src/device-service/src/daemon.js
+      - ./permissions.js:/usr/src/device-service/src/utils/permissions.js
       - /usr/src/device-service/node_modules
     environment:
       - NODE_ENV=development
@@ -88,6 +90,7 @@ services:
       - ./func_to_string.js:/usr/src/room-service/func_to_string.js
       - ./gulpfile.js:/usr/src/room-service/gulpfile.js
       - ./daemon.js:/usr/src/room-service/src/daemon.js
+      - ./permissions.js:/usr/src/room-service/src/utils/permissions.js
       - /usr/src/room-service/node_modules
     environment:
       - NODE_ENV=development

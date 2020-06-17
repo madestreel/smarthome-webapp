@@ -2,6 +2,7 @@ const axios = require('axios');
 const express = require('express');
 const log = require('debug')(process.env.SERVICE_NAME);
 const auth = process.env.REACT_APP_AUTH_SERVICE_URL;
+const {PERMISSION} = require('./utils/permissions');
 
 const app = express.Router();
 const db = require('./utils/device');
@@ -10,12 +11,13 @@ const db = require('./utils/device');
  * isConnected -- Check if the token is a valid token by asking the users micro-service
  *
  * @param {String} token the token to be verified
+ * @param {String} permission the permission needed
  *
  * @returns {Promise} a promise with a call to the users microservice
  */
-function isConnected(token) {
+function isConnected(token, permission = PERMISSION.USER) {
   return new Promise((resolve, reject) => {
-    axios.get(`${auth}/isconnected/${token}`)
+    axios.get(`${auth}/isconnected/${token}`, {params: {permission: permission}})
         .then(res => {
           resolve("")
         })
@@ -40,7 +42,7 @@ app.post('/device', (req, res) => {
 
   const token = req.body.token;
   const device = req.body.device;
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.createDevice(device).then(_ => {
       res.status(200).json({message: "success"})
     }).catch(err => {
@@ -60,7 +62,7 @@ app.post('/update', (req, res) => {
 
   const token = req.body.token;
   const device = req.body.device;
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.updateDevice(device).then(_ => {
       res.status(200).json({message: "success"})
     }).catch(err => {
@@ -95,7 +97,7 @@ app.post('/room', (req, res) => {
   const token = req.body.token;
   const id = req.body.id;
   const roomID = req.body.roomID;
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.addDeviceToRoom(id, roomID).then(_ => {
       res.status(200).json({message: `device (${id}) successfully added to room (${roomID})`})
     }).catch(err => {
@@ -132,7 +134,7 @@ app.delete('/room', (req, res) => {
   const id = req.body.id;
   const roomID = req.body.roomID;
 
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.deleteDeviceOfRoom(id, roomID).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {
@@ -150,7 +152,7 @@ app.get('/devices', (req, res) => {
   }
 
   const token = req.query.token;
-  isConnected(token).then(_ => {
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
     return db.getDevices().then(devices => {
       res.status(200).json({message: 'success', devices: devices})
     }).catch(err => {
