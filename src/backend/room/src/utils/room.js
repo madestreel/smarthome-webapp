@@ -2,6 +2,7 @@ const db = require('nano')(process.env.DB_URL);
 const log = require('debug')(process.env.SERVICE_NAME);
 
 function getRoom(room) {
+  //TODO: check that user (token) has access to room
   return new Promise((resolve, reject) => {
     db.get(room, (error, success) => {
       if (success) {
@@ -125,6 +126,15 @@ function deleteUserOfRoom(userID, roomID) {
   })
 }
 
+function getRooms() {
+  return new Promise((resolve, reject) => {
+    db.view('queries', 'all_rooms', function(err, body) {
+      if (!err) resolve(body.rows.map(room => room.value))
+      else reject(new Error('Failed to retrieve rooms'))
+    })
+  })
+}
+
 module.exports = {
   getRoom,
   getRoomsForUser,
@@ -133,5 +143,6 @@ module.exports = {
   addFav,
   deleteFav,
   isFav,
-  deleteUserOfRoom
-};
+  deleteUserOfRoom,
+  getRooms
+}

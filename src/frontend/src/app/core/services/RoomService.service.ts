@@ -64,8 +64,6 @@ export class RoomService {
     for (let user of room.users) {
       this.addUserToRoom(user, room.roomName)
     }
-    //FIXME: admins should not be added to rooms, they should be able to see them all
-    this.addUserToRoom("root", room.roomName);
   }
 
   addUserToRoom(user, room) {
@@ -82,19 +80,19 @@ export class RoomService {
 
   fetchRooms(rooms: Room[]) {
     const user: User = this.authenticationService.getCurrentUser();
-
-    axios.get(`api/room/rooms/${user.username}`, {params: {token: user.token}}).then(res => {
+    const request = user.permission == Permission.ADMIN ? 'api/room/rooms' : `api/room/rooms/${user.username}`
+    axios.get(request, {params: {token: user.token}}).then(res => {
       res.data.rooms.forEach(room => {
-        axios.get(`api/room/room/${room}`, {params: {token: user.token}}).then(res => {
+        axios.get(`api/room/room/${room.room.roomID}`, {params: {token: user.token}}).then(res => {
           const room1: Room = {
-            roomID: room,
+            roomID: room.room.roomID,
             name: res.data.room.name,
             permission: (<any>Permission)[res.data.room.permission.toUpperCase()],
             devices: [],
             favorite: false
           };
           rooms.push(room1);
-          axios.get(`api/room/fav/room/${room}/user/${user.username}`, {params: {token: user.token}}).then(res => {
+          axios.get(`api/room/fav/room/${room.room.roomID}/user/${user.username}`, {params: {token: user.token}}).then(res => {
             room1.favorite = res.data.isfav
           })
         })

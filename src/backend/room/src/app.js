@@ -22,7 +22,7 @@ function isConnected(token, permission = PERMISSION.USER) {
           resolve("")
         })
         .catch(err => {
-          reject(new Error(err.response.status))
+          reject({status: err.response.status})
         })
   })
 }
@@ -43,7 +43,7 @@ function isValidRoom(room) {
  *  @param {String} roomID the room id to retrieve
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                         err.message in case of invalid token and 500 otherwise.
+ *                         err.status in case of invalid token and 500 otherwise.
  *  @returns {Room} In case of success the room is returned.
  *
  *  @see isValidRoom for the representation of the Room object.
@@ -61,9 +61,37 @@ app.get('/room/:roomID', (req, res) => {
       res.status(500).json({message: String(err)})
     })
   }).catch(err => {
-    res.status(err.message).json()
+    res.status(err.status).json()
   })
 });
+
+/**
+ * API to get all rooms
+ * request params:
+ *  - token: _
+ *
+ * @param {String} token the token of the user
+ *
+ * @returns {Status code} 200 in case of success, 400 in case of missing param, err.status in case of invalid token and
+ *                        500 otherwise
+ * @returns {Room[]} a list of rooms
+ */
+app.get('/rooms', (req, res) => {
+  if (!(req.query.hasOwnProperty('token'))) {
+    return res.status(400).json({status: 'invalid request'})
+  }
+
+  let token = req.query.token;
+  isConnected(token, PERMISSION.ADMIN).then(_ => {
+    return db.getRooms().then(rooms => {
+      res.status(200).json({rooms: rooms})
+    }).catch(err => {
+      res.status(500).json({message: String(err)})
+    })
+  }).catch(err => {
+    res.status(err.status).json()
+  })
+})
 
 /**
  * API to get the rooms of a user
@@ -77,7 +105,7 @@ app.get('/room/:roomID', (req, res) => {
  *  @param {String} user the user from which to get the rooms
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                        err.message in case of invalid token and 500 otherwise.
+ *                        err.status in case of invalid token and 500 otherwise.
  *
  *  @returns {List[string]} In case of success the ids of the rooms for the user
  *
@@ -96,7 +124,7 @@ app.get('/rooms/:user', (req, res) => {
       res.status(500).json({message: String(err)})
     })
   }).catch(err => {
-    res.status(err.message).json()
+    res.status(err.status).json()
   })
 });
 
@@ -112,13 +140,11 @@ app.get('/rooms/:user', (req, res) => {
  *  @param {Room} room the room to be created
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                        err.message in case of invalid token and 500 otherwise.
+ *                        err.status in case of invalid token and 500 otherwise.
  *
  *  @see isValidRoom for the representation of the Room object.
  */
 app.post('/room', (req, res) => {
-  log(req.body);
-  console.log(req.body);
   if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('room') && isValidRoom(req.body.room))) {
     res.status(400).json({message: 'bad request'});
     return
@@ -131,10 +157,10 @@ app.post('/room', (req, res) => {
     return db.createRoom(room).then(_ => {
       res.status(200).json({message: 'room successfully created'})
     }).catch(err => {
-      res.status(500).json({message: err.message})
+      res.status(500).json({message: err.status})
     })
   }).catch(err => {
-    res.status(err.message).json({message: 'permission denied'})
+    res.status(err.status).json({message: 'permission denied'})
   })
 });
 
@@ -151,11 +177,10 @@ app.post('/room', (req, res) => {
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                        err.message in case of invalid token and 500 otherwise.
+ *                        err.status in case of invalid token and 500 otherwise.
  *
  */
 app.post('/user', (req, res) => {
-  console.log(req.body);
   if (!(req.body.hasOwnProperty('token') && req.body.hasOwnProperty('userID') && req.body.hasOwnProperty('roomID'))) {
     res.status(400).json({message: 'bad request'});
     return
@@ -168,10 +193,10 @@ app.post('/user', (req, res) => {
     return db.addUserToRoom(userID, roomID).then(_ => {
       res.status(200).json({message: `user (${userID}) successfully added to room (${roomID})`})
     }).catch(err => {
-      res.status(500).json({message: err.message})
+      res.status(500).json({message: err.status})
     })
   }).catch(err => {
-    res.status(err.message).json({message: 'permission denied'})
+    res.status(err.status).json({message: 'permission denied'})
   });
 });
 
@@ -188,7 +213,7 @@ app.post('/user', (req, res) => {
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                        err.message in case of invalid token and 500 otherwise.
+ *                        err.status in case of invalid token and 500 otherwise.
  *
  */
 app.delete('/user', (req, res) => {
@@ -205,10 +230,10 @@ app.delete('/user', (req, res) => {
     return db.deleteUserOfRoom(userID, roomID).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {
-      res.status(500).json({message: err.message})
+      res.status(500).json({message: err.status})
     })
   }).catch(err => {
-    res.status(err.message).json({message: 'permission denied'})
+    res.status(err.status).json({message: 'permission denied'})
   })
 });
 
@@ -224,7 +249,7 @@ app.delete('/user', (req, res) => {
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                        err.message in case of invalid token and 500 otherwise.
+ *                        err.status in case of invalid token and 500 otherwise.
  *
  */
 app.post('/fav', (req, res) => {
@@ -240,10 +265,10 @@ app.post('/fav', (req, res) => {
     return db.addFav(userID, roomID).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {
-      res.status(500).json({message: err.message})
+      res.status(500).json({message: err.status})
     })
   }).catch(err => {
-    res.status(err.message).json({message: 'permission denied'})
+    res.status(err.status).json({message: 'permission denied'})
   })
 });
 
@@ -260,7 +285,7 @@ app.post('/fav', (req, res) => {
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                        err.message in case of invalid token and 500 otherwise.
+ *                        err.status in case of invalid token and 500 otherwise.
  *
  */
 app.delete('/fav', (req, res) => {
@@ -276,10 +301,10 @@ app.delete('/fav', (req, res) => {
     return db.deleteFav(userID, roomID).then(_ => {
       res.status(200).json({message: 'success'})
     }).catch(err => {
-      res.status(500).json({message: err.message})
+      res.status(500).json({message: err.status})
     })
   }).catch(err => {
-    res.status(err.message).json({message: 'permission denied'})
+    res.status(err.status).json({message: 'permission denied'})
   })
 });
 
@@ -298,7 +323,7 @@ app.delete('/fav', (req, res) => {
  *  @param {String} userID the user id of the user to be added to the room
  *
  *  @returns {status code} 200 in case of success, 400 in case of missing params,
- *                        err.message in case of invalid token and 500 otherwise.
+ *                        err.status in case of invalid token and 500 otherwise.
  *
  */
 app.get('/fav/room/:roomID/user/:userID', (req, res) => {
@@ -314,10 +339,10 @@ app.get('/fav/room/:roomID/user/:userID', (req, res) => {
     db.isFav(userID, roomID).then(isfav => {
       res.status(200).json({message: 'success', isfav: isfav})
     }).catch(err => {
-      res.status(500).json({message: err.message})
+      res.status(500).json({message: err.status})
     })
   }).catch(err => {
-    res.status(err.message).json({message: 'permission denied'})
+    res.status(err.status).json({message: 'permission denied'})
   })
 });
 

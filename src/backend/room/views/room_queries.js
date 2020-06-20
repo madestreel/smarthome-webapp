@@ -13,6 +13,13 @@ const viewDescriptor = {
           emit(doc.userID, doc)
         }
       }
+    },
+    all_rooms: {
+      map: function (doc) {
+        if (doc.room) {
+          emit(doc.room.roomID, doc)
+        }
+      }
     }
   }
 };

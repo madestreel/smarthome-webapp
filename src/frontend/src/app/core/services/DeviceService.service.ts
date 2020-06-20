@@ -88,7 +88,7 @@ export class DeviceService {
               const device1: DefaultDevice = new DefaultDevice(this, {
                 name: res.data.device.device.name,
                 status: res.data.device.device.status,
-                actions: [],
+                actions: res.data.device.device.actions,
                 favorite: false,
                 permission: (<any>Permission)[res.data.device.device.permission.toUpperCase()],
                 id: res.data.device._id,
@@ -102,6 +102,11 @@ export class DeviceService {
 
   fetchDevices(devices: DefaultDevice[]) {
     const user: User = this.authenticationService.getCurrentUser();
+
+    if (user.permission == Permission.ADMIN) {
+      this.fetchAllDevices(devices);
+      return
+    }
 
     axios.get(`api/room/rooms/${user.username}`, {params: {token: user.token}})
         .then(res => {
